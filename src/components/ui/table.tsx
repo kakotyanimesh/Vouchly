@@ -2,7 +2,6 @@ import { cn } from "@/utils/lib/cn"
 import { StatusColor, statusType } from "@/utils/lib/tailwind_switch"
 import { TabledataTypes } from "@/utils/types/user_types"
 import React from "react"
-import { Button } from "./button"
 import { toast } from "sonner"
 
 type TableProps = React.HTMLAttributes<HTMLTableElement> & TabledataTypes
