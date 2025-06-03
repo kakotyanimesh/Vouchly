@@ -1,19 +1,23 @@
 "use client"
 import { cn } from "@/utils/lib/cn";
 import { SpaceCardProps } from "@/utils/types/user_types";
-import React, { useState } from "react";
+import React from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import {  File, Plus } from "lucide-react";
 import { IconDiv } from "./ui/icondiv";
 import { SpaceCard } from "./ui/spacecard";
+import { SpaceModal } from "./ui/spaceModal";
+import { useSpaceModalStore } from "@/utils/zustand/space_state";
 
 type SpaceDivTypes = {
     data : SpaceCardProps[]
 } & React.HTMLAttributes<HTMLDivElement>
 
 export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) => {
-    const [openModal, setopenModal] = useState<boolean>(false)
+
+    const {openModal, setOpneModal} = useSpaceModalStore()
+
     return (
         <div className={cn("", className)} {...props}>
             {
@@ -21,11 +25,9 @@ export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) 
                     
                     <IconDiv reactNode={<File/>}/>
                     <h1 className="text-sm text-[hsl(var(--primary))]">Create your first space to start collecting testimonials</h1>
-                    <Button onClick={()=> setopenModal(true)} variant={"secondary"} className="flex items-center gap-2 " sizes={"md"}><Plus size={16}/> Create Space</Button>
+                    <Button onClick={()=> setOpneModal(true)} variant={"secondary"} className="flex items-center gap-2 " sizes={"md"}><Plus size={16}/> Create Space</Button>
                     {
-                        openModal && <Card>
-                            <h1>animesh</h1>
-                        </Card>
+                        openModal && <SpaceModal/>
                     }
                 </Card> : 
                 <div className="grid md:grid-cols-3 grid-cols-1 gap-5">

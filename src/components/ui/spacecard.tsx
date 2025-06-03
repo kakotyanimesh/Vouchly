@@ -24,7 +24,7 @@ export const SpaceCard : React.FC<SpceCardProps> = ({className, spaceName, creat
             </div>
             <div>
                 <h1>{totalForms} fomrs</h1>
-                <h1 className="flex items-center text-sm gap-2"><CalendarRange size={12}/>{createdAt}</h1>
+                <h1 className="flex items-center text-sm gap-2"><CalendarRange size={12}/>{new Date(createdAt).toDateString()}</h1>
             </div>
             <Button variant={"transparent"} className="w-full py-2 group-hover:border-[hsl(var(--primary))] group-active:border-[hsl(var(--primary))]" sizes={"sm"}>Open Space </Button>
         </Card>

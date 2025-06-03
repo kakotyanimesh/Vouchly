@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
 
 const ButtonVariants = cva(
-    "w-fit rounded-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-linear duration-200",
+    "w-fit md:rounded-2xl rounded-xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-linear duration-200",
     {
         variants : {
             variant : {
@@ -14,7 +14,7 @@ const ButtonVariants = cva(
             },
             sizes : {
                 sm : "py-1 px-2 text-sm",
-                md : "px-5 py-2 font-semibold text-md"
+                md : "md:px-5 px-3 py-2 font-semibold md:text-md text-sm"
             }
         },
         defaultVariants : {

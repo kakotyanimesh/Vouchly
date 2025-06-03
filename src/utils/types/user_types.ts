@@ -6,6 +6,11 @@ export interface SignupTypes {
     email : string
 }
 
+export interface CreateSpaceTypes {
+    spaceName : string,
+    url : string
+} 
+
 export interface DashboardCardProps {
     title : string,
     data : number,
@@ -23,7 +28,7 @@ export interface RecentelyActiveProps {
 
 export interface SpaceCardProps {
     spaceName : string,
-    createdAt : string,
+    createdAt : string | Date,
     totalForms : number,
     Id : number,
     src : string
