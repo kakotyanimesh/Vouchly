@@ -23,12 +23,12 @@ export const InputVariants = cva(
 )
 
 
-export interface InputVariants extends React.InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof InputVariants>{
+export interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof InputVariants>{
     icon ? : ReactNode
 }
 
 
-export const InputBox = React.forwardRef<HTMLInputElement, InputVariants>(({className, icon, variants, sizes, ...props}, ref) => {
+export const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(({className, icon, variants, sizes, ...props}, ref) => {
     return (
         <div className="flex flex-col space-y-2">
             <label htmlFor="" className="text-sm text-[hsl(var(--secondary-foreground))]/60">{props.name}</label>

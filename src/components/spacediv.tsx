@@ -21,11 +21,17 @@ export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) 
     return (
         <div className={cn("", className)} {...props}>
             {
-                data.length === 0 ? <Card className="w-full h-full py-10 items-center flex flex-col space-y-5 justify-center">
+                data.length === 0 ? <Card className="w-full h-full py-10 items-center flex flex-col space-y-5 justify-center hover:border-dotted hover:border-2 transition-colors duration-200 ease-linear cursor-pointer group hover:border-[hsl(var(--primary))]">
                     
                     <IconDiv reactNode={<File/>}/>
                     <h1 className="text-sm text-[hsl(var(--primary))]">Create your first space to start collecting testimonials</h1>
-                    <Button onClick={()=> setOpneModal(true)} variant={"secondary"} className="flex items-center gap-2 " sizes={"md"}><Plus size={16}/> Create Space</Button>
+                    <Button 
+                    onClick={()=> setOpneModal(true)} 
+                    variant={"transparent"} 
+                    className="flex items-center gap-2 group-hover:bg-[hsl(var(--primary))]/20 " 
+                    sizes={"md"}>
+                    <Plus size={16}/> Create Space
+                    </Button>
                     {
                         openModal && <SpaceModal/>
                     }

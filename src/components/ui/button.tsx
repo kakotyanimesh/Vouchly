@@ -9,7 +9,7 @@ const ButtonVariants = cva(
             variant : {
                 primary : "bg-white text-black",
                 secondary : "bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))] border border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-foreground))]",
-                transparent : "hover:bg-[hsl(var(--primary))]/20 border border-slate-100/10",
+                transparent : "hover:bg-[hsl(var(--primary))]/20 border border-slate-100/10 text-[hsl(var(--primary))]",
                 fetch : "hover:underline decoration-[hsl(var(--primary))] text-[hsl(var(--primary))] underline-offset-2"
             },
             sizes : {

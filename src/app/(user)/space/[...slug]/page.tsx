@@ -1,5 +1,4 @@
-import { IndividualSpaceNavbar } from "@/components/dashboardnavbar"
-import { EmptyFormDiv } from "@/components/emptyFormdiv"
+import { FormCreation } from "@/components/fromModal"
 
 
 export default async function SpaceSlug({params} : {params : Promise<{slug : string[]}>}) {
@@ -16,9 +15,8 @@ export default async function SpaceSlug({params} : {params : Promise<{slug : str
     
 
     return (
-        <div className="space-y-10">
-            <IndividualSpaceNavbar heading={sName} sId={sId} buttonTitle="Create Testimonia Forms" />
-            <EmptyFormDiv sId={sId} sName={sName}/>
+        <div>
+            <FormCreation sName={sName} sId={sId}/>
         </div>
     )
 }
