@@ -6,6 +6,7 @@ import { cn } from "@/utils/lib/cn";
 import { useSpaceModalStore } from "@/utils/zustand/space_state";
 import { SpaceModal } from "./ui/spaceModal";
 import { redirect } from "next/navigation";
+import { endcodeURL } from "@/utils/lib/lib_new";
 
 type DashboardNavbarTypes = React.HTMLAttributes<HTMLDivElement> & {
     heading : string,
@@ -38,6 +39,29 @@ export const FormsNavabar : React.FC<DashboardNavbarTypes> = ({className, headin
                 <p className="text-[hsl(var(--slate-text))]">{desc}.</p> 
             </div>
             <Button onClick={() => redirect("/dashboard")} variant={"secondary"} className="flex items-center gap-2" sizes={"md"}><Plus size={16}/>{buttonTitle}</Button>
+        </div>
+    )
+}
+
+
+
+
+type IndividualSpaceNavbarTypes = React.HTMLAttributes<HTMLDivElement> & {
+    heading : string,
+    buttonTitle : string,
+    sId : string
+
+}
+
+
+
+export const IndividualSpaceNavbar : React.FC<IndividualSpaceNavbarTypes> = ({className, heading, sId, buttonTitle}) => {
+    return (
+        <div className={cn("flex md:flex-row flex-col justify-between md:items-center md:gap-0 gap-3", className)}>
+            <div>
+                <h1 className="font-semibold text-2xl">{heading}</h1> 
+            </div>
+            <Button onClick={() => redirect(`/createForm?data=${endcodeURL(JSON.stringify({spaceName : heading, SpaceId: sId}))}`)} variant={"secondary"} className="flex items-center gap-2" sizes={"md"}><Plus size={16}/>{buttonTitle}</Button>
         </div>
     )
 }

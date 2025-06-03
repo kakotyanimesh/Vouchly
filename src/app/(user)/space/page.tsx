@@ -1,11 +1,13 @@
 import { getAllSpaces } from "@/app/action/server_action/user";
 import { SpaceNavabr } from "@/components/dashboardnavbar";
 import { SpaceDiv } from "@/components/spacediv";
+import { getUserSession } from "@/utils/lib/user_session";
 // import { SpaceCarddata } from "@/utils/hardcodeddata/shortcuts";
 
 export default async function Space() {
-    const spacedata = await getAllSpaces()
-    
+    const { id } = await getUserSession()
+    const spacedata = await getAllSpaces(id)
+        
     if(!Array.isArray(spacedata)){
         return (
             <p className="text-[hsl(var(--primary))]">Something went wrong went at server level please try again later !! </p>

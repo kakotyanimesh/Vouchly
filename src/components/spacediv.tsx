@@ -15,7 +15,7 @@ type SpaceDivTypes = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) => {
-
+    
     const {openModal, setOpneModal} = useSpaceModalStore()
 
     return (

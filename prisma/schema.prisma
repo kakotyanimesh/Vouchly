@@ -57,7 +57,7 @@ model TestimonialForm  {
   updatedAt                 DateTime                @updatedAt
   status                    status                  @default(Draft)
 
-  @@unique([spaceId, adminId, id])
+  @@index([spaceId, adminId])
 }
 
 enum status {
