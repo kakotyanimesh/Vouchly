@@ -7,6 +7,42 @@ import { unstable_cache } from "next/cache"
 
 
 
+export const getUserDataCount = async(id : number) => {
+    try {
+        const [ spaceCount, formsCount, submissionCount ] = await Promise.all([
+            prisma.spaces.count({
+                where : {
+                    userId : Number(id)
+                }
+            }),
+
+            prisma.testimonialForm.count({
+                where : {
+                    adminId : Number(id)
+                }
+            }),
+            prisma.customerReview.count({
+                where : {
+                    adminId : Number(id)
+                }
+            })
+        ])
+
+        return {
+            spaceCount, submissionCount, formsCount
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
+
+
 const cachedSpaceData = (userId : string) => unstable_cache(
     async() => {
         const spaces = await prisma.spaces.findMany({
@@ -46,7 +82,6 @@ export const getAllSpaces = async(id : string) : Promise<GetAllSpacesTypes> => {
 
         const spaces = cachedSpaceData(id)
 
-        console.log(await spaces());
         
         const formatedData : SpaceCardProps[] = (await spaces()).map(s => ({
             spaceName : s.spaceName,
@@ -130,12 +165,12 @@ export const getSpaceTestimonialsDataWithId = async({spaceId, adminId} : {spaceI
 
 
 
-const cachedAllTestimonialForms = (adminId : number) => unstable_cache(async() => {
+const cachedAllTestimonialForms = (adminId : number, takeNumber : number) => unstable_cache(async() => {
     const allTestimonials = await prisma.testimonialForm.findMany({
         where : {
             adminId : Number(adminId)
         },
-        take : 5,
+        take : takeNumber,
         orderBy : {
             createdAt : "asc"
         },select : {
@@ -164,9 +199,9 @@ const cachedAllTestimonialForms = (adminId : number) => unstable_cache(async() =
 })
 
 
-export const getAllTestimonials = async(adminId : number) => {
+export const getAllTestimonials = async(adminId : number, takeNumber : number) => {
     try {
-        const res = cachedAllTestimonialForms(adminId)
+        const res = cachedAllTestimonialForms(adminId, takeNumber)
 
         const allT = await res()
 

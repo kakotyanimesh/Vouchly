@@ -2,17 +2,20 @@
 import React, { ReactNode } from "react";
 import { cn } from "@/utils/lib/cn";
 import { HTMLMotionProps, motion } from "motion/react";
+import { redirect } from "next/navigation";
 
 type UIcardProps = HTMLMotionProps<"div"> & {
     icon : ReactNode,
     title : string,
     iconStyle : string,
-    parentColor : string
+    parentColor : string,
+    redirectLink : string
 }
 
-export const Usercards : React.FC<UIcardProps> = ({className, iconStyle, parentColor, icon, title, ...props}) => {
+export const Usercards : React.FC<UIcardProps> = ({className, redirectLink, iconStyle, parentColor, icon, title, ...props}) => {
     return (
-        <motion.div 
+        <motion.div
+        onClick={() => redirect(redirectLink)}
         initial={false}
         whileHover={{
             scale : 1.01,

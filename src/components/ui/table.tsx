@@ -4,7 +4,7 @@ import { TabledataTypes } from "@/utils/types/user_types"
 import React from "react"
 import { toast } from "sonner"
 
-type TableProps = React.HTMLAttributes<HTMLTableElement> & TabledataTypes
+type TableProps<T = Record<string, string>> = React.HTMLAttributes<HTMLTableElement> & TabledataTypes<T>
 
 
 export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,...props}) => {
@@ -22,14 +22,14 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
                 </tr>
             </thead>
             <tbody>
-                {tdata.map((td, k) => (
-                    <tr key={k} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/4 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
+                {tdata.map((td, j) => (
+                    <tr key={j} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/4 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
                         {thead.map((th, k) => {
                             if(th.label === "Name"){
                                 return (
                                     <td key={k} className="pt-5 pb-3 px-3 text-sm " >
                                         <span >{td[th.label]}</span>
-                                        <p className="hidden md:table-cell text-clip text-xs text-[hsl(var(--slate-text))]">{td["Description"].slice(0, 50)}...</p>
+                                        <p className="hidden md:table-cell text-clip text-xs text-[hsl(var(--slate-text))]">{td["Description"]?.slice(0, 50)}...</p>
                                     </td>
                                 )
                             }

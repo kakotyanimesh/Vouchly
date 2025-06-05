@@ -44,7 +44,7 @@ export const SpaceModal = () => {
                 animate={{opacity : 1, scale : 1}}
                 exit={{opacity : 0, scale : 0.9, y : 10}}
                 transition={{type : "spring", stiffness: 300, damping : 30}}
-                className="fixed bg-black border-[hsl(var(--primary))]/40 border -translate-x-1/2 -translate-y-1/2 z-50 md:p-10 p-5 space-y-4 md:w-[500px] w-72 top-1/2 left-1/2 rounded-2xl"
+                className="fixed bg-black border-[hsl(var(--primary))]/40 border -translate-x-1/2 -translate-y-1/2 z-50 md:p-10 p-5 space-y-4 md:w-[500px] w-72 top-1/2 left-1/2 rounded-md"
                 >
                         <div>
                             <h1 className="text-2xl text-[hsl(var(--primary))]">Create space</h1>

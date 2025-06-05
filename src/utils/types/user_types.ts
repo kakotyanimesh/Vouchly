@@ -50,9 +50,9 @@ export interface TableHeader {
   isHidden : boolean
 }
 
-export interface TabledataTypes {
+export interface TabledataTypes<T = Record<string, string>> {
     thead : TableHeader[],
-    tdata : Record<string, string>[]
+    tdata : T[]
 }
 
 

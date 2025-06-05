@@ -7,7 +7,7 @@ import { getUserSession } from "@/utils/lib/user_session";
 export default async function Forms() {
     const { id } = await getUserSession()
 
-    const td = await getAllTestimonials(Number(id))
+    const td = await getAllTestimonials(Number(id), 4)
 
     if(!Array.isArray(td)){
         return (

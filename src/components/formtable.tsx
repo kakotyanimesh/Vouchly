@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client"
 import { motion } from "motion/react";
 import { TableComponent } from "./ui/table";
@@ -24,6 +25,7 @@ export const FormTable = ({thead, tdata} : {thead : TableHeader[], tdata : Testi
             <div>
                 <InputBox value={searchValue} onChange={(e) => setSearchValue(e.target.value)} icon={<Search size={14} strokeWidth={1.2}/>} variants={"secondary"} placeholder="search"/> 
             </div>
+            {/* @ts-expect-error */}
             <TableComponent tdata={filteredData} thead={thead}/>
             <Button variant={"fetch"} className="self-end">More</Button>
         </motion.div>

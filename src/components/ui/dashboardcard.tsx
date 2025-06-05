@@ -21,7 +21,7 @@ type RecentlyActiveCardProps = React.HTMLAttributes<HTMLAnchorElement> & Recente
 
 export const RecentlyActiveCard : React.FC<RecentlyActiveCardProps> = ({className, time, Name, position, src, status, ...props}) => {
     return (
-        <Link href={src} className={cn("flex flex-row justify-between rounded-none border-b first:rounded-t-2xl last:rounded-b-2xl transition-all duration-200 ease-linear last:border-b-0 px-10 pt-6 pb-3 cursor-pointer text-xs border-slate-100/10 hover:bg-[hsl(var(--primary))]/10", className)} {...props}>
+        <Link href={src} className={cn("flex flex-row justify-between rounded-none border-b first:rounded-t-md last:rounded-b-md transition-all duration-200 ease-linear last:border-b-0 px-10 pt-6 pb-3 cursor-pointer text-xs border-slate-100/10 hover:bg-[hsl(var(--primary))]/10", className)} {...props}>
             <div>
                 <h1 className="text-sm">{Name}</h1>
                 <p className="text-[hsl(var(--card-foreground))]/70">{position}</p>

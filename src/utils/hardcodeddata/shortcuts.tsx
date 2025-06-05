@@ -1,18 +1,45 @@
 import { GitGraph, MessageCircleDashed, Plus, Settings } from "lucide-react"
-import { DashboardCardProps, RecentelyActiveProps, TableHeader } from "../types/user_types"
+import { RecentelyActiveProps, TableHeader } from "../types/user_types"
 
 export const shortCutArrayDashboard = [
-    {title : "Create New Space", icon : <Plus size={15}/>, parentColor: "shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)] bg-[hsl(var(--primary))]/20", iconStyle : "bg-[hsl(var(--primary))]/50 text-white"},
-    {title : "View Forms", icon : <GitGraph size={15}/>, parentColor:"shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)] bg-blue-500/10", iconStyle : "bg-blue-500/50"},
-    {title : "Check Submissions", icon : <MessageCircleDashed size={15}/>, parentColor:"shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)] bg-purple-500/10", iconStyle : "bg-purple-500/50"},
-    {title : "Manage Settings", icon : <Settings size={15}/>, parentColor: "shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)] bg-orange-500/10",iconStyle : "bg-orange-500/50"},
+    {   
+        title : "Create New Space", 
+        icon : <Plus size={15}/>, 
+        parentColor: "shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)] bg-[hsl(var(--primary))]/20", 
+        iconStyle : "bg-[hsl(var(--primary))]/50 text-white",
+        redirect : "/space"
+    },
+    {   
+        title : "View Forms", 
+        icon : <GitGraph size={15}/>, 
+        parentColor:"shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)] bg-blue-500/10", 
+        iconStyle : "bg-blue-500/50",
+        redirect : "/forms"
+
+    },
+    {
+        title : "Check Submissions", 
+        icon : <MessageCircleDashed size={15}/>, 
+        parentColor:"shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)] bg-purple-500/10", 
+        iconStyle : "bg-purple-500/50",
+        redirect : "/submissions"
+        
+    },
+    {
+        title : "Manage Settings", 
+        icon : <Settings size={15}/>, 
+        parentColor: "shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)] bg-orange-500/10",
+        iconStyle : "bg-orange-500/50",
+        redirect : "/settings"
+        
+    },
 ]
 
-export const DashboardCardData : DashboardCardProps[] = [
-    {title : "Space", data : 1, desc : "Organize your projects"},
-    {title : "Forms", data : 2, desc : "+2 from last week"},
-    {title : "Submission", data : 2, desc : "+12 from last month"}
-] 
+// export const DashboardCardData : DashboardCardProps[] = [
+//     {title : "Space", data : 1, desc : "Organize your projects"},
+//     {title : "Forms", data : 2, desc : "+2 from last week"},
+//     {title : "Submission", data : 2, desc : "+12 from last month"}
+// ] 
 
 
 export const RecentlyActiveCardData : RecentelyActiveProps[] = [
@@ -34,9 +61,11 @@ export const RecentlyActiveCardData : RecentelyActiveProps[] = [
 export const TestimonialsTableheaders : TableHeader[] = [
     { label: "Name", key: "Name" , isHidden : false},
     { label: "Status", key: "status", isHidden : false },
-    { label: "Submissions", key: "submission" , isHidden : true},
+    { label: "Submissions", key: "Submissions" , isHidden : true},
     { label: "Actions", key: "actions" , isHidden : false}
 ]
+
+
 
 export const FormTableheaders = [
     { label: "Name", key: "Name" , isHidden : false},
