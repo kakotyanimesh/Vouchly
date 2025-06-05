@@ -2,7 +2,7 @@
 
 import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
-import { SpaceCardProps } from "@/utils/types/user_types"
+import { SpaceCardProps, TestimoniaTableDataTypes } from "@/utils/types/user_types"
 import { unstable_cache } from "next/cache"
 
 
@@ -25,8 +25,10 @@ const cachedSpaceData = (userId : string) => unstable_cache(
             }, orderBy : {
                 createdAt : "asc"
             }
-        })
+        })  
 
+        
+        
         return spaces
     },
     [`spaces-${userId}`],
@@ -44,7 +46,8 @@ export const getAllSpaces = async(id : string) : Promise<GetAllSpacesTypes> => {
 
         const spaces = cachedSpaceData(id)
 
-
+        console.log(await spaces());
+        
         const formatedData : SpaceCardProps[] = (await spaces()).map(s => ({
             spaceName : s.spaceName,
             createdAt : s.createdAt,
@@ -53,6 +56,7 @@ export const getAllSpaces = async(id : string) : Promise<GetAllSpacesTypes> => {
             src : s.url
         }))
 
+        
         return formatedData
     } catch (error) {
         const err = await handlerError(error)
@@ -66,7 +70,7 @@ export const getAllSpaces = async(id : string) : Promise<GetAllSpacesTypes> => {
 }   
 
 
-const cachedIndividualSpaceData = ({adminId, spaceId} : {adminId: string, spaceId : string}) => unstable_cache(
+const cachedIndividualSpaceTestimonialsData = ({adminId, spaceId} : {adminId: string, spaceId : string}) => unstable_cache(
     async() => {
         const data = await prisma.testimonialForm.findMany({
             where : {
@@ -76,31 +80,115 @@ const cachedIndividualSpaceData = ({adminId, spaceId} : {adminId: string, spaceI
                 Name : true,
                 Description : true,
                 createdAt : true,
-                id : true
+                id : true,
+                status : true,
+                _count : {
+                    select : {
+                        customerReview : true
+                    }
+                }
             }
         })
+
         return data
     },
-    [`individual_space_${spaceId}`],
+    [`individual_space_testimonials${spaceId}`],
     {   
         revalidate : 300,
-        tags : [`user-inidividual-space-${spaceId}`, `spaces`]
+        tags : [`user-inidividual-space-testimoials-${spaceId}`, `spaces`]
     }
 )
 
 
-export const getSpaceDataWithId = async({spaceId, adminId} : {spaceId : string, adminId : string}) => {
+export const getSpaceTestimonialsDataWithId = async({spaceId, adminId} : {spaceId : string, adminId : string}) => {
     try {
 
-        const indvSpace = cachedIndividualSpaceData({spaceId, adminId})
+        const alltestimonials = cachedIndividualSpaceTestimonialsData({spaceId, adminId})
 
-        return await indvSpace()
+        const res = await alltestimonials()
+        
+        return res.map((t) : TestimoniaTableDataTypes => ({
+            Name : t.Name,
+            Description : t.Description,
+            createdAt : new Date(t.createdAt).toLocaleDateString(),
+            Submissions : t._count.customerReview,
+            status : t.status
+        }))
+
     } catch (error) {
         const err = await handlerError(error)
         return {
             success : false,
             message : err.errorMsg,
             status : err.statusCode
+        }
+    }
+}
+
+
+// const cached
+
+
+
+const cachedAllTestimonialForms = (adminId : number) => unstable_cache(async() => {
+    const allTestimonials = await prisma.testimonialForm.findMany({
+        where : {
+            adminId : Number(adminId)
+        },
+        take : 5,
+        orderBy : {
+            createdAt : "asc"
+        },select : {
+            Name : true,
+            space : {
+                select : {
+                    spaceName : true
+                }
+            },
+            Description : true,
+            status : true,
+            createdAt : true,
+            _count : {
+                select : {
+                    customerReview : true
+                }
+            }
+        }
+    })
+    return allTestimonials
+},
+[`all_testimonials-${adminId}`],
+{
+    revalidate : 3000,
+    tags : [`all_testimonials-${adminId}`, `spaces`, `testimonials`]
+})
+
+
+export const getAllTestimonials = async(adminId : number) => {
+    try {
+        const res = cachedAllTestimonialForms(adminId)
+
+        const allT = await res()
+
+
+        return allT.map((t) : TestimoniaTableDataTypes=> ({
+            Name : t.Name,
+            Space : t.space.spaceName,
+            Description : t.Description,
+            createdAt : new Date(t.createdAt).toLocaleDateString(),
+            status : t.status,
+            Submissions : t._count.customerReview
+        }))
+
+        
+
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            statusCode : err.statusCode
         }
     }
 }

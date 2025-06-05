@@ -1,5 +1,5 @@
 import { handlerError } from "@/utils/lib/errorhandler"
-import { CreateSpaceTypes, SignupTypes } from "@/utils/types/user_types"
+import { CreateFormTypes, CreateSpaceTypes, SignupTypes } from "@/utils/types/user_types"
 
 export const createUser = async (data : SignupTypes) => {
     try {   
@@ -52,6 +52,39 @@ export const createSpace = async(data : CreateSpaceTypes) => {
         return {
             success : true,
             message : resMsg.message
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
+
+
+export const createForms = async(data : CreateFormTypes) => {
+    try {
+        const res = await fetch(`/api/space/${data.spaceId}/forms`, {
+            method : "POST",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            body : JSON.stringify(data)
+        })
+
+        if(!res.ok){
+            throw res
+        }
+
+        const msg = (await res.json()).message
+
+        
+        return {
+            success : true,
+            message : msg
         }
     } catch (error) {
         const err = await handlerError(error)

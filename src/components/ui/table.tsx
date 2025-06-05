@@ -23,13 +23,13 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
             </thead>
             <tbody>
                 {tdata.map((td, k) => (
-                    <tr key={k} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
+                    <tr key={k} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/4 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
                         {thead.map((th, k) => {
                             if(th.label === "Name"){
                                 return (
-                                    <td key={k} className="pt-5 pb-3 px-3 text-sm" >
-                                        <span>{td[th.label]}</span>
-                                        <p className="hidden md:table-cell">{td["desc"]}</p>
+                                    <td key={k} className="pt-5 pb-3 px-3 text-sm " >
+                                        <span >{td[th.label]}</span>
+                                        <p className="hidden md:table-cell text-clip text-xs text-[hsl(var(--slate-text))]">{td["Description"].slice(0, 50)}...</p>
                                     </td>
                                 )
                             }
@@ -47,6 +47,15 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
                                         <button className="cursor-pointer" onClick={() => toast.success("will be available soon ...", {position : "bottom-right"})}>
                                             ...
                                         </button>
+                                    </td>
+                                )
+                            }
+                            if(th.label === "Submissions"){
+                                return (
+                                    <td key={k} className="text-left pl-10 md:table-cell hidden">
+                                        {/* {td[th.key] !== undefined && td[th.key] !== null ? td[th.key] : ""} */}
+                                        {td[th.key] !== undefined ? td[th.key] : 0} 
+                                        {/*  0 is considered as nothing  */}
                                     </td>
                                 )
                             }

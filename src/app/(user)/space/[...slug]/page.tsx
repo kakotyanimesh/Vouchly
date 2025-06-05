@@ -1,22 +1,24 @@
+import { getSpaceTestimonialsDataWithId } from "@/app/action/server_action/user"
 import { FormCreation } from "@/components/fromModal"
+import { getUserSession } from "@/utils/lib/user_session"
 
 
 export default async function SpaceSlug({params} : {params : Promise<{slug : string[]}>}) {
     const [ spaceName, Id ]= (await params).slug
-
-    // const { id : adminId } = await getUserSession()
-
     
     const sName = decodeURIComponent(spaceName)
     const sId = decodeURIComponent(Id)
 
-    // const d = await getSpaceDataWithId({adminId, spaceId : iD})
-    // console.log(d);
-    
+    const { id } = await getUserSession()
 
+    const testimonialsData = await getSpaceTestimonialsDataWithId({spaceId : sId, adminId : id})
+
+
+    // const tArray : TestimoniaTableDataTypes[] = testimonialsData.map
+    
     return (
         <div>
-            <FormCreation sName={sName} sId={sId}/>
+            <FormCreation sName={sName} sId={sId} data={testimonialsData}/>
         </div>
     )
 }

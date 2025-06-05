@@ -1,11 +1,11 @@
 import { GitGraph, MessageCircleDashed, Plus, Settings } from "lucide-react"
-import { DashboardCardProps, RecentelyActiveProps, SpaceCardProps } from "../types/user_types"
+import { DashboardCardProps, RecentelyActiveProps, TableHeader } from "../types/user_types"
 
 export const shortCutArrayDashboard = [
-    {title : "Create New Space", icon : <Plus size={15}/>, parentColor: "shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)]", iconStyle : "bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))]"},
-    {title : "View Forms", icon : <GitGraph size={15}/>, parentColor:"shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)]", iconStyle : "bg-blue-500/20 text-blue-500/90"},
-    {title : "Check Submissions", icon : <MessageCircleDashed size={15}/>, parentColor:"shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)]", iconStyle : "bg-purple-500/20 text-purple-400"},
-    {title : "Manage Settings", icon : <Settings size={15}/>, parentColor: "shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)]",iconStyle : "bg-orange-500/20 text-orange-400"},
+    {title : "Create New Space", icon : <Plus size={15}/>, parentColor: "shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)] bg-[hsl(var(--primary))]/20", iconStyle : "bg-[hsl(var(--primary))]/50 text-white"},
+    {title : "View Forms", icon : <GitGraph size={15}/>, parentColor:"shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)] bg-blue-500/10", iconStyle : "bg-blue-500/50"},
+    {title : "Check Submissions", icon : <MessageCircleDashed size={15}/>, parentColor:"shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)] bg-purple-500/10", iconStyle : "bg-purple-500/50"},
+    {title : "Manage Settings", icon : <Settings size={15}/>, parentColor: "shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)] bg-orange-500/10",iconStyle : "bg-orange-500/50"},
 ]
 
 export const DashboardCardData : DashboardCardProps[] = [
@@ -22,12 +22,21 @@ export const RecentlyActiveCardData : RecentelyActiveProps[] = [
 ]
 
 
-export const SpaceCarddata : SpaceCardProps[] = [
-    {spaceName : "My new space", Id : 1, src : "www.google.com", totalForms : 12, createdAt : new Date("12-12-2024").toDateString()},
-    {spaceName : "My new Two", Id : 1, src : "www.google.com", totalForms : 12, createdAt : new Date("12-12-2024").toDateString()},
-    {spaceName : "My new thweew", Id : 1, src : "www.google.com", totalForms : 12, createdAt : new Date("12-12-2024").toDateString()},
-]
+// export const SpaceCarddata : SpaceCardProps[] = [
+//     {spaceName : "My new space", Id : 1, src : "www.google.com", totalForms : 12, createdAt : new Date("12-12-2024").toDateString()},
+//     {spaceName : "My new Two", Id : 1, src : "www.google.com", totalForms : 12, createdAt : new Date("12-12-2024").toDateString()},
+//     {spaceName : "My new thweew", Id : 1, src : "www.google.com", totalForms : 12, createdAt : new Date("12-12-2024").toDateString()},
+// ]
 
+
+// used in spaces->testimonials table 
+
+export const TestimonialsTableheaders : TableHeader[] = [
+    { label: "Name", key: "Name" , isHidden : false},
+    { label: "Status", key: "status", isHidden : false },
+    { label: "Submissions", key: "submission" , isHidden : true},
+    { label: "Actions", key: "actions" , isHidden : false}
+]
 
 export const FormTableheaders = [
     { label: "Name", key: "Name" , isHidden : false},
@@ -57,7 +66,7 @@ export const FormTabledata = [
         Space : "spaceOne",
         desc: "Collect valuable feedback for your latest product.",
         status: "Draft",
-        submission: "12",
+        submission: "1",
     },
     {
         Name: "Until Testimonial",
@@ -67,3 +76,6 @@ export const FormTabledata = [
         submission: "12",
     },
 ]
+
+
+

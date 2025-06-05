@@ -1,3 +1,4 @@
+import { status } from "@/generated/prisma"
 import { statusType } from "../lib/tailwind_switch"
 
 export interface SignupTypes {
@@ -10,6 +11,15 @@ export interface CreateSpaceTypes {
     spaceName : string,
     url : string
 } 
+
+
+export interface CreateFormTypes {
+    Name : string,
+    Description : string,
+    questions : string[],
+    brandLogo : string,
+    spaceId : number
+}
 
 export interface DashboardCardProps {
     title : string,
@@ -45,4 +55,17 @@ export interface TabledataTypes {
     tdata : Record<string, string>[]
 }
 
+
+
 export type TableDataKeyTypes = "Name" | "Space" | "Status" 
+
+export interface TestimoniaTableDataTypes {
+    Name : string,
+    Description : string,
+    createdAt : string,
+    status : status,
+    Submissions : number,
+    Space ?: string
+} 
+
+

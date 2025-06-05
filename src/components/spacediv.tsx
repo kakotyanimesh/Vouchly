@@ -21,7 +21,7 @@ export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) 
     return (
         <div className={cn("", className)} {...props}>
             {
-                data.length === 0 ? <Card className="w-full h-full py-10 items-center flex flex-col space-y-5 justify-center hover:border-dotted hover:border-2 transition-colors duration-200 ease-linear cursor-pointer group hover:border-[hsl(var(--primary))]">
+                data.length === 0 ? <Card className="w-full h-full py-10 items-center flex flex-col space-y-5 justify-center hover:border-dotted hover:border-2 bg-white/5 transition-colors duration-200 ease-linear cursor-pointer group hover:border-[hsl(var(--primary))]">
                     
                     <IconDiv reactNode={<File/>}/>
                     <h1 className="text-sm text-[hsl(var(--primary))]">Create your first space to start collecting testimonials</h1>

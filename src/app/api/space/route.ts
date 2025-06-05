@@ -37,7 +37,7 @@ export async function POST(req:NextRequest) {
         )
     } catch (error) {
 
-        console.log(error, "zod error ")
+        // console.log(error, "zod error ")
         // console.error(error.instanceof)
 
         if(error instanceof ZodError){

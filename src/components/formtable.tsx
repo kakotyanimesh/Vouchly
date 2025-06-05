@@ -1,17 +1,17 @@
 "use client"
 import { motion } from "motion/react";
 import { TableComponent } from "./ui/table";
-import { FormTabledata, FormTableheaders } from "@/utils/hardcodeddata/shortcuts";
 import { InputBox } from "./ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { TableHeader, TestimoniaTableDataTypes } from "@/utils/types/user_types";
 
-export const FormTable = () => {
+export const FormTable = ({thead, tdata} : {thead : TableHeader[], tdata : TestimoniaTableDataTypes[]} ) => {
     const [searchValue, setSearchValue] = useState("")
     
-    const filteredData = FormTabledata.filter(f => (
-        f.Name.toLowerCase().includes(searchValue.toLowerCase()) || f.desc.toLowerCase().includes(searchValue.toLowerCase())
+    const filteredData : TestimoniaTableDataTypes[] = tdata.filter(f => (
+        f.Name.toLowerCase().includes(searchValue.toLowerCase()) || f.Description.toLowerCase().includes(searchValue.toLowerCase())
     ))
     return (
         <motion.div 
@@ -20,11 +20,11 @@ export const FormTable = () => {
         transition={{
             ease : "easeIn"
         }}
-        className="pt-7 px-7 pb-5 rounded-2xl bg-black/40 border-slate-100/10 border flex flex-col gap-4">
+        className="pt-7 px-7 pb-5 rounded-2xl bg-white/4 border-slate-100/10 border flex flex-col gap-4">
             <div>
                 <InputBox value={searchValue} onChange={(e) => setSearchValue(e.target.value)} icon={<Search size={14} strokeWidth={1.2}/>} variants={"secondary"} placeholder="search"/> 
             </div>
-            <TableComponent tdata={filteredData} thead={FormTableheaders}/>
+            <TableComponent tdata={filteredData} thead={thead}/>
             <Button variant={"fetch"} className="self-end">More</Button>
         </motion.div>
     )
