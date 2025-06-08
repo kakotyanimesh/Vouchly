@@ -19,7 +19,7 @@ export const LandingHeader = () => {
         y : 0
     }
     return (
-        <div className="flex justify-center md:my-40 m-30 items-center text-center flex-col md:gap-5 gap-3">
+        <div className="flex justify-center md:my-40 mt-30 mb-20 items-center text-center flex-col md:gap-5 gap-3">
             <h1 className="md:text-6xl text-3xl">
                 {
                     headLine.split(" ").map((w, index) => (
@@ -30,6 +30,7 @@ export const LandingHeader = () => {
                         key={index} className="mr-3">{w}</motion.span>
                     ))
                 }
+                <br className="md:hidden flex"/>
                 <motion.span
                 initial={initial}
                 animate={animate}
