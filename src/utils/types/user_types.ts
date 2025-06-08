@@ -69,3 +69,14 @@ export interface TestimoniaTableDataTypes {
 } 
 
 
+
+export type AWS_Folder_Name = "form_logos" | "testimonial-videos"  | "user-images"
+
+
+export interface TextReviewProps {
+    textReview : string,
+    username : string,
+    userCompany : string,
+    imageSrc : string,
+    starts : number
+}

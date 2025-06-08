@@ -28,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${myFont.className} antialiased`}
       >
+
         {children}
         <Toaster position="bottom-left" richColors  />
       </body>

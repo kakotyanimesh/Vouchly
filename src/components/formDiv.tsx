@@ -8,25 +8,36 @@ import { Plus } from "lucide-react"
 import { useTransition } from "react"
 import { CreateFormTypes } from "@/utils/types/user_types"
 import { useParseSpacedata } from "@/hooks/useSpacehook"
-import { createForms } from "@/app/action/client_action/user"
+import { createForms, uploadFileToS3 } from "@/app/action/client_action/user"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
 export const  FormDiv = () => {
     const { sId } = useParseSpacedata()
     const router = useRouter()
-    const { resetFile } = useFileStore()
+    const { resetFile, file } = useFileStore()
     const { questions,Name, Description, setName, setDescription, upadatedQuestions, addQuestionsArrray, reset } = useFormStore()
 
 
     const [isPending, startTransition] = useTransition()
     const createForm = (e : React.FormEvent) => {
         e.preventDefault()
+        if(!file){
+            toast.error("Logo file is Empty")
+            return
+        }
         startTransition(async() => {
+            const fileUrl = await uploadFileToS3(file, "form_logos")
+
+            if (typeof fileUrl !== "string") {
+                toast.error("Logo upload failed: " + fileUrl.message || "Unknown error");
+            return;
+            }
+
             const formData : CreateFormTypes = {
                 Name,
                 Description,
-                brandLogo : "www.animesh.com",
+                brandLogo : fileUrl,
                 spaceId : Number(sId),
                 questions
             }

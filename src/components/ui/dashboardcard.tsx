@@ -11,7 +11,7 @@ export const DashboardCard : React.FC<DashboardProps> = ({className, title, data
     return (
         <Card className={cn("bg-white/10 px-7 py-6 hover:border-[hsl(var(--primary))]/40 active:border-[hsl(var(--primary))]/40 transition-colors ease-linear duration-200", className)} {...props}>
             <h1 className="text-[hsl(var(--primary))] font-semibold">Total {title}</h1>
-            <h1 className="text-4xl font-bold">{data}</h1>
+            <h1 className="text-4xl font-bold">{data} </h1>
             <p className="text-sm text-[hsl(var(--primary))]">{desc}</p>
         </Card>
     )

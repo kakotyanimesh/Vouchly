@@ -21,7 +21,7 @@ export const FileUploda = ({fileType, className} : FileUploadProps) => {
         const f = fileRef.current?.files?.[0]
         if(f){
             setfileName(f.name)
-            setFile(f)
+            setFile(f) 
         }
     }
     return (

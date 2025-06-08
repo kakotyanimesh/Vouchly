@@ -1,5 +1,5 @@
 import { GitGraph, MessageCircleDashed, Plus, Settings } from "lucide-react"
-import { RecentelyActiveProps, TableHeader } from "../types/user_types"
+import { RecentelyActiveProps, TableHeader, TextReviewProps } from "../types/user_types"
 
 export const shortCutArrayDashboard = [
     {   
@@ -108,3 +108,28 @@ export const FormTabledata = [
 
 
 
+
+
+export const LandingReviews : TextReviewProps[] = [
+    {
+        textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
+        username : "Animesh",
+        userCompany : "Kakoty.tech",
+        starts : 4,
+        imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
+    },
+    {
+        textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
+        username : "Animesh",
+        userCompany : "Kakoty.tech",
+        starts : 4,
+        imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
+    },
+    {
+        textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
+        username : "Animesh",
+        userCompany : "Kakoty.tech",
+        starts : 4,
+        imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
+    },
+]
