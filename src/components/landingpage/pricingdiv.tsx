@@ -9,18 +9,23 @@ export const PricingDiv = () => {
                 Scale When You
                 <span className="bg-gradient-to-br from-[hsl(var(--primary))] to-teal-500 bg-clip-text text-transparent mx-2">Grow</span>
             </h1>
-            <div className="grid grid-cols-3 gap-4 md:w-[700px]">
-                <PricingCard 
+            <div className="grid md:grid-cols-3 grid-cols-1 gap-2 md:w-[700px]">
+                <PricingCard
+                // className="-rotate-3" 
                 title="Free"
                 desc="For hobbies" 
                 price={0} 
                 features={["1 Space", "1 Video Testimonial", "5 text Testimonial", "Wall of Love with Our Logo"]}/>
+                
                 <PricingCard 
+                // className="rotate-0"
                 title="Professional"
                 desc="Perfect for individuals and small businesses getting started with testimonials" 
                 price={20} 
                 features={["4 Space", "10 Video Testimonial", "Unlimited Text Testimonial", "Wall of Love without Our Logo"]}/>
-                <PricingCard 
+                
+                <PricingCard
+                // className="rotate-3" 
                 title="Enterprice"
                 desc="For organizations requiring maximum control and customization." 
                 price={100} 

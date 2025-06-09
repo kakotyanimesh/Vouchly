@@ -1,4 +1,5 @@
 import { FeaturesDiv } from "@/components/landingpage/featuresdiv";
+import { Footer } from "@/components/landingpage/footer";
 import { LandingHeader } from "@/components/landingpage/landingbody";
 import { NoCoding } from "@/components/landingpage/nocoding";
 import { PricingDiv } from "@/components/landingpage/pricingdiv";
@@ -9,13 +10,14 @@ export default function Home() {
   return (
     <div className="md:mx-20 mx-5">
       <Navbar/>
-      <div className="flex justify-center text-center space-y-40 mb-40 items-center flex-col">
+      <div className="flex justify-center text-center space-y-40 items-center flex-col">
         <LandingHeader/>
         <Reviewdiv/>
         <FeaturesDiv/>
         <NoCoding/>
         <PricingDiv/>
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -185,3 +185,17 @@ export const BentoGridFeatures = [
 ]
 
 
+export const FooterLinks : {fHead : string, features : string[]}[] = [
+    {
+        fHead : "Product",
+        features : ["Features", "Pricing", "API"]
+    },
+    {
+        fHead : "Resources",
+        features : ["Documentation", "Support", "Blog"]
+    },
+    {
+        fHead : "Company",
+        features : ["About", "Contact", "Privacy"]
+    }
+]
