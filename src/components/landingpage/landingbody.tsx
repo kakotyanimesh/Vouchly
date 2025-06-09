@@ -19,29 +19,29 @@ export const LandingHeader = () => {
         y : 0
     }
     return (
-        <div className="flex justify-center md:my-40 mt-30 mb-20 items-center text-center flex-col md:gap-5 gap-3">
+        <div className="flex justify-center md:my-48 mt-30 mb-20 items-center text-center flex-col md:gap-5 gap-3">
             <h1 className="md:text-6xl text-3xl">
                 {
                     headLine.split(" ").map((w, index) => (
                         <motion.span
                         initial={initial}
                         animate={animate}
-                        transition={{duration : 0.7 , delay : 0.1 * index, ease : "easeIn"}}
+                        transition={{duration : 0.8 , delay : 0.2 * index, ease : "easeIn"}}
                         key={index} className="mr-3">{w}</motion.span>
                     ))
                 }
-                <br className="md:hidden flex"/>
+                <br/>
                 <motion.span
                 initial={initial}
                 animate={animate}
                 transition={{duration : 0.5 , delay : 0.4, ease : "easeIn"}} 
-                className="bg-gradient-to-r from-fuchsia-500 to-rose-800 bg-clip-text text-transparent">Effortlessly</motion.span>
+                className="bg-gradient-to-r from-[hsl(var(--primary))] to-teal-500 bg-clip-text text-transparent">Effortlessly</motion.span>
             </h1>
             <motion.p 
             initial={initial}
             animate={animate}
             transition={{duration : 0.5, ease : "linear", delay : 0.1}}
-            className="md:mx-50 mx-2 text-sm">Transform happy customers into powerful testimonials. Create stunning forms, collect video reviews, and showcase them with style across all your platforms</motion.p>
+            className="max-w-2xl mx-auto px-4 text-sm">Transform happy customers into powerful testimonials. Create stunning forms, collect video reviews, and showcase them with style across all your platforms</motion.p>
             <motion.div
             initial={initial}
             animate={animate}

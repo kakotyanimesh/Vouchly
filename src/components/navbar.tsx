@@ -12,7 +12,7 @@ export  const Navbar = () => {
     const [openmenu, setOpenmenu] = useState(false)
     const router = useRouter()
     return (
-        <div className="flex flex-row md:mx-34 px-4 my-5 md:py-4 py-3 rounded-md justify-between items-center relative bg-white/10">
+        <div className="flex flex-row md:mx-34 px-4 my-5 md:py-4 py-3 rounded-md justify-between items-center relative bg-white/20">
             <div className="flex flex-row gap-20 items-center">
                 <Logo className="text-2xl"/>
                 <div className="sm:flex hidden flex-row justify-between gap-10 items-center ">

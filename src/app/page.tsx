@@ -1,4 +1,6 @@
+import { FeaturesDiv } from "@/components/landingpage/featuresdiv";
 import { LandingHeader } from "@/components/landingpage/landingbody";
+import { NoCoding } from "@/components/landingpage/nocoding";
 import { Reviewdiv } from "@/components/landingpage/reviewdiv";
 import { Navbar } from "@/components/navbar";
 
@@ -9,6 +11,8 @@ export default function Home() {
       <div className="flex justify-center text-center gap-10 items-center flex-col">
         <LandingHeader/>
         <Reviewdiv/>
+        <FeaturesDiv/>
+        <NoCoding/>
       </div>
     </div>
   );
