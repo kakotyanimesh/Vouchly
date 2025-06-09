@@ -3,7 +3,7 @@ import { BentoGridFeatures } from "@/utils/hardcodeddata/shortcuts"
 
 export const FeaturesDiv = () => {
     return (
-        <div className=" space-y-4 md:w-[650px] w-[300px] ">
+        <div className=" space-y-4 md:w-[650px] w-full ">
             <h1 className="md:text-4xl text-2xl">
                 From 
                 <span className="bg-gradient-to-br from-[hsl(var(--primary))] to-teal-500 bg-clip-text text-transparent mx-2">Collection</span>

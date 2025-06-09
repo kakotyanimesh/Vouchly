@@ -19,7 +19,7 @@ export const NoCoding = () => {
               With our 
               <span className="mx-2 bg-gradient-to-br from-[hsl(var(--primary))] via-white/10 to-teal-500 px-2">Wall of Love</span>
             </h1>
-            <div className="grid grid-cols-3 gap-1 md:w-[650px] w-[300px] ">
+            <div className="grid grid-cols-3 gap-1 md:w-[650px] w-full ">
                 <VideoTestimonial
                     {...leftAnimation}
                     className="md:col-span-1 col-span-3"
@@ -49,7 +49,7 @@ export const NoCoding = () => {
                     videoSrc={animeshvideo} 
                 />
             </div>
-            <div className="grid grid-cols-3 gap-1 md:w-[650px] w-[300px] ">
+            <div className="grid grid-cols-3 gap-1 md:w-[650px] w-full ">
                 {
                     TextReviews.slice(1, 2).map((t, k) => (
                         <TextReviewOne

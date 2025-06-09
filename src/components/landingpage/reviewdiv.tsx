@@ -33,9 +33,9 @@ export const Reviewdiv = () => {
             </h1>
             <TextReviewOne 
               {...fromYanimation}
-              className="md:w-[610px] w-[300px]"
+              className="md:w-[610px] w-full"
               textReview="ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page."
-              starts={3}
+              starts={1}
               username="Animesh"
               userCompany="Titls.com"
               imageSrc="https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
