@@ -16,7 +16,7 @@ const fromNXanimation = {
   viewport : { once : true },
   transition : { duration : 0.5, ease : "linear"}
 }
-const fromPXanimation = {
+export const fromPXanimation = {
   initial : { x : 12, opacity : 0},
   whileInView : { x : 0, opacity : 1},
   viewport : { once : true },
@@ -29,7 +29,7 @@ export const Reviewdiv = () => {
             <h1 className="md:text-4xl text-2xl">
               Everything You Need to
               Collect & 
-              <span className="bg-gradient-to-br from-[hsl(var(--primary))]/20 to-teal-500 px-2  ml-2">Showcase</span>
+              <span className="bg-gradient-to-br from-[hsl(var(--primary))]/20 to-teal-500 via-white/40 px-2  ml-2">Showcase</span>
             </h1>
             <TextReviewOne 
               {...fromYanimation}
