@@ -1,5 +1,6 @@
 import { handlerError } from "@/utils/lib/errorhandler"
 import { AWS_Folder_Name, CreateFormTypes, CreateSpaceTypes, SignupTypes } from "@/utils/types/user_types"
+import axios from "axios"
 
 export const createUser = async (data : SignupTypes) => {
     try {   
@@ -108,38 +109,36 @@ export const createForms = async(data : CreateFormTypes) => {
  */
 
 
-export const uploadFileToS3 = async (file: File, folderName : AWS_Folder_Name) => {
+export const uploadToS3 = async (file : File, folderName : AWS_Folder_Name) => {
     try {
-        const presignedURL = await fetch("/api/unprotected/uploadtos3", {
-            method : "POST",
+        const presignedUrl = await axios.post("/api/unprotected/uploadtos3", {
+            fileName : file.name,
+            fileType : file.type,
+            folderName
+        })
+
+        const {generatedUrl, uniqueKey } =  presignedUrl.data
+
+        if(!generatedUrl || !uniqueKey ) {
+            
+            throw new Error("No presigned url or uniqueKey")
+        }
+
+        const uploadingToS3 = await axios.put(generatedUrl, file, {
             headers : {
-                "Content-Type" : "application/json"
-            },
-            body : JSON.stringify({
-                fileName : file.name,
-                fileType : file.type,
-                folderName
-            })
+                "Content-Type" : file.type
+            }
         })
 
-        const { uploadURL, key: fileURL } = await presignedURL.json()
-
-        if(!uploadURL || !fileURL){
-            throw new Error("No upload URL or FileURL got")
+        if(uploadingToS3.status !== 200){
+            
+            throw new Error("Error while uploding to s3 status code")
         }
 
-        const uploadtos3 = await fetch(uploadURL, {
-            method : "PUT",
-            body : file
-        })
-
-        if(uploadtos3.status !== 200 ){
-            throw new Error("Filed to upload to s3 ")
-        }
-        return fileURL
+        
+        return {uniqueKey}
     } catch (error) {
         const err = await handlerError(error)
-
         return {
             success : false,
             message : err.errorMsg,

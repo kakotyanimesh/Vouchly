@@ -5,6 +5,7 @@ import { motion } from "motion/react"
 import { Check } from "lucide-react"
 import { cn } from "@/utils/lib/cn"
 import { Button } from "./button"
+import { redirect } from "next/navigation"
 
 type PricingProps = HTMLMotionProps<"div"> & {
     title : "Free" | "Professional" | "Enterprice",
@@ -40,7 +41,9 @@ export const PricingCard : React.FC<PricingProps> = ({className, title, price, d
                     ))
                 }
             </div>
-            <Button className={cn("w-full mt-3 transition-colors ease-linear duration-200", title !== "Professional" ? "group-hover:bg-[hsl(var(--primary))]/20 group-active:bg-[hsl(var(--primary))]/20" : undefined)} variant={title === "Professional" ? "primary" : "transparent"}>Get Started</Button>
+            <Button 
+            onClick={() => redirect("/signin")}
+            className={cn("w-full mt-3 transition-colors ease-linear duration-200", title !== "Professional" ? "group-hover:bg-[hsl(var(--primary))]/20 group-active:bg-[hsl(var(--primary))]/20" : undefined)} variant={title === "Professional" ? "primary" : "transparent"}>Get Started</Button>
         </motion.div>
     )
 }

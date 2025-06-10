@@ -43,9 +43,9 @@ export default auth((req) => {
     return 
   }
 
-  if (isLoggedIn && isPublicRoutes) {
-    return Response.redirect(new URL(DEFAULT_REDIRECT_URL, nextUrl));
-  }
+  // if (isLoggedIn && isPublicRoutes) {
+  //   return Response.redirect(new URL(DEFAULT_REDIRECT_URL, nextUrl));
+  // }
 
   if(!isLoggedIn && !isPublicRoutes){
     return Response.redirect(new URL("/signin", nextUrl))

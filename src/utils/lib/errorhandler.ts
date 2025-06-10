@@ -1,3 +1,5 @@
+import axios from "axios";
+
 interface ErrroInterface {
     errorMsg : string,
     statusCode ?: number,
@@ -10,6 +12,13 @@ export const handlerError = async (error : unknown) : Promise<ErrroInterface> =>
         return {
             errorMsg : 'Network error ! check your internet connection',
             statusCode : 0
+        }
+    }
+
+    if(axios.isAxiosError(error)){
+        return {
+            errorMsg : error.message,
+            statusCode : error.status
         }
     }
 

@@ -3,52 +3,56 @@ import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod/v4";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 export async function POST(req:NextRequest) {
     try {
-        const parsedObject = S3Config.safeParse(await req.json())
+        console.log("animesh");
+        
+        const parsedData = S3Config.safeParse(await req.json())
 
-        if(!parsedObject.success){
-            throw parsedObject.error
+        if(!parsedData.success){
+            throw parsedData.error
         }
 
-        const { fileName, fileType } = parsedObject.data
+
+        const { fileName, fileType, folderName } = parsedData.data
 
         const binaryName = fileName.split(".").pop() ?? fileType.split("/").pop() ?? "bin"
 
-        const individualKey = `${fileName}/${randomUUID()}.${binaryName}`
+        const uniqueKey = `${folderName}/${randomUUID()}/${binaryName}`
 
         const generatedS3Client = new S3Client({
-            region : process.env.AWS_REGION,
+            region : process.env.AWS_REGION!,
             credentials : {
-                accessKeyId : process.env.AWS_ACCESS_KEY!,
-                secretAccessKey : process.env.AWS_SECRET_KEY!
+                accessKeyId : process.env.AWS_IM_USER_ACCESS_KEY!,
+                secretAccessKey : process.env.AWS_IM_USER_SECRET_KEY!
             }
         })
 
-        const presignedCommnad = new PutObjectCommand({
-            Bucket : process.env.AWS_BUCKET_NAME,
-            Key : individualKey,
+        const commnad = new PutObjectCommand({
+            Bucket : process.env.AWS_S3_BUCKETNAME!,
+            Key : uniqueKey,
             ContentType : fileType
         })
 
-        const preSignedURL = await getSignedUrl(generatedS3Client, presignedCommnad, {expiresIn : Number(process.env.Presigned_Url_expire)})
+        const generatedUrl = await getSignedUrl(generatedS3Client, commnad, {expiresIn : Number(process.env.PRE_SIGNED_URL_EXPIRE) || 9000})
 
         return NextResponse.json({
-            uploadURL : preSignedURL,
-            key : individualKey
+            generatedUrl,
+            uniqueKey
         })
     } catch (error) {
+        // console.log(error);
+        
         if(error instanceof ZodError){
             return NextResponse.json(
-                {msg : "Invalid Files type uploads"},
+                {msg : "Invalid file Type Uploaded"},
                 {status : 409}
             )
         }
-
         return NextResponse.json(
-            {msg : "Something went wrong at the server level"},
+            {msg : "Something went wrong at File Upload"},
             {status : 500}
         )
     }

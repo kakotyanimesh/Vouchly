@@ -8,7 +8,7 @@ import { Plus } from "lucide-react"
 import { useTransition } from "react"
 import { CreateFormTypes } from "@/utils/types/user_types"
 import { useParseSpacedata } from "@/hooks/useSpacehook"
-import { createForms, uploadFileToS3 } from "@/app/action/client_action/user"
+import { createForms, uploadToS3 } from "@/app/action/client_action/user"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -27,17 +27,20 @@ export const  FormDiv = () => {
             return
         }
         startTransition(async() => {
-            const fileUrl = await uploadFileToS3(file, "form_logos")
+            
+            const uploadResult = await uploadToS3(file, "form_logos") 
 
-            if (typeof fileUrl !== "string") {
-                toast.error("Logo upload failed: " + fileUrl.message || "Unknown error");
-            return;
+            if (!uploadResult || !uploadResult.uniqueKey) {
+                toast.error(uploadResult?.message || "Logo upload failed: Unique key not returned.");
+                return;
             }
+            
+            const brandLogoKey = uploadResult.uniqueKey; 
 
             const formData : CreateFormTypes = {
                 Name,
                 Description,
-                brandLogo : fileUrl,
+                brandLogo : brandLogoKey,
                 spaceId : Number(sId),
                 questions
             }
