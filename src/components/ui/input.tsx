@@ -30,8 +30,8 @@ export interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElemen
 
 export const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(({className, icon, variants, sizes, ...props}, ref) => {
     return (
-        <div className="flex flex-col space-y-2">
-            <label htmlFor="" className="text-sm text-[hsl(var(--secondary-foreground))]/60">{props.name}</label>
+        <div className="flex flex-col space-y-1">
+            <label htmlFor="" className="text-sm text-[hsl(var(--secondary-foreground))]">{props.name}</label>
             <div className="relative">
             {
                 icon && <span className="absolute top-3 left-5">{icon}</span>

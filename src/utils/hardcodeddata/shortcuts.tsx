@@ -199,3 +199,10 @@ export const FooterLinks : {fHead : string, features : string[]}[] = [
         features : ["About", "Contact", "Privacy"]
     }
 ]
+
+
+export const questions = [
+  "What inspired you to share this testimonial?",
+  "How has our product or service made a difference for you?",
+  "Would you recommend us to others? Why or why not?"
+];

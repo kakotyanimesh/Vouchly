@@ -8,8 +8,11 @@ export async function POST(req:NextRequest) {
     const parsedObject = signupObject.safeParse(await req.json())
 
     if(!parsedObject.success){
+        // console.log(parsedObject.error.errors[0].message);
+        // for now we are not touching all zod errros but we need to fix it also haha 
+        
         return NextResponse.json(
-            {msg : `Invalid Inputs ${parsedObject.error.errors}`},
+            {msg : `Invalid Inputs ${JSON.stringify(parsedObject.error.errors[0].message)}`},
             {status : 400}
         )
     }
@@ -49,7 +52,7 @@ export async function POST(req:NextRequest) {
         // }
         
         return NextResponse.json(
-            {msg : `Error @ user. create ${error}`},
+            {msg : `Error @ user. create`},
             {status : 500}
         )
     }

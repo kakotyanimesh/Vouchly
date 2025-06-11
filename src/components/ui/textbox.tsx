@@ -27,7 +27,7 @@ export interface TextBoxProps extends React.TextareaHTMLAttributes<HTMLTextAreaE
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement ,TextBoxProps>(({className,sizes, variants, name, ...props}, ref) => {
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1">
             <label htmlFor="" className="text-sm text-[hsl(var(--secondary-foreground))]/60">{name}</label>
             <textarea
             ref={ref}

@@ -60,6 +60,7 @@ export interface TabledataTypes<T = Record<string, string>> {
 export type TableDataKeyTypes = "Name" | "Space" | "Status" 
 
 export interface TestimoniaTableDataTypes {
+    id : number,
     Name : string,
     Description : string,
     createdAt : string,
@@ -79,4 +80,10 @@ export interface TextReviewProps {
     userCompany : string,
     imageSrc : string,
     starts : number
+}
+
+
+export interface ArrayOfTabs {
+    title : string,
+    key : number
 }

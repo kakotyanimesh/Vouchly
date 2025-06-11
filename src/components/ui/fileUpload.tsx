@@ -32,7 +32,13 @@ export const FileUploda = ({fileType, className} : FileUploadProps) => {
         className={cn("w-full h-fit p-5 cursor-pointer border-dotted border-2 rounded-2xl border-[hsl(var(--primary))] flex justify-center items-center flex-col hover:bg-[hsl(var(--secondary))]/60", className)}
         >
             <IconDiv reactNode={<FileQuestion size={13}/>} className="p-2"/>
-            <input className="hidden" type="file" ref={fileRef} accept="image/*" onChange={handleUpload}/>
+            <input
+                className="hidden" 
+                type="file" 
+                ref={fileRef} 
+                accept={fileType === "Video" ? "video/*" : "image/*"} 
+                onChange={handleUpload}/>
+
             <p className="text-xs italic">{fileName ? fileName : `Click to upload your ${fileType}`} </p>
         </Card>
     )

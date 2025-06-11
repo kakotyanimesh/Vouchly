@@ -1,8 +1,8 @@
 import { cn } from "@/utils/lib/cn"
 import { StatusColor, statusType } from "@/utils/lib/tailwind_switch"
 import { TabledataTypes } from "@/utils/types/user_types"
+import { redirect } from "next/navigation"
 import React from "react"
-import { toast } from "sonner"
 
 type TableProps<T = Record<string, string>> = React.HTMLAttributes<HTMLTableElement> & TabledataTypes<T>
 
@@ -23,7 +23,7 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
             </thead>
             <tbody>
                 {tdata.map((td, j) => (
-                    <tr key={j} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/4 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
+                    <tr key={j} onClick={() => redirect(`/forms/${td.id}`)} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/4 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
                         {thead.map((th, k) => {
                             if(th.label === "Name"){
                                 return (
@@ -44,7 +44,7 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
                             if(th.label === "Actions"){
                                 return (
                                     <td key={k} className="text-left pl-10">
-                                        <button className="cursor-pointer" onClick={() => toast.success("will be available soon ...", {position : "bottom-right"})}>
+                                        <button className="cursor-pointer" onClick={() => redirect(`/forms/${td.id}`)}>
                                             ...
                                         </button>
                                     </td>

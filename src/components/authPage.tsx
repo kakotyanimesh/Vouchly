@@ -43,7 +43,7 @@ export const AuthPage = ({authTypes} : {
                     toast.error("Invalid inputs")
                 }
             } else {
-                console.log("signup");
+                // console.log("signup");
 
                 const userSignUp = await createUser({
                     username, 

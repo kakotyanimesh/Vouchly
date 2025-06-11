@@ -143,6 +143,7 @@ export const getSpaceTestimonialsDataWithId = async({spaceId, adminId} : {spaceI
         const res = await alltestimonials()
         
         return res.map((t) : TestimoniaTableDataTypes => ({
+            id : t.id,
             Name : t.Name,
             Description : t.Description,
             createdAt : new Date(t.createdAt).toLocaleDateString(),
@@ -180,6 +181,7 @@ const cachedAllTestimonialForms = (adminId : number, takeNumber : number) => uns
                     spaceName : true
                 }
             },
+            id : true,
             Description : true,
             status : true,
             createdAt : true,
@@ -207,6 +209,7 @@ export const getAllTestimonials = async(adminId : number, takeNumber : number) =
 
 
         return allT.map((t) : TestimoniaTableDataTypes=> ({
+            id : t.id,
             Name : t.Name,
             Space : t.space.spaceName,
             Description : t.Description,
@@ -224,6 +227,58 @@ export const getAllTestimonials = async(adminId : number, takeNumber : number) =
             success : false,
             message : err.errorMsg,
             statusCode : err.statusCode
+        }
+    }
+}
+
+
+
+// const cachedIndividualTestimonialFormdata = ({adminId, formId} : {adminId : number, formId : number}) => unstable_cache(async() => {
+//     return prisma.testimonialForm.findUnique({
+//         where : {
+//             id : Number(formId),
+//             adminId : Number(adminId)
+//         },select : {
+//             Name : true,
+//             Description : true,
+//             _count : {
+//                 select : {
+//                     customerReview : true
+//                 }
+//             },
+//             createdAt : true
+//         }
+//     })
+// })
+
+
+export const getIndividualTestimonialFormData = async({adminId, formId} : {adminId : number, formId : number}) => {
+    try {
+        return await prisma.testimonialForm.findUnique({
+            where : {
+                id : Number(formId),
+                adminId : Number(adminId)
+            }, select : {
+                Name : true,
+                brandLogo : true,
+                Description : true,
+                questions : true,
+                _count : {
+                    select : {
+                        customerReview : true
+                    }
+                },
+                createdAt : true
+            }
+        })
+
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
         }
     }
 }
