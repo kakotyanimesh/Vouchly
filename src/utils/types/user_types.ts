@@ -87,3 +87,20 @@ export interface ArrayOfTabs {
     title : string,
     key : number
 }
+
+
+// review types here 
+
+export interface ReviewTypes {
+    spaceId : number,
+    formId : number,
+    customerName : string
+    customerEmail : string
+    textReview : string
+    adminId  : number
+    customerImageUrl : string
+    customerVideoUrl : string
+    stars : number
+    jobTitle :  string
+    customerCompany : string
+}

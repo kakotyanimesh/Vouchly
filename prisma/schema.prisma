@@ -81,6 +81,7 @@ model CustomerReview {
   customerName              String
   customerEmail             String
   stars                     Int
+  jobTitle                  String
   approved                  Boolean               @default(false)
   customerCompany           String
   createdAt                 DateTime              @default(now())

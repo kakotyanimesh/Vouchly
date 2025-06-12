@@ -259,6 +259,7 @@ export const getIndividualTestimonialFormData = async({adminId, formId} : {admin
                 id : Number(formId),
                 adminId : Number(adminId)
             }, select : {
+                spaceId : true,
                 Name : true,
                 brandLogo : true,
                 Description : true,

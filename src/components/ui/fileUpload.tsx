@@ -1,45 +1,64 @@
-import { FileQuestion } from "lucide-react"
+import { FileQuestion, User, Video} from "lucide-react"
 import { Card } from "./card"
 import { IconDiv } from "./icondiv"
 import React, { useRef, useState } from "react"
 import { cn } from "@/utils/lib/cn"
 import { useFileStore } from "@/utils/zustand/testimonialsformstore"
+import { Button } from "./button"
+import Image from "next/image"
 
 interface FileUploadProps {
     fileType : "Logo" | "UserImage" | "Video"
-    className ?: string
+    className ?: string,
+    disable ? : boolean
 }
 
 
-export const FileUploda = ({fileType, className} : FileUploadProps) => {
+export const FileUploda = ({fileType, className, disable} : FileUploadProps) => {
     const fileRef = useRef<HTMLInputElement | null>(null)
     const [fileName, setfileName] = useState<string | null>(null)
+    // there is a bug file name still there after uploading to s3 i will solve later just have to make a the usestate of filename to a varible that takes data from zustand
 
-    const { setFile } = useFileStore()
+    const { setImageFile, setVideoFile, previewUrl } = useFileStore()
 
     const handleUpload = () => {
         const f = fileRef.current?.files?.[0]
         if(f){
             setfileName(f.name)
-            setFile(f) 
+
+            const setter = fileType === "Video" ? setVideoFile : setImageFile
+
+            setter(f)
         }
     }
     return (
         <Card
-        onClick={() => {
-            fileRef.current?.click()
-        }}
-        className={cn("w-full h-fit p-5 cursor-pointer border-dotted border-2 rounded-2xl border-[hsl(var(--primary))] flex justify-center items-center flex-col hover:bg-[hsl(var(--secondary))]/60", className)}
+            className={cn("w-full h-fit p-5 cursor-pointer border-dotted border-2 space-y-2 rounded-2xl border-[hsl(var(--primary))] flex justify-center items-center flex-col hover:bg-[hsl(var(--secondary))]/60", className)}
         >
-            <IconDiv reactNode={<FileQuestion size={13}/>} className="p-2"/>
+
+            {
+                fileName ? <div className="place-items-center">
+                    <h1 className="text-sm text-[hsl(var(--primary))]">Selected File : {fileName}</h1>
+                    {fileType !== "Video" && previewUrl && <Image width={60} height={70} alt="image" className="rounded-full" src={previewUrl}/>}
+                </div> 
+                : 
+                <IconDiv reactNode={fileType === "UserImage" ? <User size={14}/> : fileType === "Video" ?  <Video size={13}/> : <FileQuestion size={13}/>} className="p-2"/>
+            }
             <input
                 className="hidden" 
-                type="file" 
+                type="file"
+                disabled={disable} 
                 ref={fileRef} 
                 accept={fileType === "Video" ? "video/*" : "image/*"} 
                 onChange={handleUpload}/>
 
-            <p className="text-xs italic">{fileName ? fileName : `Click to upload your ${fileType}`} </p>
+            <Button 
+                onClick={() => fileRef.current?.click()}
+                type="button" 
+                variant={"secondary"} 
+                sizes={"sm"}>
+                {fileName ? "Change" : "Upload"} {fileType === "UserImage" ? "Profile Picture" : fileType}
+            </Button>
         </Card>
     )
 }

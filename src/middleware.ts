@@ -16,7 +16,10 @@ export default auth((req) => {
   const isApiAuthRoutes = nextUrl.pathname.startsWith(authapiPrefix)
 
   // console.log(isApiAuthRoutes);
-  const isPublicRoutes = publicRoutes.includes(nextUrl.pathname)
+  // const isPublicRoutes = publicRoutes.includes(nextUrl.pathname)
+  const isPublicRoutes = publicRoutes.some((route) => {
+    return nextUrl.pathname === route || (route.endsWith("/") && nextUrl.pathname.startsWith(route.replace("/*", "/")))
+  })
 
   // console.log(isPublicRoutes, "public", nextUrl.pathname);
   

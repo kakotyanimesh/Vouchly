@@ -43,27 +43,37 @@ export const useFormStore = create<FormInterface & FormActions>((set) => ({
 
 
 interface FileUploadInterface {
-    file : File | null
+    videofile : File | null
+    imagefile : File | null
     previewUrl : string | null
 }
 
 type FileUploadActions = {
-    setFile : (f : File) => void,
+    setVideoFile : (f : File) => void,
+    setImageFile : (f : File) => void
     resetFile : () => void
 }
 
 const fileUploadInitialStates : FileUploadInterface = {
-    file : null,
+    imagefile : null,
+    videofile : null,
     previewUrl : null
 }
 
-export const useFileStore = create<FileUploadInterface & FileUploadActions>((set) => ({
+// export const useFileStore = create<FileUploadInterface & FileUploadActions>((set) => ({
+    
+// }))
+
+
+export const useFileStore = create<FileUploadActions & FileUploadInterface>((set) => ({
     ...fileUploadInitialStates,
-    setFile : (f) => set({
-        file : f,
-        previewUrl : URL.createObjectURL(f)
-    }),
-    resetFile : () => {
-        set(fileUploadInitialStates)
-    }
+    setImageFile : (i) => {
+        set({
+            imagefile : i,
+            previewUrl : URL.createObjectURL(i)
+        })
+    },
+    setVideoFile : (v) => set({videofile : v}),
+    resetFile : () => set(fileUploadInitialStates)
+
 }))

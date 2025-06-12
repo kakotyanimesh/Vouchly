@@ -9,7 +9,9 @@ export const PreviewForm = () => {
     return (
         <Card className="h-fit md:px-15 md:py-10 p-3 bg-[hsl(var(--primary))]/10 flex flex-col space-y-5 md:max-w-[700px] md:w-[700px] w-[300px]">
            <div className="justify-center flex">
-                <Image src={previewUrl || "/images/logo.png"} className="rounded-4xl border-2 border-blue-600" width={200} height={200} alt="logo"/>
+                <Image 
+                    src={previewUrl && previewUrl !== "" ? previewUrl : "/images/logo.png"} 
+                    className="rounded-4xl border-2 border-blue-600" width={200} height={200} alt="logo"/>
            </div>
            <div className="space-y-2 text-center">
                 <h1 className="text-2xl font-bold">{Name}</h1>

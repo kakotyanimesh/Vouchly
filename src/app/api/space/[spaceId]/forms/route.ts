@@ -50,7 +50,7 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
             {status : 200}
         )
     } catch (error) {
-        console.log(error);
+        // console.log(error);
 
         if(error instanceof ZodError){
             return NextResponse.json(

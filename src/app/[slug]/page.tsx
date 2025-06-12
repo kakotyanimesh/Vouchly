@@ -21,12 +21,12 @@ export default async function SubmitTestimonia({params}:{params : Promise<{slug 
         )
     }
 
-    console.log(data);
+    // console.log(data);
     
 
     return (
         <div className="flex justify-center items-center mt-10">
-            <SubmitFormComponent Name={data.Name} Description={data.Description} questions={data.questions} />
+            <SubmitFormComponent adminId={decoded.adminId} formId={decoded.formId} spaceId={data.spaceId} Name={data.Name} Description={data.Description} questions={data.questions} />
         </div>
     )
 }

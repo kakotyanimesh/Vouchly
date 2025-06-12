@@ -42,10 +42,10 @@ export const VerticalTabSwitcher : React.FC<VarticalSliderProps> = ({className, 
             }}
             transition={{
                 type: "spring",
-                stiffness: 400,
+                stiffness: 300,
                 damping: 30,
             }}
-            className="absolute bg-[hsl(var(--primary))] z-0 top-0 bottom-0 rounded-xl"
+            className="absolute bg-[hsl(var(--primary))]/20 z-0 top-0 bottom-0 rounded-xl"
             />
             {
                 tabs.map((t, k) => (

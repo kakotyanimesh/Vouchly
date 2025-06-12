@@ -1,10 +1,12 @@
 "use client"
-import { Check, Copy } from "lucide-react"
+import { Check, Copy, Eye, Link } from "lucide-react"
 import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 import { InputBox } from "./ui/input"
 import { TextArea } from "./ui/textbox"
 import { useState } from "react"
+import { LinkTag } from "./ui/Link"
+import { toast } from "sonner"
 
 export interface IndividualFormDivProps {
     Name : string,
@@ -22,10 +24,33 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
     
     return (
         <div className="space-y-5">
-            <div>
-                <h1 className="font-semibold text-2xl">{data.Name}</h1> 
-                <p className="text-[hsl(var(--slate-text))]">{data.Description}.</p> 
-            </div>
+            <section className="flex flex-row items-center justify-between">
+                <div>
+                    <h1 className="font-semibold text-2xl">{data.Name}</h1> 
+                    <p className="text-[hsl(var(--slate-text))]">{data.Description}.</p>
+                </div>
+                <div className="flex flex-row gap-4 items-center">
+                    <LinkTag 
+                        href={`${process.env.NEXT_PUBLIC_NEXT_URL}/${data.token}`}
+                        target="_blank"
+                        className="flex flex-row items-center gap-2 bg-white w-fit rounded-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 md:px-5 px-3 py-2 font-semibold text-sm text-black">
+                        <Eye className="" size={14}/>
+                        view Public Form
+                    </LinkTag>
+                    <Button 
+                        onClick={() => {
+                            navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/${data.token}`)
+                            toast.info("URL copied", {
+                                position : "top-left",
+                                
+                            })
+                        }}
+                        variant={"secondary"} 
+                        className="flex flex-row items-center gap-2">
+                        <Link size={14}/> Share
+                    </Button>
+                </div>
+            </section>
             <div className="grid grid-cols-3 gap-7">
                 <Card className="col-span-2 py-7 px-5 bg-white/7 space-y-5">
                     <h1>Update Your Testimonia Form here </h1>
@@ -63,8 +88,11 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                         <section className="flex flex-row gap-2 justify-between">
                             <h1 className="rounded-md border border-white/20 p-2 text-[hsl(var(--primary))] overflow-x-auto whitespace-nowrap scrollbar-hide">{process.env.NEXT_PUBLIC_NEXT_URL}{data.token}</h1>
                             <Button variant={"transparent"} sizes={"sm"} onClick={() => {
-                                navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/${data.token}`)
+                                navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}${data.token}`)
                                 setCopied(true)
+                                toast.info("URL copied", {
+                                    position : "top-left",
+                                })
                             }}>
                                 {!copied ? <Copy size={19}/> : <Check size={19}/>}
                             </Button>

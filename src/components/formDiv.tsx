@@ -15,20 +15,20 @@ import { useRouter } from "next/navigation"
 export const  FormDiv = () => {
     const { sId } = useParseSpacedata()
     const router = useRouter()
-    const { resetFile, file } = useFileStore()
+    const { resetFile, imagefile } = useFileStore()
     const { questions,Name, Description, setName, setDescription, upadatedQuestions, addQuestionsArrray, reset } = useFormStore()
 
 
     const [isPending, startTransition] = useTransition()
     const createForm = (e : React.FormEvent) => {
         e.preventDefault()
-        if(!file){
+        if(!imagefile){
             toast.error("Logo file is Empty")
             return
         }
         startTransition(async() => {
             
-            const uploadResult = await uploadToS3(file, "form_logos") 
+            const uploadResult = await uploadToS3(imagefile, "form_logos") 
 
             if (!uploadResult || !uploadResult.uniqueKey) {
                 toast.error(uploadResult?.message || "Logo upload failed: Unique key not returned.");

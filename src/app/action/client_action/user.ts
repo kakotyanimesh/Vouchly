@@ -1,5 +1,5 @@
 import { handlerError } from "@/utils/lib/errorhandler"
-import { AWS_Folder_Name, CreateFormTypes, CreateSpaceTypes, SignupTypes } from "@/utils/types/user_types"
+import { AWS_Folder_Name, CreateFormTypes, CreateSpaceTypes, ReviewTypes, SignupTypes } from "@/utils/types/user_types"
 import axios from "axios"
 
 export const createUser = async (data : SignupTypes) => {
@@ -139,6 +139,40 @@ export const uploadToS3 = async (file : File, folderName : AWS_Folder_Name) => {
         return {uniqueKey}
     } catch (error) {
         const err = await handlerError(error)
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
+
+
+
+export const submitTestimonials = async(data : ReviewTypes) => {
+    try {
+        const res = await fetch(`/api/space/${data.spaceId}/forms/${data.formId}`,{
+            method : "POST",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            body : JSON.stringify(data)
+            // we are sending two extra data here but thats okay for now
+        })
+
+        if(!res.ok){
+            throw res
+        }
+
+        const datares = (await res.json()).message
+
+        return {
+            success : true,
+            message : datares
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
         return {
             success : false,
             message : err.errorMsg,
