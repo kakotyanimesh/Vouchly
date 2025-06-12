@@ -98,7 +98,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
         })
     }
     return (
-        <Card className="w-fit mx-2 rounded-2xl bg-white/10 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
+        <Card className="w-fit mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/6 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
             <Image src={"/images/logo.png"} width={200} height={100} className="rounded-2xl" alt="form_logo"/>
             <div>
                 <h1 className="text-2xl font-bold">{data.Name}</h1>

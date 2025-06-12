@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import { authConfig } from "../auth.config"
 import { authapiPrefix,authenticationRoutes, DEFAULT_REDIRECT_URL, publicRoutes } from "./utils/lib/middleware_routes"
 
+// my fucking best middleware is here 
 
 const {auth} = NextAuth(authConfig)
  
@@ -17,8 +18,13 @@ export default auth((req) => {
 
   // console.log(isApiAuthRoutes);
   // const isPublicRoutes = publicRoutes.includes(nextUrl.pathname)
-  const isPublicRoutes = publicRoutes.some((route) => {
-    return nextUrl.pathname === route || (route.endsWith("/") && nextUrl.pathname.startsWith(route.replace("/*", "/")))
+  const isPublicRoutes = publicRoutes.some(route => {
+    if(route.endsWith("/*")){
+      // this is for submit thingy => like if the route ends with /asdadsa => then it slice it 
+      const baseUrl = route.slice(0, -2) // making /submit
+      return nextUrl.pathname.startsWith(baseUrl + '/') // then add / and checks the real routes 
+    }
+    return nextUrl.pathname === route
   })
 
   // console.log(isPublicRoutes, "public", nextUrl.pathname);

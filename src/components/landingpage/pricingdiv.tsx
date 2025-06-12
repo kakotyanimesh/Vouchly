@@ -18,7 +18,7 @@ export const PricingDiv = () => {
                 features={["1 Space", "1 Video Testimonial", "5 text Testimonial", "Wall of Love with Our Logo"]}/>
                 
                 <PricingCard 
-                // className="rotate-0"
+                // className="rotate-0 py-5"
                 title="Professional"
                 desc="Perfect for individuals and small businesses getting started with testimonials" 
                 price={20} 

@@ -27,7 +27,7 @@ export const PricingCard : React.FC<PricingProps> = ({className, title, price, d
             duration : 0.3,
             // delay : 0.1
         }}
-        className={cn("space-y-3 group relative hover:bg-black active:bg-black transition-colors ease-linear duration-200 rounded-md border bg-white/10 text-left p-4", title === "Professional" ? "border-[hsl(var(--primary))]/80" : "border-slate-100/10", className)} {...props}>
+        className={cn("space-y-3 group relative hover:bg-black active:bg-black transition-colors ease-linear duration-200 rounded-md border text-left p-4", title === "Professional" ? "border-[hsl(var(--primary))]/80 bg-black rotate-0" : "border-slate-100/10 bg-[hsl(var(--pure-white))]/7", className)} {...props}>
             { 
                 title === "Professional" && <h1 className="absolute -top-3 left-1/2 bg-[hsl(var(--primary))] text-black text-sm px-2 py-0.5 rounded-md">Most Popular</h1>
             }

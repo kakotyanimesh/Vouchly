@@ -21,7 +21,7 @@ export const FormTable = ({thead, tdata} : {thead : TableHeader[], tdata : Testi
         transition={{
             ease : "easeIn"
         }}
-        className="pt-7 px-7 pb-5 rounded-2xl bg-white/4 border-slate-100/10 border flex flex-col gap-4">
+        className="pt-7 px-7 pb-5 rounded-2xl bg-[hsl(var(--pure-white))]/4 border-slate-100/10 border flex flex-col gap-4">
             <div>
                 <InputBox value={searchValue} onChange={(e) => setSearchValue(e.target.value)} icon={<Search size={14} strokeWidth={1.2}/>} variants={"secondary"} placeholder="search"/> 
             </div>

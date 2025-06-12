@@ -1,6 +1,6 @@
 import { extractDataFromToken } from "@/utils/lib/lib_new"
-import { getIndividualTestimonialFormData } from "../action/server_action/user"
 import { SubmitFormComponent } from "@/components/submitForm"
+import { getIndividualTestimonialFormData } from "@/app/action/server_action/user"
 
 export default async function SubmitTestimonia({params}:{params : Promise<{slug : string}>}) {
     const decoded = extractDataFromToken((await params).slug)

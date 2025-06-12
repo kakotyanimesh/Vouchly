@@ -29,6 +29,7 @@ export async function POST(req:NextRequest) {
         // revalidateTag(`user-spaces-${id}`)
         // revalidateTag(`spaces`)
         revalidateTag(`user-spaces-${id}`)
+        revalidateTag(`user-all-data-count-${id}`)
         revalidatePath(`/space`)
 
         return NextResponse.json(

@@ -52,7 +52,7 @@ export const SideBar = () => {
                             }
                         }}
                         className={cn("w-full cursor-pointer text-start flex md:flex-row flex-col items-center md:gap-3 py-2 md:px-3 px-1 md:mt-0 mt-4  rounded-md transition-colors duration-250 ease-linear", 
-                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:bg-transparent bg-[hsl(var(--primary))]/40 md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-white/10 hover:text-[hsl(var(--primary))]"
+                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:bg-transparent bg-[hsl(var(--primary))]/40 md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-[hsl(var(--pure-white))]/10 hover:text-[hsl(var(--primary))]"
                         )}
                         onClick={() => redirect(s.src)}
                         key={k}>

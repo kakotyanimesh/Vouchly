@@ -37,7 +37,7 @@ export const AuthPage = ({authTypes} : {
                 })
 
                 if(userSignin.error === undefined){
-                    toast.success("User signined In")
+                    // toast.success("User signined In")
                     redirect("/dashboard")
                 } else if (userSignin.error === "Configuration"){
                     toast.error("Invalid inputs")
@@ -82,7 +82,7 @@ export const AuthPage = ({authTypes} : {
                 }
             }}
             className="mb-2">
-                <Card className="h-fit p-5 md:w-[450px] w-[300px] text-start md:space-y-4 space-y-2 bg-white/10 border border-[hsl(var(--primary))]/20 backdrop-blur-3xl">
+                <Card className="h-fit p-5 md:w-[450px] w-[300px] text-start md:space-y-4 space-y-2 bg-[hsl(var(--pure-white))]/10 border border-[hsl(var(--primary))]/20 backdrop-blur-3xl">
                     <div className="space-y-1">
                         <h1 className="text-2xl">{authForm ? "LogIn" : "SignUp"}</h1>
                         <p className="text-sm">Enter your credentials to access your account</p>

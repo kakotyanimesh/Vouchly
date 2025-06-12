@@ -44,6 +44,7 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
 
         revalidateTag(`user-spaces-${id}`)
         revalidateTag(`user-inidividual-space-testimoials-${spaceId}`)
+        revalidateTag(`user-all-data-count-${id}`)
         revalidateTag(`all_testimonials-${id}`)
         return NextResponse.json(
             {msg : "Testimonia Form Created Successfully !!"},

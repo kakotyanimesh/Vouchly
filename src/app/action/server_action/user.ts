@@ -6,30 +6,51 @@ import { SpaceCardProps, TestimoniaTableDataTypes } from "@/utils/types/user_typ
 import { unstable_cache } from "next/cache"
 
 
-
-export const getUserDataCount = async(id : number) => {
-    try {
+const cachedUserdataCount = (id : number) => unstable_cache(
+    async() => {
+        const numberedId = Number(id)
         const [ spaceCount, formsCount, submissionCount ] = await Promise.all([
             prisma.spaces.count({
                 where : {
-                    userId : Number(id)
+                    userId : numberedId
                 }
             }),
-
             prisma.testimonialForm.count({
                 where : {
-                    adminId : Number(id)
+                    adminId : numberedId
                 }
             }),
             prisma.customerReview.count({
                 where : {
-                    adminId : Number(id)
+                    adminId : numberedId
                 }
             })
         ])
 
         return {
-            spaceCount, submissionCount, formsCount
+            spaceCount,
+            formsCount,
+            submissionCount
+        }
+    },
+    [`user-count-data${id}`]
+    ,{
+        revalidate : 300,
+        tags : [`user-all-data-count-${id}`, `spaces`, `testimonials`, `user-data`]
+    }
+)
+
+export const getUserDataCount = async(id : number) => {
+    try {
+        const countfunction = cachedUserdataCount(id)
+
+        const data = await countfunction()
+
+        
+        return {
+            success : true,
+            data
+
         }
     } catch (error) {
         const err = await handlerError(error)

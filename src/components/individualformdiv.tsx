@@ -31,15 +31,15 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                 </div>
                 <div className="flex flex-row gap-4 items-center">
                     <LinkTag 
-                        href={`${process.env.NEXT_PUBLIC_NEXT_URL}/${data.token}`}
+                        href={`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`}
                         target="_blank"
-                        className="flex flex-row items-center gap-2 bg-white w-fit rounded-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 md:px-5 px-3 py-2 font-semibold text-sm text-black">
+                        className="flex flex-row items-center gap-2 bg-[hsl(var(--pure-white))] w-fit rounded-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 md:px-5 px-3 py-2 font-semibold text-sm text-black">
                         <Eye className="" size={14}/>
                         view Public Form
                     </LinkTag>
                     <Button 
                         onClick={() => {
-                            navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/${data.token}`)
+                            navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`)
                             toast.info("URL copied", {
                                 position : "top-left",
                                 
@@ -52,8 +52,8 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                 </div>
             </section>
             <div className="grid grid-cols-3 gap-7">
-                <Card className="col-span-2 py-7 px-5 bg-white/7 space-y-5">
-                    <h1>Update Your Testimonia Form here </h1>
+                <Card className="col-span-2 py-7 px-5 bg-[hsl(var(--pure-white))]/7 space-y-5">
+                    <h1 className="text-md font-semibold">Update Your Testimonia Form here </h1>
                     <form className="space-y-5">
                         <InputBox 
                             placeholder={data.Name} 
@@ -67,7 +67,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     </form>
                 </Card>
                 <div className="space-y-4">
-                    <Card className="col-span-1 py-7 px-5 bg-white/7 h-fit space-y-5">
+                    <Card className="col-span-1 py-7 px-5 bg-[hsl(var(--pure-white))]/7 h-fit space-y-5">
                         <section>
                             <h1 className="font-semibold text-2xl">Submissions</h1>
                             <p className="text-[hsl(var(--slate-text))] text-sm">View and manage responses to this form</p>
@@ -80,15 +80,15 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     </Card>
 
 
-                    <Card className="col-span-1 py-7 px-5 bg-white/7 h-fit space-y-5">
+                    <Card className="col-span-1 py-7 px-5 bg-[hsl(var(--pure-white))]/7 h-fit space-y-5">
                         <section>
                             <h1 className="font-semibold text-2xl">Sharing & Details</h1>
                             <p className="text-[hsl(var(--slate-text))] text-sm">Share your form and view its identifiers.</p>
                         </section>
                         <section className="flex flex-row gap-2 justify-between">
-                            <h1 className="rounded-md border border-white/20 p-2 text-[hsl(var(--primary))] overflow-x-auto whitespace-nowrap scrollbar-hide">{process.env.NEXT_PUBLIC_NEXT_URL}{data.token}</h1>
+                            <h1 className="rounded-md border border-white/20 p-2 text-[hsl(var(--primary))] overflow-x-auto whitespace-nowrap scrollbar-hide">{process.env.NEXT_PUBLIC_NEXT_URL}/submit/{data.token}</h1>
                             <Button variant={"transparent"} sizes={"sm"} onClick={() => {
-                                navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}${data.token}`)
+                                navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`)
                                 setCopied(true)
                                 toast.info("URL copied", {
                                     position : "top-left",
