@@ -40,6 +40,7 @@ export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) 
                     {data.map((d, k) => (
                         <SpaceCard src={d.src} Id={d.Id} key={k} spaceName={d.spaceName} createdAt={d.createdAt} totalForms={d.totalForms}/>
                     ))}
+                    
                 </div>
             }
         </div>
