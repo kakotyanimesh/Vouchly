@@ -7,7 +7,7 @@ export const InputVariants = cva(
     {
         variants : {
             variants : {
-                primary : "bg-[hsl(var(--primary))]/14 placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]",
+                primary : "bg-[hsl(var(--input))] placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]",
                 secondary : "bg-[hsl(var(--secondary))]/20 placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]"
             },
             sizes : {

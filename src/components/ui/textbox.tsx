@@ -7,7 +7,7 @@ export const TextBoxVariants = cva(
     {
         variants : {
             variants : {
-                "primary" : "bg-[hsl(var(--primary))]/20 placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]"
+                "primary" : "bg-[hsl(var(--input))] placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]"
             },
             sizes : {
                 sm : "h-32 p-5"

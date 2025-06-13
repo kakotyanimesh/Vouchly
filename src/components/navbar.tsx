@@ -12,13 +12,13 @@ export  const Navbar = () => {
     const [openmenu, setOpenmenu] = useState(false)
     const router = useRouter()
     return (
-        <div className="flex flex-row md:mx-34 px-4 my-5 md:py-4 py-3 rounded-md justify-between items-center relative bg-[hsl(var(--primary))]/10">
+        <div className="flex flex-row md:mx-34 px-4 my-5 md:py-4 py-3 rounded-md justify-between items-center relative bg-[hsl(var(--primary))]/30">
             <div className="flex flex-row gap-20 items-center">
                 <Logo className="text-2xl"/>
                 <div className="sm:flex hidden flex-row justify-between gap-10 items-center ">
                     {
                         NavbarArray.map((l, k) => (
-                            <LinkTag href={l.src} key={k} >{l.name}</LinkTag>
+                            <LinkTag className="text-[hsl(var(--pure-white))]" href={l.src} key={k} >{l.name}</LinkTag>
                         ))
                     }
                 </div>
@@ -27,7 +27,7 @@ export  const Navbar = () => {
                 <Button onClick={() => router.push("/signin")} variant={"secondary"}>Sign in</Button>
                 <Button onClick={() => router.push("/signin")} className="md:px-10" variant={"primary"}>Get Started</Button>
             </div>
-            <Button variant={"fetch"} onClick={() => setOpenmenu(!openmenu)} className="md:hidden flex">{!openmenu ? <Menu /> : <X/>}</Button>
+            <Button variant={"fetch"} onClick={() => setOpenmenu(!openmenu)} className="md:hidden flex text-white">{!openmenu ? <Menu /> : <X/>}</Button>
 
             {
                 openmenu && 

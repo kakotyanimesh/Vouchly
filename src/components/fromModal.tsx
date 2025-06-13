@@ -44,7 +44,7 @@ export const FormCreation = ({sName, sId, data} : FormDivtypes) => {
 
             {
                 data.length === 0 ?
-                <Card className="w-full h-full py-10 items-center  bg-[hsl(var(--primary))]/4  flex flex-col space-y-5 justify-center border-dotted border-2 border-[hsl(var(--primary))] transition-colors ease-linear duration-200 group">
+                <Card className="w-full h-full py-10 items-center  bg-[hsl(var(--pure-white))]/3  flex flex-col space-y-5 justify-center border-dotted border-2 border-[hsl(var(--primary))] transition-colors ease-linear duration-200 group">
                     <IconDiv reactNode={<File/>}/>
                     <h1 className="text-sm">Create your first Testimonia Form </h1>
                     <Button

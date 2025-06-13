@@ -18,8 +18,8 @@ export const SideBar = () => {
 
     
     return (
-        <div className="md:h-full h-fit md:space-y-4 bg-gradient-to-b from-[hsl(var(--primary))]/4 to-[#0F0F0F] border-r border-white/20 md:w-[240px] w-full">
-                <Logo className="text-2xl md:flex hidden items-center justify-center border-b border-white/20 px-3 p-4"/>
+        <div className="md:h-full h-fit md:space-y-4 bg-gradient-to-b from-[hsl(var(--primary))]/4 to-[#0F0F0F] border-r border-[hsl(var(--pure-white))]/10 md:w-[240px] w-full">
+                <Logo className="text-2xl md:flex hidden items-center justify-center border-b border-[hsl(var(--pure-white))]/10 px-3 p-4"/>
                 <div className="space-y-3 md:px-3 relative flex md:flex-col flex-row">
                     {
                       activeIndex !== -1 && <motion.div 
@@ -52,7 +52,7 @@ export const SideBar = () => {
                             }
                         }}
                         className={cn("w-full cursor-pointer text-start flex md:flex-row flex-col items-center md:gap-3 py-2 md:px-3 px-1 md:mt-0 mt-4  rounded-md transition-colors duration-250 ease-linear", 
-                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:bg-transparent bg-[hsl(var(--primary))]/40 md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-[hsl(var(--pure-white))]/10 hover:text-[hsl(var(--primary))]"
+                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:bg-transparent bg-[hsl(var(--primary))]/40 md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-[hsl(var(--pure-white))]/10"
                         )}
                         onClick={() => redirect(s.src)}
                         key={k}>

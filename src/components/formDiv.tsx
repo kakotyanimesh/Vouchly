@@ -58,7 +58,7 @@ export const  FormDiv = () => {
         })
     }
     return (
-        <Card className="h-fit p-5 space-y-5 ">
+        <Card className="h-fit p-5 space-y-5 w-full">
                     <div>
                         <h1 className="text-2xl font-bold">Form Preview </h1>
                         <p className="text-sm">After the Space is created, it will generate a dedicated page for collecting testimonials.</p>

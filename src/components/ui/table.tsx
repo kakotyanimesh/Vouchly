@@ -14,7 +14,7 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
                 <tr>
                     {thead.map((th, k) => (
                         <th key={k}
-                        className={cn("text-left font-semibold text-[hsl(var(--primary))] px-3 py-2 border-b border-[hsl(var(--primary))]/20", th.isHidden ? "md:table-cell hidden" : "")}
+                        className={cn("text-left font-semibold text-[hsl(var(--pure-white))] px-3 py-2 border-b border-[hsl(var(--primary))]/20", th.isHidden ? "md:table-cell hidden" : "")}
                         >
                             {th.label}
                         </th>
@@ -23,7 +23,7 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
             </thead>
             <tbody>
                 {tdata.map((td, j) => (
-                    <tr key={j} onClick={() => redirect(`/forms/${td.id}`)} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/4 hover:bg-[hsl(var(--primary))]/10 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
+                    <tr key={j} onClick={() => redirect(`/forms/${td.id}`)} className="cursor-pointer border-b border-[hsl(var(--primary))]/20 last:border-0 bg-[hsl(var(--primary))]/20 hover:bg-[hsl(var(--primary))]/60 transition-all ease-linear duration-200 px-6 py-5 text-left rounded-3xl">
                         {thead.map((th, k) => {
                             if(th.label === "Name"){
                                 return (

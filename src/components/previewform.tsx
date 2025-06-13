@@ -7,7 +7,7 @@ export const PreviewForm = () => {
     const {Name, Description, questions} = useFormStore()
     const { previewUrl } = useFileStore()
     return (
-        <Card className="h-fit md:px-15 md:py-10 p-3 bg-[hsl(var(--primary))]/10 flex flex-col space-y-5 md:max-w-[700px] md:w-[700px] w-[300px]">
+        <Card className="h-fit md:px-15 md:py-10 p-3 flex flex-col space-y-5 w-full">
            <div className="justify-center flex">
                 <Image 
                     src={previewUrl && previewUrl !== "" ? previewUrl : "/images/logo.png"} 
@@ -15,7 +15,7 @@ export const PreviewForm = () => {
            </div>
            <div className="space-y-2 text-center">
                 <h1 className="text-2xl font-bold">{Name}</h1>
-                <p className="text-md md:mx-10 text-[hsl(var(--slate-text))] break-words whitespace-pre-line">{Description}</p>
+                <p className="text-md md:mx-10 break-words whitespace-pre-line">{Description}</p>
            </div>
            <div className="flex justify-start space-y-3 cursor-none flex-col">
                 <div className=" border-2 border-[hsl(var(--primary))] bg-blue-700/10 md:w-72 w-52 rounded-3xl space-x-5 flex items-center px-5 py-2 h-fit">

@@ -1,7 +1,7 @@
 export const StatusColor = (status : statusType) => {
     switch (status) {
         case "Approved":
-                return "bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))] border-[hsl(var(--primary))]/30"
+                return "bg-[hsl(var(--primary))]/60 text-white border-[hsl(var(--primary))]"
             
         case "Pending":
             return "bg-yellow-600/20 text-yellow-600 border-yellow-600/30"

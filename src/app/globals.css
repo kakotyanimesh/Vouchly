@@ -5,7 +5,7 @@
     --foreground: 0 0% 98%;
 
     --user-background: 222.2 84% 4.9%;
-    --slate-text: 0 0% 98% / 70%;
+    --slate-text: 0 0% 48%;
     
     --card: 0 0% 8%;
     --card-foreground: 0 0% 98%;
@@ -13,7 +13,9 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
     
-    --primary: 162 37% 64%;
+    --primary: 152 100% 19%;
+    --primary-border:152 84% 26%;
+    --hover-primary:152 100% 28%;
     --primary-foreground: 0 0% 3%;
     
     --secondary: 0 0% 12%;
@@ -29,25 +31,27 @@
     --destructive-foreground: 0 0% 98%;
     
     --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --input: 0 0% 14%;
     --ring: 162 37% 64%;
     
     --radius: 1rem;
+    --dashboard-cards:0 0% 13%;
+    --dashboard-border:0 0% 12%;
     --pure-white: 0 0% 100%;
 }
 
 
 
 body {
-  background: transparent;
+  background: #171717;
   color: hsl(var(--foreground));
   font-family: Arial, Helvetica, sans-serif;
 }
 
-html {
+/* html {
   background: 
-    radial-gradient(circle at 30% 25%, rgba(132, 194, 179, 0.15) 0%, transparent 10%),
-    radial-gradient(circle at 50% 50%, rgba(0, 247, 165, 0.077) 1%, transparent 50%),
+    radial-gradient(circle at 30% 25%, rgba(33, 82, 69, 0.296) 0%, transparent 10%),
+    radial-gradient(circle at 50% 50%, rgba(0, 156, 247, 0.079) 1%, transparent 50%),
     radial-gradient(circle at 60% 60%, rgba(132, 194, 179, 0.042) 0%, transparent 50%),
     radial-gradient(circle at 30% 70%, rgba(59, 87, 80, 0.02) 0%, transparent 50%),
     linear-gradient(105deg, 
@@ -58,7 +62,7 @@ html {
       #000000 100%
     );
   min-height: 0vh;
-}
+} */
 
 
 .scrollbar-hide::-webkit-scrollbar {
