@@ -2,7 +2,7 @@
 import React, { ReactNode } from "react";
 import { cn } from "@/utils/lib/cn";
 import { HTMLMotionProps, motion } from "motion/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type UIcardProps = HTMLMotionProps<"div"> & {
     icon : ReactNode,
