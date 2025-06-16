@@ -5,6 +5,9 @@ import { Logo } from "./ui/logo"
 import { Grid3x3, House, Rocket, Shredder, User } from "lucide-react";
 import { cn } from "@/utils/lib/cn"
 import { motion } from "motion/react";
+import { Button } from "./ui/button";
+import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 
 export const SideBar = () => {
@@ -19,7 +22,7 @@ export const SideBar = () => {
 
     
     return (
-        <div className="md:h-full h-fit md:space-y-4 bg-gradient-to-b from-[hsl(var(--primary))]/4 to-[#0F0F0F] border-r border-[hsl(var(--pure-white))]/10 md:w-[240px] w-full">
+        <div className="md:h-full relative h-fit md:space-y-4 bg-gradient-to-b from-[hsl(var(--primary))]/4 to-[#0F0F0F] border-r border-[hsl(var(--pure-white))]/10 md:w-[240px] w-full">
                 <Logo className="text-2xl md:flex hidden items-center justify-center border-b border-[hsl(var(--pure-white))]/10 px-3 p-4"/>
                 <div className="space-y-3 md:px-3 relative flex md:flex-col flex-row">
                     {
@@ -63,6 +66,14 @@ export const SideBar = () => {
                     ))
                 }
                 </div>
+                <Button   
+                    className="absolute bottom-10 left-14" 
+                    variant={"secondary"} 
+                    onClick={() => {
+                        toast.message("✅ You’ve been logged out successfully.")
+                        signOut({callbackUrl : "/", redirect : true})
+                    }}
+                >log out</Button>
             </div>
     )
 }

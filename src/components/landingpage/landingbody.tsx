@@ -6,7 +6,7 @@ import { GlowingComponent } from "../ui/glowingdiv"
 
 export const LandingHeader = () => {
     const router = useRouter()
-    const headLine = "Build Testimonial Page"
+    const headLine = "Build Testimonial Pages"
 
     const initial = {
         filter : "blur(2px)",
@@ -45,7 +45,7 @@ export const LandingHeader = () => {
             initial={initial}
             animate={animate}
             transition={{duration : 0.5, ease : "linear", delay : 0.1}}
-            className="max-w-2xl mx-auto px-4 text-sm">Transform happy customers into powerful testimonials. Create stunning forms, collect video reviews, and showcase them with style across all your platforms</motion.p>
+            className="max-w-md mx-auto px-4 text-sm">Transform happy customers into powerful testimonials. Create stunning forms, collect video reviews, and showcase them with style across all your platforms</motion.p>
             <motion.div
             initial={initial}
             animate={animate}
@@ -60,7 +60,7 @@ export const LandingHeader = () => {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay : 0.4, ease: "easeOut" }}
-                className="bg-gradient-to-r from-transparent via-[hsl(var(--primary))] w-72 rounded-4xl h-[2px] to-transparent"/>
+                className="xl:top-[59vh] top-[50vh] md:top-[72vh] lg:top-[74vh]  bg-gradient-to-r from-transparent via-[hsl(var(--primary))] md:w-64 w-40 rounded-4xl h-[2px] to-transparent"/>
             
         </div>
     )

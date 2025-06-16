@@ -14,6 +14,7 @@ export default function Home() {
         <LandingHeader/>
         <FeaturesDiv/>
         <Reviewdiv/>
+        {/* no codig has mobile bugs */}
         <NoCoding/>
         <PricingDiv/>
       </div>

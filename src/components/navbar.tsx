@@ -12,10 +12,10 @@ export  const Navbar = () => {
     const [openmenu, setOpenmenu] = useState(false)
     const router = useRouter()
     return (
-        <div className="flex flex-row md:mx-40 px-4 my-5 md:py-4 py-3 rounded-md justify-between items-center relative bg-gradient-to-r from-transparent via-[hsl(var(--primary))] to-transparent">
+        <div className="flex flex-row lg:mx-40 px-4 my-5 md:py-4 py-3 rounded-md justify-between items-center relative bg-black/60">
             <div className="flex flex-row gap-10 items-center">
                 <Logo className="text-2xl"/>
-                <div className="sm:flex hidden flex-row justify-between gap-10 items-center ">
+                <div className="lg:flex hidden flex-row justify-between gap-10 items-center ">
                     {
                         NavbarArray.map((l, k) => (
                             <LinkTag className="text-[hsl(var(--pure-white))]" href={l.src} key={k} >{l.name}</LinkTag>
@@ -23,11 +23,11 @@ export  const Navbar = () => {
                     }
                 </div>
             </div>
-            <div className="md:flex flex-row gap-5 hidden">
+            <div className="lg:flex flex-row gap-5 hidden">
                 <Button onClick={() => router.push("/signin")} variant={"secondary"}>Sign in</Button>
                 <Button onClick={() => router.push("/signin")} className="md:px-10" variant={"primary"}>Get Started</Button>
             </div>
-            <Button variant={"fetch"} onClick={() => setOpenmenu(!openmenu)} className="md:hidden flex text-white">{!openmenu ? <Menu /> : <X/>}</Button>
+            <Button variant={"fetch"} onClick={() => setOpenmenu(!openmenu)} className="lg:hidden flex text-white">{!openmenu ? <Menu /> : <X/>}</Button>
 
             {
                 openmenu && 

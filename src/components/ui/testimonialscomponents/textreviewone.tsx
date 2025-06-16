@@ -25,7 +25,7 @@ export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className
                 duration : 0.4
             }
         }}
-        className={cn("rounded-md group  bg-[hsl(var(--secondary))] border-[hsl(var(--primary))] border-[1px] w-fit py-4 px-3 text-left space-y-3", className)} {...props}>
+        className={cn("rounded-md group  bg-[hsl(var(--secondary))] w-fit py-4 px-3 text-left space-y-3", className)} {...props}>
             <div className="flex flex-row gap-1">
                 {
                 Array.from({length : 5}).map((s, k) => (

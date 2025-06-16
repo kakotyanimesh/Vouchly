@@ -33,7 +33,7 @@ export const Reviewdiv = () => {
             <h1 className="md:text-4xl text-2xl z-10">
               Everything You Need to
               Collect & 
-              <span className="bg-[hsl(var(--primary))] rounded-[3px] border-[hsl(var(--hover-primary))] px-2  ml-2">Showcase</span>
+              <span className="bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent ml-2">Showcase</span>
             </h1>
             <TextReviewOne 
               {...fromYanimation}

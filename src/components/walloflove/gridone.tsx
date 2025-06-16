@@ -13,7 +13,7 @@ export const WallOfLoveText = ({data} : {data : TextReviewProps[]}) => {
                 data.map((s, k) => (
                     <TextReviewOne
                     className=""
-                    customerCompany={s.customerName} imageSrc={"/images/logo.png"} stars={s.stars} textReview={s.textReview!} customerName={s.customerName} key={k}/>
+                    customerCompany={s.customerName} imageSrc={s.imageSrc} stars={s.stars} textReview={s.textReview!} customerName={s.customerName} key={k}/>
                 ))
             }
             </div>
