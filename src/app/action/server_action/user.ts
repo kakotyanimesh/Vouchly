@@ -2,8 +2,8 @@
 
 import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
-import { SpaceCardProps, TestimoniaTableDataTypes } from "@/utils/types/user_types"
-import { unstable_cache } from "next/cache"
+import { SpaceCardProps, TestimoniaTableDataTypes, TextReviewProps } from "@/utils/types/user_types"
+import { revalidateTag, unstable_cache } from "next/cache"
 
 
 const cachedUserdataCount = (id : number) => unstable_cache(
@@ -304,3 +304,183 @@ export const getIndividualTestimonialFormData = async({adminId, formId} : {admin
         }
     }
 }
+
+
+
+/**
+ * two functions -> for text review 
+ * another for vidoes
+ */
+
+
+const cachedTextReviews = ({formId, adminId} : {formId : number, adminId : number}) => unstable_cache(async() => {
+    return await prisma.customerReview.findMany({
+        where : {
+            adminId : Number(adminId),
+            testimonialFormsId : Number(formId)
+        },select : {
+            customerName : true,
+            customerImageUrl : true,
+            customerCompany : true,
+            stars : true,
+            textReview : {
+                select : {
+                    textReview : true
+                }
+            }
+        }
+    })
+},
+    [`text-reviews-cached${formId}-${adminId}`],
+    {
+        revalidate : 300,
+        tags : [`text-review-cached-${formId}-${adminId}`, `review-cached`]
+    }
+)
+
+export const getTextReviews = async({formId, adminId} : {formId : number, adminId : number}) => {
+    try {
+        const res = cachedTextReviews({formId, adminId})
+
+        return (await res()).map((t) : TextReviewProps => ({
+            customerName : t.customerName,
+            customerCompany : t.customerCompany,
+            stars : t.stars,
+            imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg",
+            textReview : t.textReview?.textReview as string
+        }))
+    } catch (error) {
+        const err = await handlerError(error)
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
+
+
+export const revalidateCached = async({cachedName} : {cachedName : string}) => {
+    revalidateTag(`${cachedName}`)
+}
+
+// export const wallofSubmissions = async({formId, adminId} : {formId : number, adminId : number})=> {
+//     try {
+//         return await prisma.customerReview.findMany({
+//             where : {
+//                 adminId : Number(adminId),
+//                 testimonialFormsId : Number(formId)
+//             }, select : {
+//                 customerName : true,
+//                 customerCompany : true,
+//                 customerImageUrl : true,
+//                 viderId : true,
+//                 textReviewId : true,
+//                 stars : true
+//             },
+//             take : 12,
+//         })
+//     } catch (error) {
+//         const err = await handlerError(error)
+
+//         return {
+//             success : false,
+//             message : err.errorMsg,
+//             status : err.statusCode
+//         }
+//     }
+// }
+
+
+
+// const cachedSubmissionsTable = ({adminId, formId} : {adminId : number, formId : number}) => unstable_cache(async() => {
+//     return await prisma.customerReview.findMany({
+//         where : {
+//             adminId : adminId,
+//             testimonialFormsId : formId
+//         }, select : {
+//             customerName : true,
+//             customerCompany : true,
+//             createdAt : true,
+//             approved : true
+//         }
+//     })
+// },
+//     [`user-all-submission-${adminId}`],
+//     {
+//         revalidate : 300,
+//         tags : [`user-all-submission-${adminId}`]
+//     }
+// )
+
+
+// export const getForSubmissionTable = async ({adminId, formId} : {adminId : number, formId : number}) => {
+//     try {
+//         const res = cachedSubmissionsTable({adminId, formId})
+
+//         return (await res()).map((t) : SubmissionTableDatatypes => ({
+//             "Customer Name" : t.customerName,
+//             Status : !t.approved ? "Active" : "Draft",
+//             "Submitted At" : new Date(t.createdAt).toDateString()
+//         }))
+//     } catch (error) {
+//         const err = await handlerError(error)
+
+//         return {
+//             success : false,
+//             message : err.errorMsg,
+//             status : err.statusCode
+//         }
+//     }
+// }
+
+
+
+// submit textreview and video link extra
+
+// export const submitTextReview = async(textReview : string) => {
+//     try {
+//         const { id } = await prisma.textReview.create({
+//             data : {
+//                 textReview
+//             }
+//         })
+
+//         return {
+//             id,
+//             success : true
+//         }
+//     } catch (error) {
+//         const err = await handlerError(error)
+
+//         return {
+//             success : false,
+//             message : err.errorMsg,
+//             status : err.statusCode
+//         } 
+//     }
+// }
+
+
+// export const submiVideoReview = async(video : string) => {
+//     try {
+//         const { id } = await prisma.textReview.create({
+//             data : {
+//                 textReview
+//             }
+//         })
+
+//         return {
+//             id,
+//             success : true
+//         }
+//     } catch (error) {
+//         const err = await handlerError(error)
+
+//         return {
+//             success : false,
+//             message : err.errorMsg,
+//             status : err.statusCode
+//         } 
+//     }
+// }

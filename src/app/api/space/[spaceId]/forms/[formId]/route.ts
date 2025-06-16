@@ -21,21 +21,46 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
             throw error
         }
 
-        const { customerName, adminId, jobTitle, customerCompany, customerEmail, customerImageUrl, customerVideoUrl, textReview, stars} = parsedObject.data
+        const { customerName, adminId, jobTitle, customerCompany, customerEmail, customerImageUrl, videoLink, textReview, stars} = parsedObject.data
 
-        await prisma.customerReview.create({
-            data : {
-                adminId : Number(adminId),
-                spaceId : Number(spaceId),
-                testimonialFormsId : Number(formId),
-                customerCompany,
-                customerEmail,
-                customerImageUrl,
-                customerName,
-                customerVideoUrl,
-                textReview, 
-                stars,
-                jobTitle
+        await prisma.$transaction(async(ts) => {
+            const customerReview = await ts.customerReview.create({
+                data : {
+                    adminId : Number(adminId),
+                    spaceId : Number(spaceId),
+                    testimonialFormsId : Number(formId),
+                    customerCompany,
+                    customerEmail,
+                    customerName,
+                    customerImageUrl,
+                    stars,
+                    jobTitle
+                }, select : {
+                    id : true
+                }
+            })
+
+            if(videoLink && textReview){
+                return NextResponse.json(
+                    {msg : "Cannot provide both text review and video review"},
+                    {status : 400}
+                )
+            }
+
+            if(textReview){
+                await ts.textReview.create({
+                    data : {
+                        customerReviewId : customerReview.id,
+                        textReview
+                    }
+                })
+            } else if(videoLink){
+                await ts.vidoeReview.create({
+                    data : {
+                        customerReviewId : customerReview.id,
+                        videoLink
+                    }
+                })
             }
         })
 
@@ -45,7 +70,7 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
         )
 
     } catch (error) {
-        console.log(error);
+        console.log(JSON.stringify(error));
         
         // we need to work on our error handlers
         if(error instanceof ZodError){
@@ -55,7 +80,7 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
             )
         }
         return NextResponse.json(
-            {msg : "Something went wrong while submitting reviews please try again later"},
+            {msg : "Something went wrong while submitting reviews please try again later", error},
             {status : 500}
         )
     }

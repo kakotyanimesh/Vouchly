@@ -7,19 +7,19 @@
     --user-background: 222.2 84% 4.9%;
     --slate-text: 0 0% 48%;
     
-    --card: 0 0% 8%;
+    /* --card-background: linear-gradient(to right, #2dd4bf, #34d399); */
     --card-foreground: 0 0% 98%;
     
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
     
-    --primary: 152 100% 19%;
+    --primary: 174 69% 49%;
     --primary-border:152 84% 26%;
     --hover-primary:152 100% 28%;
     --primary-foreground: 0 0% 3%;
     
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 68%;
     
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
@@ -38,14 +38,23 @@
     --dashboard-cards:0 0% 13%;
     --dashboard-border:0 0% 12%;
     --pure-white: 0 0% 100%;
+    --card-bg-one: 174 69% 49%;  
+    --card-bg-two: 292 77% 58%; 
 }
 
 
 
 body {
-  background: #171717;
+  background: #1C1C1C;
   color: hsl(var(--foreground));
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@layer utilities{
+  .bg_card_gradient{
+    background: linear-gradient(to right, #24d7c283, #a62fd5);
+  }
 }
 
 /* html {

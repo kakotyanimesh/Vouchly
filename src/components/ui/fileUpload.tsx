@@ -33,7 +33,7 @@ export const FileUploda = ({fileType, className, disable} : FileUploadProps) => 
     }
     return (
         <Card
-            className={cn("w-full h-fit p-5 cursor-pointer border-dotted border-2 space-y-2 rounded-2xl border-[hsl(var(--primary))] flex justify-center items-center flex-col hover:bg-[hsl(var(--secondary))]/60", className)}
+            className={cn("w-full h-fit p-5 cursor-pointer border-dotted border-2 space-y-2 rounded-2xl border-[hsl(var(--primary))] flex justify-center items-center flex-col hover:bg-[hsl(var(--primary))]/5", className)}
         >
 
             {

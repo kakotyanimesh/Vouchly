@@ -16,18 +16,28 @@ export const SpaceModal = () => {
 
     const handleSpaceSubmit = (formdata : FormData) => {
         startTransition(async() => {
-            const spaceName = formdata.get("Space") as string
-            const url = formdata.get("Url") as string
+            const toastId = toast.loading("creating space ..")
 
-            const resSpace = await createSpace({spaceName : spaceName.trim(), url : url.trim()})
+            try {
+                const spaceName = formdata.get("Space") as string
+                const url = formdata.get("Url") as string
 
-            if(resSpace.success){
+                const resSpace = await createSpace({spaceName : spaceName.trim(), url : url.trim()})
+
+                if(!resSpace.success){
+                    throw new Error("failed to create space !! Try again later")
+                } 
                 router.refresh()
-                toast.success("Space Created successfully")
-            } else {
-                toast.error(resSpace.message)
+                toast.success("Space Created successfully", {
+                    id : toastId
+                })
+                setOpneModal(false)
+            } catch (error) {
+                const errmsg = error instanceof Error ? error.message : "something went wrong please try again later"
+                toast.error(errmsg, {
+                    id : toastId
+                })
             }
-            setOpneModal(false)
         })
     }
     return (
@@ -44,14 +54,14 @@ export const SpaceModal = () => {
                 animate={{opacity : 1, scale : 1}}
                 exit={{opacity : 0, scale : 0.9, y : 10}}
                 transition={{type : "spring", stiffness: 300, damping : 30}}
-                className="fixed bg-[hsl(var(--secondary))] border-[hsl(var(--pure-white))]/20 border -translate-x-1/2 -translate-y-1/2 z-50 md:p-10 p-5 space-y-4 md:w-[500px] w-72 top-1/2 left-1/2 rounded-md"
+                className="fixed bg-[hsl(var(--secondary))] shadow-[0px_0px_6px_0px_#4fd1c5] -translate-x-1/2 -translate-y-1/2 z-50 p-7 space-y-4 md:w-[500px] w-72 top-1/2 left-1/2 rounded-md"
                 >
-                        <div>
-                            <h1 className="text-2xl text-[hsl(var(--pure-white))]">Create space</h1>
-                            <p className="text-sm text-[hsl(var(--slate-text))]">A space helps you organize your forms and submissions.</p>
+                        <div className="text-left">
+                            <h1 className="text-3xl text-[hsl(var(--primary))]">Create space</h1>
+                            <p className="text-sm text-[hsl(var(--pure-white))]/60">A space helps you organize your forms and submissions.</p>
                         </div>
                         {/* <Button onClick={() => setOpneModal(false)} variant={"transparent"} sizes={"md"} className="absolute md:right-10 md:top-9 top-2 p-3 text-[hsl(var(--primary))]"><X size={15} strokeWidth={1.6}/></Button> */}
-                        <form action={handleSpaceSubmit}>
+                        <form action={handleSpaceSubmit} className="space-y-2">
                             <InputBox disabled={isPending} name="Space" placeholder="My awesome Space" icon={<Rocket size={15} strokeWidth={1.2}/>}/>
                             <InputBox disabled={isPending} name="Url" placeholder="myawesomespace.com" icon={<Link2 size={15} strokeWidth={1.2}/>}/>
                             <div className="flex items-center md:mt-10 mt-7 md:gap-5 gap-2 justify-end">

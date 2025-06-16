@@ -6,7 +6,7 @@ import { GlowingComponent } from "../ui/glowingdiv"
 
 export const LandingHeader = () => {
     const router = useRouter()
-    const headLine = "Collect Customer Stories"
+    const headLine = "Build Testimonial Page"
 
     const initial = {
         filter : "blur(2px)",
@@ -37,7 +37,7 @@ export const LandingHeader = () => {
                 animate={animate}
                 transition={{duration : 0.5 , delay : 0.4, ease : "easeIn"}} 
                 className="bg-gradient-to-r relative from-[hsl(var(--primary))] to-teal-500 bg-clip-text text-transparent">
-                    Effortlessly
+                    in minutes
                     
                 </motion.span>
             </h1>

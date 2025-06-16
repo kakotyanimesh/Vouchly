@@ -27,43 +27,60 @@ export const  FormDiv = () => {
             return
         }
         startTransition(async() => {
-            
-            const uploadResult = await uploadToS3(imagefile, "form_logos") 
+            const loadingToast = toast.loading("creating testimonia Form" , {
+                position : "bottom-right"
+            })
 
-            if (!uploadResult || !uploadResult.uniqueKey) {
-                toast.error(uploadResult?.message || "Logo upload failed: Unique key not returned.");
-                return;
-            }
-            
-            const brandLogoKey = uploadResult.uniqueKey; 
+            try {
+                const uploadResult = await uploadToS3(imagefile, "form_logos") 
 
-            const formData : CreateFormTypes = {
-                Name,
-                Description,
-                brandLogo : brandLogoKey,
-                spaceId : Number(sId),
-                questions
-            }
+                if (!uploadResult || !uploadResult.uniqueKey) {
+                    toast.error(uploadResult?.message || "Logo upload failed: Unique key not returned.", {
+                        id : loadingToast
+                    });
+                    return;
+                }
 
-            const res = await createForms(formData)
+                const brandLogoKey = uploadResult.uniqueKey; 
 
-            if(res.success){
-                toast.success("Form created successfully")
+                const formData : CreateFormTypes = {
+                    Name,
+                    Description,
+                    brandLogo : brandLogoKey,
+                    spaceId : Number(sId),
+                    questions
+                }
+
+                const res = await createForms(formData)
+
+                if(!res.success){
+                    throw new Error(res.message || "Error Please try again later ....")
+                }
+
+                toast.success("Testimonia created successfully", {
+                    id : loadingToast,
+                    // position :
+                })
+
                 reset()
                 resetFile()
-                router.push(`/space`)
-            } else {
-                toast.error(res.message)
+                router.push("/space")
+            } catch (error) {
+                const errmsg = error instanceof Error ? error.message : "Something went wrong"
+                toast.error(errmsg, {
+                    id : loadingToast
+                })
             }
+            
         })
     }
-    return (
-        <Card className="h-fit p-5 space-y-5 w-full">
+    return ( 
+        <Card className="h-fit p-5 space-y-5 w-full border-[hsl(var(--primary))]/20">
                     <div>
                         <h1 className="text-2xl font-bold">Form Preview </h1>
                         <p className="text-sm">After the Space is created, it will generate a dedicated page for collecting testimonials.</p>
                     </div>
-                    <form onSubmit={createForm} className="border border-[hsl(var(--primary))] p-5 rounded-2xl space-y-5">
+                    <form onSubmit={createForm} className=" rounded-2xl space-y-5">
                         <InputBox 
                         disabled={isPending}
                         onChange={(e) => setName(e.target.value) }

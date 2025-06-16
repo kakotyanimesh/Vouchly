@@ -70,16 +70,21 @@ export interface TestimoniaTableDataTypes {
 } 
 
 
+export interface SubmissionTableDatatypes {
+    "Customer Name" : string,
+    Status : status,
+    "Submitted At" : string,
+} 
 
 export type AWS_Folder_Name = "form_logos" | "testimonial-videos"  | "user-images"
 
 
 export interface TextReviewProps {
     textReview : string,
-    username : string,
-    userCompany : string,
+    customerName : string,
+    customerCompany : string,
     imageSrc : string,
-    starts : number
+    stars : number
 }
 
 
@@ -96,10 +101,10 @@ export interface ReviewTypes {
     formId : number,
     customerName : string
     customerEmail : string
-    textReview : string
+    textReview ?: string
     adminId  : number
     customerImageUrl : string
-    customerVideoUrl : string
+    videoLink ?: string
     stars : number
     jobTitle :  string
     customerCompany : string

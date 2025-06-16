@@ -7,7 +7,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 export async function POST(req:NextRequest) {
     try {
-        console.log("animesh");
         
         const parsedData = S3Config.safeParse(await req.json())
 

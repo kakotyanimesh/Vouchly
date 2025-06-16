@@ -18,7 +18,7 @@ type TestimonialSubmissionTypes  = {
     customerEmail : string,
     customerCompany : string,
     stars : number,
-    textReview : string,
+    textReview ?: string,
     jobTitle : string    
 }
 

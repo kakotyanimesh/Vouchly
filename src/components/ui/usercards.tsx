@@ -2,7 +2,7 @@
 import React, { ReactNode } from "react";
 import { cn } from "@/utils/lib/cn";
 import { HTMLMotionProps, motion } from "motion/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 type UIcardProps = HTMLMotionProps<"div"> & {
     icon : ReactNode,
@@ -13,9 +13,10 @@ type UIcardProps = HTMLMotionProps<"div"> & {
 }
 
 export const Usercards : React.FC<UIcardProps> = ({className, redirectLink, iconStyle, parentColor, icon, title, ...props}) => {
+    const router = useRouter()
     return (
         <motion.div
-        onClick={() => redirect(redirectLink)}
+        onClick={() => router.push(redirectLink)}
         initial={false}
         whileHover={{
             scale : 1.01,

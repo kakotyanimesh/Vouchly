@@ -29,7 +29,7 @@ export const PricingCard : React.FC<PricingProps> = ({className, title, price, d
         }}
         className={cn("space-y-3 group relative hover:bg-black active:bg-black transition-colors ease-linear duration-200 rounded-md border text-left p-4", title === "Professional" ? "border-[hsl(var(--primary))]/80 bg-black rotate-0" : "border-slate-100/10 bg-[hsl(var(--pure-white))]/7", className)} {...props}>
             { 
-                title === "Professional" && <h1 className="absolute -top-3 left-1/2 bg-[hsl(var(--primary))] text-black text-sm px-2 py-0.5 rounded-md">Most Popular</h1>
+                title === "Professional" && <h1 className="absolute -top-3 left-1/2 bg-[hsl(var(--primary))] text-white text-sm px-2 py-0.5 rounded-md">Most Popular</h1>
             }
             <h1 className={cn("text-2xl font-bold", title === "Professional" ? "bg-gradient-to-br from-[hsl(var(--primary))] to-teal-500 bg-clip-text text-transparent" : "text-white")}>{title}</h1>
             <h1 className="text-sm text-slate-500"><span className="text-2xl text-[hsl(var(--primary))]">{price}</span>/month</h1>

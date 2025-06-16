@@ -25,19 +25,23 @@ export const fromPXanimation = {
 
 export const Reviewdiv = () => {
     return (
-        <div className="space-y-1">
-            <h1 className="md:text-4xl text-2xl">
+        <div className="space-y-1 relative">
+            {/* <GlowingComponent 
+            animate={{opacity : 1, scaleY : 1}}
+            initial={{opacity : 0, scaleY : 0}}
+            className="-z-50 bg-gradient-to-t from-[hsl(var(--primary))] blur-md to-transparent rounded-t-[400px] w-full h-42 opacity-50 rounded-b-none -top-32 left-1/2 -translate-x-1/2"/> */}
+            <h1 className="md:text-4xl text-2xl z-10">
               Everything You Need to
               Collect & 
-              <span className="bg-gradient-to-br from-[hsl(var(--primary))]/20 to-teal-500 via-white/40 px-2  ml-2">Showcase</span>
+              <span className="bg-[hsl(var(--primary))] rounded-[3px] border-[hsl(var(--hover-primary))] px-2  ml-2">Showcase</span>
             </h1>
             <TextReviewOne 
               {...fromYanimation}
               className="md:w-[610px] w-full"
               textReview="ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page."
-              starts={1}
-              username="Animesh"
-              userCompany="Titls.com"
+              stars={1}
+              customerName="Animesh"
+              customerCompany="Titls.com"
               imageSrc="https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
             />
             
@@ -46,16 +50,17 @@ export const Reviewdiv = () => {
                 {...fromNXanimation}
                 className="md:w-[500px] w-full"
                 textReview="ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page."
-                starts={3}
-                username="Animesh"
-                userCompany="Titls.com"
+                stars={3}
+                customerName="Animesh"
+                customerCompany="Titls.com"
                 imageSrc="https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
                 />
                 
               <VideoTestimonial
                 {...fromPXanimation}
-                username="Animesh"
-                usercompany="Tits.com"
+                usercompany="Animesh"
+                // st={3}
+                username="Tits.com"
                 videoSrc={animeshvideo} 
               />
             </div>

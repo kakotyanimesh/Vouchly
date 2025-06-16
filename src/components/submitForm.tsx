@@ -10,14 +10,19 @@ import { TextArea } from "./ui/textbox"
 import { IndividualFormDivProps } from "./individualformdiv"
 import { Star } from "lucide-react"
 import { cn } from "@/utils/lib/cn"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { submitTestimonials, uploadToS3 } from "@/app/action/client_action/user"
 import { useFileStore } from "@/utils/zustand/testimonialsformstore"
 import { toast } from "sonner"
 import { ReviewTypes } from "@/utils/types/user_types"
+import { SubmissionThankyoudiv } from "./ui/thankyoudiv"
+import { Logo } from "./ui/logo"
+import { useRouter } from "next/navigation"
 
 export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "createdAt" | "submission" | "token"> & {spaceId : number, adminId : number, formId : number}) => {
     const { storeNumber } = InputBoxesTypesStore()
+    const [isSubmitted, setisSubmitted] = useState<boolean>(false)
+    const router = useRouter()
     
     const {imagefile, videofile, resetFile} = useFileStore()
 
@@ -36,69 +41,105 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
     const handleSubmit = (e : React.FormEvent,) => {
         e.preventDefault()
         if(!imagefile){
-            toast.error("user profile picture is empty")
+            toast.error("Hey! Don`t forget to add a profile picture 📸")
             return
         }
         if(storeNumber === 1 && !videofile){
-            toast.error("Video file is empty")
+            toast.error("Oops, your video`s missing 🎬 Wanna try uploading again?")
             return
         }
         startTransition(async() => {
-            const userPfp = await uploadToS3(imagefile, "user-images") 
+            const toastId = toast.loading("Submitting your review… ⏳", {
+                position : "top-right"
+            })
 
-            if (!userPfp || !userPfp.uniqueKey) {
-                toast.error("user pfp upload failed")
-                return
-            }
-            
-            const customerImageUrl = userPfp.uniqueKey
-            let customerVideoUrl
+            try {
+                const userPfp = await uploadToS3(imagefile, "user-images") 
 
-            if(storeNumber === 1){
-                // too much of if else
-                if(!videofile) {
-                    toast.error("Video file is required");
-                    return;
+                if (!userPfp || !userPfp.uniqueKey) {
+                    toast.error("Couldn`t upload your profile pic 😓 Try again?")
+                    return
                 }
-                const videoLink = await uploadToS3(videofile, "testimonial-videos")
 
-                // i had error here making two !! thanks to ai 3 hrs saved 
-                if(!videoLink || !videoLink.uniqueKey){
-                    toast.error(userPfp?.message || "Video upload failed");
-                    return;
+                const customerImageUrl = userPfp.uniqueKey
+
+                const reviewObject : ReviewTypes = {
+                    customerEmail,
+                    stars,
+                    customerCompany,
+                    customerName,
+                    customerImageUrl,
+                    spaceId : data.spaceId,
+                    formId : data.formId,
+                    adminId : data.adminId,
+                    jobTitle
                 }
-                
-                customerVideoUrl = videoLink.uniqueKey
-            } 
-            // havent make the api route to submit testimonials haha 
-            const reviewObject : ReviewTypes = {
-                customerEmail,
-                stars,
-                customerCompany,
-                customerName,
-                customerImageUrl,
-                customerVideoUrl,
-                textReview,
-                spaceId : data.spaceId,
-                formId : data.formId,
-                adminId : data.adminId,
-                jobTitle
-            }
 
-            const submitReview = await submitTestimonials(reviewObject)
 
-            if(submitReview.success){
-                toast.success("review submitted")
-                resetData()
+                if(storeNumber === 1){
+                    // too much of if else
+                    if(!videofile) {
+                        toast.error("A video is required to submit this type of review 🎥", {
+                            id : toastId
+                        })
+                        return;
+                    }
+                    const videoLink = await uploadToS3(videofile, "testimonial-videos")
+
+                    // i had error here making two !! thanks to ai 3 hrs saved 
+                    if(!videoLink || !videoLink.uniqueKey){
+                        toast.error(videoLink?.message || "Ugh, video upload didn`t work 😩 Try again?", {
+                            id : toastId
+                        });
+                        return;
+                    }
+
+                    reviewObject.videoLink = videoLink.uniqueKey
+                } else {
+                    reviewObject.textReview = textReview
+                }
+                // havent make the api route to submit testimonials haha -> I made it haha
+
+
+                const submitReview = await submitTestimonials(reviewObject)
+
+
+                if(!submitReview.success){
+                    throw new Error("Something went wrong 😕 Couldn`t submit your review right now.")
+                }
+
+                toast.success("Review submitted! You`re awesome 🫶✨", {
+                    id : toastId
+                })
+
+
                 resetFile()
-            } else {
-                toast.error("something went wrong ", submitReview.message)
+                resetData()
+
+                setisSubmitted(true)
+
+            } catch (error) {
+                const errormsg = error instanceof Error ? error.message : "Something went wrong 😵 Give it another shot?"
+
+                toast.error(errormsg, {
+                    id : toastId
+                })
+                
             }
 
         })
     }
     return (
-        <Card className="w-fit mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/6 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
+        <div className="mb-10">
+            {/* <Button variant={"fetch"} className="fixed right-10 bottom-10 bg-gradient-to-r from-teal-400 to-emerald-400 text-left text-sm" onClick={() => router.push(process.env.NEXT_PUBLIC_NEXT_URL as string)}>Built by <br /><Logo className="text-xs"/></Button> */}
+
+            
+            {!isSubmitted ?
+            <Card className="w-fit mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/6 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
+            
+            {/* <div className="z-0 pointer-events-none absolute left-1/2 top-90 w-80 h-72 bg-gradient-to-r from-teal-400/20 to-emerald-400/15 rounded-full blur-3xl"></div>
+            <div className="z-0 pointer-events-none absolute right-1/2 top-60  w-80 h-72 bg-gradient-to-r from-purple-500/20 to-violet-500/15 rounded-full blur-3xl"></div>
+             */}
             <Image src={"/images/logo.png"} width={200} height={100} className="rounded-2xl" alt="form_logo"/>
             <div>
                 <h1 className="text-2xl font-bold">{data.Name}</h1>
@@ -128,6 +169,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
                         name="Email" 
                         type="email"/>
                     <InputBox 
+                        disabled={isPending}
                         value={customerCompany}
                         onChange={(e) => setCustomerCompany(e.target.value)}
                         placeholder="Your Company"
@@ -151,29 +193,38 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
                             onClick={() => setStars(k + 1)}
                             className={cn("rounded-md p-2 cursor-pointer border", stars > k ? "bg-[hsl(var(--primary))]/40 border-white/20" : "bg-[hsl(var(--primary))]/10 border-black/20")} 
                             key={k} >
-                            <Star size={18} className={cn(stars > k ? "text-[hsl(var(--primary))] fill-[hsl(var(--primary))]" : "")}/>
+                            <Star size={18} className={cn(stars > k ? "fill-[hsl(var(--primary))]" : "", "text-[hsl(var(--primary))]")}/>
                         </button>
                     ))}
                 </div>
                 <FileUploda fileType="UserImage" className=""/>
                 <VerticalTabSwitcher tabs={tabS} />
-                {storeNumber === 0 && <TextReview/>}
+                {storeNumber === 0 && <TextReview isdisable={isPending} />}
                 {storeNumber === 1 && <FileUploda disable={isPending} fileType="Video" className="h-32"/>}
                 <Button className="w-full">submit</Button>
             </form>
-            
+            <Button 
+                variant={"fetch"} 
+                className="bg-gradient-to-r from-teal-400 to-emerald-400" 
+                onClick={() => router.push(process.env.NEXT_PUBLIC_NEXT_URL as string)}>
+                Built With <Logo className="text-sm"/>
+            </Button>
         </Card>
+        :
+        <SubmissionThankyoudiv thankYoumsg="Your Review Submitted . You are a hero sir"/>    
+        }
+        </div>
     )
 }
 
 const tabS = [{title : "Text", key : 0}, {title : "Video", key : 1}]
 
 
-const TextReview = () => {
+const TextReview = ({isdisable} : {isdisable : boolean}) => {
     const { textReview, setTextReview} = useTestimonialSubmissionStore()
     return (
         <TextArea 
-            // disabled={isPending}
+            disabled={isdisable}
             // onChange={(e) => setDescription(e.target.value) }
             name="Your Review" 
             value={textReview}

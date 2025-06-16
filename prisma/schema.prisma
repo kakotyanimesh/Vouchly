@@ -75,9 +75,7 @@ model CustomerReview {
   space                     Spaces                @relation(fields: [spaceId], references: [id])
   adminId                   Int
   admin                     User                  @relation(fields: [adminId], references: [id])
-  textReview                String?
   customerImageUrl          String
-  customerVideoUrl          String?
   customerName              String
   customerEmail             String
   stars                     Int
@@ -85,4 +83,24 @@ model CustomerReview {
   approved                  Boolean               @default(false)
   customerCompany           String
   createdAt                 DateTime              @default(now())
+
+  // only one text or video link
+  textReview                TextReview?     
+  videoReview               VidoeReview?   
+
+  @@index([adminId, testimonialFormsId])
+}
+
+model TextReview {
+  id                        Int     @default(autoincrement())   @id
+  customerReviewId          Int @unique
+  CustomerReview            CustomerReview    @relation(fields: [customerReviewId], references: [id])
+  textReview                String
+}
+
+model VidoeReview {
+  id                       Int      @default(autoincrement())     @id
+  customerReviewId         Int @unique
+  CustomerReview           CustomerReview     @relation(fields: [customerReviewId], references: [id])
+  videoLink                String
 }

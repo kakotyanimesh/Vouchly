@@ -1,6 +1,6 @@
 "use client"
 
-import { redirect, usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Logo } from "./ui/logo"
 import { Grid3x3, House, Rocket, Shredder, User } from "lucide-react";
 import { cn } from "@/utils/lib/cn"
@@ -10,6 +10,7 @@ import { motion } from "motion/react";
 export const SideBar = () => {
     const pathName = usePathname()
 
+    const router = useRouter()
     // console.log(`/${pathName.split("/")[1]}` );
     // console.log(pathName);
     
@@ -38,7 +39,7 @@ export const SideBar = () => {
                       style={{
                         zIndex: 0
                       }}
-                      className="absolute md:block hidden inset-x-3 bg-[hsl(var(--primary))]/40 border border-[hsl(var(--primary))] rounded-md">
+                      className="absolute md:block hidden inset-x-3 bg_card_gradient border border-[hsl(var(--primary))] rounded-md">
 
                       </motion.div>   
                     }
@@ -51,10 +52,10 @@ export const SideBar = () => {
                                 ease : "linear"
                             }
                         }}
-                        className={cn("w-full cursor-pointer text-start flex md:flex-row flex-col items-center md:gap-3 py-2 md:px-3 px-1 md:mt-0 mt-4  rounded-md transition-colors duration-250 ease-linear", 
-                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:bg-transparent bg-[hsl(var(--primary))]/40 md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-[hsl(var(--pure-white))]/10"
+                        className={cn("w-full cursor-pointer text-start flex md:flex-row flex-col items-center md:gap-3 py-2 md:px-3 px-1 md:mt-0 mt-4  rounded-md transition-colors duration-250 ease-linear z-10", 
+                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-[hsl(var(--pure-white))]/10"
                         )}
-                        onClick={() => redirect(s.src)}
+                        onClick={() => router.push(s.src)}
                         key={k}>
                             {s.icons}
                             <span className="md:block hidden">{s.name}</span>

@@ -9,8 +9,9 @@ import { motion } from "motion/react"
 import { useTransition } from "react"
 import { signIn } from "next-auth/react"
 import { toast } from "sonner"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { createUser } from "@/app/action/client_action/user"
+import LoadingCircleSpinner from "./ui/loadingspinner"
 
 
 
@@ -18,45 +19,75 @@ export const AuthPage = ({authTypes} : {
     authTypes : "signin" | "signup"
 }) => {
     const authForm = authTypes === "signin"
+    const router = useRouter()
     
     const [isPending, startTransition] = useTransition()
 
     const handleSubmit = (formdata : FormData) => {
         startTransition(async() => {
-            const username = formdata.get("username") as string
-            const email = formdata.get("email") as string
-            const password = formdata.get("password") as string
+            const toasterId = toast.loading(!authForm ? "🧪 Setting things up for you..." : "⏳ Checking your credentials...")
 
-            if(authForm){
-                console.log("signin ");
+            try {
+                const username = formdata.get("username") as string
+                const email = formdata.get("email") as string
+                const password = formdata.get("password") as string
+
+                if(authForm){
+                    
+                    const userSignin = await signIn("credentials", {
+                        email, 
+                        password,
+                        redirect : false
+                    })
+
+                    // if(userSignin.error === undefined){
+                    //     toast.success("User signined In", {
+                    //         id : toasterId
+                    //     })
+                    //     redirect("/dashboard")
+                    // } else if (userSignin.error === "Configuration"){
+                    //     toast.error("Invalid inputs", {
+                    //         id : toasterId
+                    //     })
+                    // }
+
+                    if(userSignin.error === "Configuration"){
+                        throw new Error("❌ Incorrect email or password. Try again.")
+                    }
+
+                    toast.success("successfully Signed In", {
+                        id : toasterId
+                    })
+
+                    router.push("/dashboard")
                 
-                const userSignin = await signIn("credentials", {
-                    email, 
-                    password,
-                    redirect : false
-                })
-
-                if(userSignin.error === undefined){
-                    // toast.success("User signined In")
-                    redirect("/dashboard")
-                } else if (userSignin.error === "Configuration"){
-                    toast.error("Invalid inputs")
-                }
-            } else {
-                // console.log("signup");
-
-                const userSignUp = await createUser({
-                    username, 
-                    password,
-                    email
-                })
-
-                if(userSignUp.success){
-                    toast.success("User creted !")
-                    redirect("/signin")
+                    // redirect("/dashboard")
                 } else {
-                    toast.error(userSignUp.message)
+                    // console.log("signup");
+
+                    const userSignUp = await createUser({
+                        username, 
+                        password,
+                        email
+                    })
+
+                    if(!userSignUp.success){
+                        throw new Error(userSignUp.message)
+                    } 
+
+                    toast.success("🎉 Account created! You can now log in.", {
+                        id : toasterId
+                    })
+
+                    router.push("/signin")
+                    // redirect("/signin")
                 }
+            } catch (error) {
+                const errmsg = error instanceof Error ? error.message : "🌐 Network error. Please check your connection."
+
+                toast.error(errmsg, {
+                    id : toasterId
+                })
             }
         })
     }
@@ -108,7 +139,9 @@ export const AuthPage = ({authTypes} : {
                             name="password" 
                             placeholder="Your Password here " 
                             type="password"/>
-                        <Button disabled={isPending} className="mt-2 w-full">{authForm ? "Continue with Email " : "Create Account "}</Button>
+                        <Button variant={"secondary"} disabled={isPending} className="mt-2 w-full">
+                            {!isPending ? <span>{authForm ? "Continue with Email " : "Create Account "}</span> : <LoadingCircleSpinner/>}
+                        </Button>
                     </form>
                 </Card>
             </motion.div>

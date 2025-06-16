@@ -151,7 +151,7 @@ export const uploadToS3 = async (file : File, folderName : AWS_Folder_Name) => {
 
 export const submitTestimonials = async(data : ReviewTypes) => {
     try {
-        const res = await fetch(`/api/space/${data.spaceId}/forms/${data.formId}`,{
+        const res = await fetch(`/api/unprotected/submittestimonial`,{
             method : "POST",
             headers : {
                 "Content-type" : "application/json"
@@ -171,6 +171,8 @@ export const submitTestimonials = async(data : ReviewTypes) => {
             message : datares
         }
     } catch (error) {
+        console.log(error);
+        
         const err = await handlerError(error)
 
         return {

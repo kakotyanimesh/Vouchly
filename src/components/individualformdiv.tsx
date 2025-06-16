@@ -4,9 +4,10 @@ import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 import { InputBox } from "./ui/input"
 import { TextArea } from "./ui/textbox"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LinkTag } from "./ui/Link"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export interface IndividualFormDivProps {
     Name : string,
@@ -14,20 +15,33 @@ export interface IndividualFormDivProps {
     questions : string[],
     submission : number,
     createdAt : string,
-    token : string
+    token : string,
+    formId : number
 }
 
 export const IndividualFormDiv = (data : IndividualFormDivProps) => {
 
+    const router = useRouter()
     const [copied, setCopied] = useState(false)
+    
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            setCopied(false)
+        }, 2000)
+    
+      return () => {
+        clearTimeout(id)
+      }
+    }, [copied])
     
     
     return (
         <div className="space-y-5">
-            <section className="flex flex-row items-center justify-between">
+            <section className="flex md:flex-row flex-col items-center justify-between">
                 <div>
                     <h1 className="font-semibold text-2xl">{data.Name}</h1> 
-                    <p className="text-[hsl(var(--slate-text))]">{data.Description}.</p>
+                    <p className="text-[hsl(var(--secondary-foreground))] text-sm">{data.Description}</p>
                 </div>
                 <div className="flex flex-row gap-4 items-center">
                     <LinkTag 
@@ -40,10 +54,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     <Button 
                         onClick={() => {
                             navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`)
-                            toast.info("URL copied", {
-                                position : "top-left",
-                                
-                            })
+                            toast.info("URL copied")
                         }}
                         variant={"secondary"} 
                         className="flex flex-row items-center gap-2">
@@ -51,8 +62,8 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     </Button>
                 </div>
             </section>
-            <div className="grid grid-cols-3 gap-7">
-                <Card className="col-span-2 py-7 px-5 bg-[hsl(var(--pure-white))]/7 space-y-5">
+            <div className="grid md:grid-cols-3 grid-cols-1 gap-7">
+                <Card className="md:col-span-2 col-span-1 py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
                     <h1 className="text-md font-semibold">Update Your Testimonia Form here </h1>
                     <form className="space-y-5">
                         <InputBox 
@@ -62,37 +73,42 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                             name="New Description" 
                             placeholder={data.Description}/>
                         
-                        <h1 className="text-sm text-[hsl(var(--slate-text))]">Advanced fileds will be added soon </h1>
-                        <Button>Update</Button>
+                        <h1 className="text-sm text-[hsl(var(--secondary-foreground))]">Advanced fileds will be added soon </h1>
+                        <Button 
+                            type="button" 
+                            variant={"secondary"} 
+                            onClick={() => toast.message("Hold up ⚙️", {description : "This update feature is cooking... check back soon!"})}>
+                            Update
+                        </Button>
                     </form>
                 </Card>
-                <div className="space-y-4">
-                    <Card className="col-span-1 py-7 px-5 bg-[hsl(var(--pure-white))]/7 h-fit space-y-5">
+                <div className="space-y-4 col-span-1">
+                    <Card className=" py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
                         <section>
                             <h1 className="font-semibold text-2xl">Submissions</h1>
-                            <p className="text-[hsl(var(--slate-text))] text-sm">View and manage responses to this form</p>
+                            <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">View and manage responses to this form</p>
                         </section>
                         <section>
                             <h1 className="text-4xl font-bold">{data.submission}</h1>
-                            <p className="text-[hsl(var(--slate-text))] text-sm">Total submissions</p>
+                            <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Total submissions</p>
                         </section>
-                        <Button className="w-full" variant={"secondary"}>View all Submissions</Button>
+                        <Button 
+                        onClick={() => router.push(`/forms/${data.formId}/embaded`)}
+                        className="w-full" variant={"secondary"}>View all Submissions</Button>
                     </Card>
 
 
-                    <Card className="col-span-1 py-7 px-5 bg-[hsl(var(--pure-white))]/7 h-fit space-y-5">
+                    <Card className="py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
                         <section>
                             <h1 className="font-semibold text-2xl">Sharing & Details</h1>
-                            <p className="text-[hsl(var(--slate-text))] text-sm">Share your form and view its identifiers.</p>
+                            <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Share your form and view its identifiers.</p>
                         </section>
                         <section className="flex flex-row gap-2 justify-between">
-                            <h1 className="rounded-md border border-white/20 p-2 text-[hsl(var(--primary))] overflow-x-auto whitespace-nowrap scrollbar-hide">{process.env.NEXT_PUBLIC_NEXT_URL}/submit/{data.token}</h1>
+                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))]/40 p-2 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide">{process.env.NEXT_PUBLIC_NEXT_URL}/submit/{data.token}</h1>
                             <Button variant={"transparent"} sizes={"sm"} onClick={() => {
                                 navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`)
                                 setCopied(true)
-                                toast.info("URL copied", {
-                                    position : "top-left",
-                                })
+                                toast.info("URL copied")
                             }}>
                                 {!copied ? <Copy size={19}/> : <Check size={19}/>}
                             </Button>

@@ -7,8 +7,8 @@ export const InputVariants = cva(
     {
         variants : {
             variants : {
-                primary : "bg-[hsl(var(--input))] placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]",
-                secondary : "bg-[hsl(var(--secondary))]/20 placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]"
+                primary : "bg-[hsl(var(--primary))]/5 placeholder:text-[hsl(var(--secondary-foreground))] text-white border-[hsl(var(--primary))]/13 focus:ring-[hsl(var(--primary))]",
+                secondary : "bg-[hsl(var(--secondary))]/20 placeholder:text-[hsl(var(--secondary-foreground))] text-white border-white/20 focus:ring-[hsl(var(--primary))]"
             },
             sizes : {
                 sm : "text-sm h-10",
@@ -31,10 +31,10 @@ export interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElemen
 export const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(({className, icon, variants, sizes, ...props}, ref) => {
     return (
         <div className="flex flex-col space-y-1">
-            <label htmlFor="" className="text-sm text-[hsl(var(--secondary-foreground))]">{props.name}</label>
+            <label htmlFor="" className="text-sm text-[hsl(var(--primary))]">{props.name}</label>
             <div className="relative">
             {
-                icon && <span className="absolute top-3 left-5">{icon}</span>
+                icon && <span className="absolute top-3 left-5 text-[hsl(var(--primary))] ">{icon}</span>
             }
             
             <input

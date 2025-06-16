@@ -6,7 +6,7 @@ export const Card : React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
     ...props
 }) => {
     return (
-        <div className={cn("rounded-md border-[hsl(var(--pure-white))]/20 border", className)} {...props}>
+        <div className={cn("rounded-md border-[hsl(var(--pure-white))]/20 border ", className)} {...props}>
             {children}
         </div>
     )

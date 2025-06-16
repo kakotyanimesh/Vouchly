@@ -12,8 +12,8 @@ export default function Home() {
       <Navbar/>
       <div className="flex justify-center text-center space-y-40 items-center flex-col">
         <LandingHeader/>
-        <Reviewdiv/>
         <FeaturesDiv/>
+        <Reviewdiv/>
         <NoCoding/>
         <PricingDiv/>
       </div>

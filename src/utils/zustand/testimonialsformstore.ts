@@ -71,7 +71,7 @@ export const useFileStore = create<FileUploadActions & FileUploadInterface>((set
         set({
             imagefile : i,
             previewUrl : URL.createObjectURL(i)
-        })
+        })  
     },
     setVideoFile : (v) => set({videofile : v}),
     resetFile : () => set(fileUploadInitialStates)

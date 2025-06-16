@@ -65,11 +65,19 @@ export const TestimonialsTableheaders : TableHeader[] = [
     { label: "Actions", key: "actions" , isHidden : false}
 ]
 
+export const SubmissionTableheaders : TableHeader[] = [
+    { label: "Submitted by", key: "Name" , isHidden : false},
+    { label: "Status", key: "status", isHidden : false },
+    { label: "Submitted At", key: "date" , isHidden : true},
+    { label: "Actions", key: "actions" , isHidden : false}
+]
+
+
 
 
 export const FormTableheaders = [
     { label: "Name", key: "Name" , isHidden : false},
-    { label: "Space", key: "Space", isHidden : true },
+    { label: "Space", key: "Space", isHidden : true },  
     { label: "Status", key: "status", isHidden : false },
     { label: "Submissions", key: "submission" , isHidden : true},
     { label: "Actions", key: "actions" , isHidden : false}
@@ -113,23 +121,23 @@ export const FormTabledata = [
 export const TextReviews : TextReviewProps[] = [
     {
         textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
-        username : "Animesh",
-        userCompany : "Kakoty.tech",
-        starts : 4,
+        customerName : "Animesh",
+        customerCompany : "Kakoty.tech",
+        stars : 4,
         imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
     },
     {
         textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
-        username : "Animesh",
-        userCompany : "Kakoty.tech",
-        starts : 4,
+        customerName : "Animesh",
+        customerCompany : "Kakoty.tech",
+        stars : 4,
         imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
     },
     {
         textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
-        username : "Animesh",
-        userCompany : "Kakoty.tech",
-        starts : 4,
+        customerName : "Animesh",
+        customerCompany : "Kakoty.tech",
+        stars : 4,
         imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
     }
 ]

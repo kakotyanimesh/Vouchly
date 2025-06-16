@@ -1,13 +1,22 @@
+"use client"
 import Image from "next/image"
 import { Card } from "./ui/card"
 import { Button } from "./ui/button"
 import { useFileStore, useFormStore } from "@/utils/zustand/testimonialsformstore"
+import { toast } from "sonner"
 
 export const PreviewForm = () => {
     const {Name, Description, questions} = useFormStore()
     const { previewUrl } = useFileStore()
+
+    const alert = () => {
+        toast.message("Action disabled for preview mode", {
+            description: "Only end-users will be able to interact with this form.",
+            // ai message im not that good at writing english
+        })
+    }
     return (
-        <Card className="h-fit md:px-15 md:py-10 p-3 flex flex-col space-y-5 w-full">
+        <Card className="h-fit md:px-15 md:py-10 p-3 flex flex-col space-y-5 w-full border-[hsl(var(--primary))]/20">
            <div className="justify-center flex">
                 <Image 
                     src={previewUrl && previewUrl !== "" ? previewUrl : "/images/logo.png"} 
@@ -33,8 +42,8 @@ export const PreviewForm = () => {
                     <h1 key={k}>• {q}</h1>
                 ))}
            </div>
-           <Button className="w-full"  >Record a Video</Button>
-           <Button className="w-full" variant={"secondary"}>Send Text Review</Button>
+           <Button className="w-full" onClick={() => alert()} >Record a Video</Button>
+           <Button className="w-full" onClick={() => alert()} variant={"secondary"}>Send Text Review</Button>
     </Card>
     )
 }

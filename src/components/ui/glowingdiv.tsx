@@ -10,7 +10,7 @@ type glowingTypes = HTMLMotionProps<"div">
 
 export const GlowingComponent : React.FC<glowingTypes> = ({className, ...props}) => {
     return (
-        <motion.div className={cn("z-0 pointer-events-none absolute w-80 h-72 rounded-full bg-gradient-to-r", className)} {...props}>
+        <motion.div className={cn("z-0 pointer-events-none absolute w-80 h-72 bg-gradient-to-r", className)} {...props}>
 
         </motion.div>
     )
