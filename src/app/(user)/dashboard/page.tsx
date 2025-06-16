@@ -14,7 +14,7 @@ export default async function dashboard() {
     return (
         <div className="md:space-y-10 space-y-5">
             <h1 className="font-semibold text-2xl">Welcome {name}</h1>
-            <div className="grid md:grid-cols-4 md:gap-10 gap-5 grid-cols-2 ">
+            <div className="grid xl:grid-cols-4 xl:gap-10 gap-5 grid-cols-2 ">
                 {shortCutArrayDashboard.map((s, k) => (
                     <Usercards  redirectLink={s.redirect} parentColor={s.parentColor} title={s.title} icon={s.icon} key={k} iconStyle={s.iconStyle} />
                 ))}

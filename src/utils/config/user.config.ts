@@ -22,3 +22,10 @@ export const signupObject = z.object({
                 .regex(/[0-9]/, "Password must contain at least one number")
                 .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character")
 })
+
+
+export const updateObject = z.object({
+    id : z.number(),
+    email : z.string().email({message : "Enter a valid email address "}).optional(),
+    username : z.string().max(20, {message : "Max 20 letters is allowed"}).optional(),
+})

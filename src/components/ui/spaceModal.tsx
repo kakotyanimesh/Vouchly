@@ -66,7 +66,7 @@ export const SpaceModal = () => {
                             <InputBox disabled={isPending} name="Url" placeholder="myawesomespace.com" icon={<Link2 size={15} strokeWidth={1.2}/>}/>
                             <div className="flex items-center md:mt-10 mt-7 md:gap-5 gap-2 justify-end">
                                 <Button disabled={isPending} variant={"secondary"} className="flex items-center gap-2 justify-center border-[hsl(var(--primary))]" sizes={"md"}><Plus size={16}/>Create Space</Button>
-                                <Button type="button" onClick={() => setOpneModal(false)} variant={"transparent"} sizes={"md"}>Cancel</Button>
+                                <Button type="button" disabled={isPending} onClick={() => setOpneModal(false)} variant={"transparent"} sizes={"md"}>Cancel</Button>
                             </div>
                         </form>
                 </motion.div>

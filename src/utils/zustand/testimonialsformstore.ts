@@ -20,7 +20,7 @@ type FormActions = {
 const initialState : FormInterface = {
     Name : "Testimonia Form Title",
     Description : "Write a warm message to your customers, and give them simple directions on how to make the best testimonial.",
-    questions : ["What is the best thing about [our product / service]"],
+    questions : ["What is the best thing about [our product / service ?"],
 }
 
 export const useFormStore = create<FormInterface & FormActions>((set) => ({

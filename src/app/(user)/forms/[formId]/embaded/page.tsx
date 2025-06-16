@@ -19,7 +19,7 @@ export default async function Embaded({params} : {params : Promise<{formId : num
     return (
         <div className="space-y-10">
             <DashboardNavbarText h1Title="Wall of Love" desc="Customize and preview your wall of love design"/>        
-            <div className="md:w-[750px] w-[300px]">
+            <div className="xl:w-[750px] w-[300px]">
                 <WallOfLoveText data={submissions}/>
             </div>
             <GridChanger cachedName={`text-review-cached-${formId}-${id}`}/>

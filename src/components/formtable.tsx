@@ -14,6 +14,7 @@ export const FormTable = ({thead, tdata} : {thead : TableHeader[], tdata : Testi
     const filteredData : TestimoniaTableDataTypes[] = tdata.filter(f => (
         f.Name.toLowerCase().includes(searchValue.toLowerCase()) || f.Description.toLowerCase().includes(searchValue.toLowerCase())
     ))
+    
     return (
         <motion.div 
         initial={{opacity : 0, y: 14}}

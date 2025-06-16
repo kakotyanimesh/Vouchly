@@ -36,7 +36,7 @@ export const SpaceDiv : React.FC<SpaceDivTypes> = ({className, data, ...props}) 
                         openModal && <SpaceModal/>
                     }
                 </Card> : 
-                <div className="grid md:grid-cols-3 grid-cols-1 gap-5">
+                <div className="grid xl:grid-cols-3 grid-cols-1 gap-5">
                     {data.map((d, k) => (
                         <SpaceCard src={d.src} Id={d.Id} key={k} spaceName={d.spaceName} createdAt={d.createdAt} totalForms={d.totalForms}/>
                     ))}

@@ -18,6 +18,7 @@ import { ReviewTypes } from "@/utils/types/user_types"
 import { SubmissionThankyoudiv } from "./ui/thankyoudiv"
 import { Logo } from "./ui/logo"
 import { useRouter } from "next/navigation"
+import LoadingCircleSpinner from "./ui/loadingspinner"
 
 export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "createdAt" | "submission" | "token"> & {spaceId : number, adminId : number, formId : number}) => {
     const { storeNumber } = InputBoxesTypesStore()
@@ -201,7 +202,9 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
                 <VerticalTabSwitcher tabs={tabS} />
                 {storeNumber === 0 && <TextReview isdisable={isPending} />}
                 {storeNumber === 1 && <FileUploda disable={isPending} fileType="Video" className="h-32"/>}
-                <Button className="w-full">submit</Button>
+                <Button className="w-full" variant={"secondary"}>
+                    {!isPending ? "submit" : <LoadingCircleSpinner/>}
+                </Button>
             </form>
             <Button 
                 variant={"fetch"} 

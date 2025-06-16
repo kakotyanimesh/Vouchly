@@ -2,12 +2,9 @@
 
 import { usePathname, useRouter } from "next/navigation"
 import { Logo } from "./ui/logo"
-import { Grid3x3, House, Rocket, Shredder, User } from "lucide-react";
+import { House, Rocket, Shredder, User } from "lucide-react";
 import { cn } from "@/utils/lib/cn"
 import { motion } from "motion/react";
-import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
-import { toast } from "sonner";
 
 
 export const SideBar = () => {
@@ -66,14 +63,14 @@ export const SideBar = () => {
                     ))
                 }
                 </div>
-                <Button   
-                    className="absolute bottom-10 left-14" 
+                {/* <Button   
+                    className="md:fixed hidden bottom-10 left-14" 
                     variant={"secondary"} 
                     onClick={() => {
                         toast.message("✅ You’ve been logged out successfully.")
                         signOut({callbackUrl : "/", redirect : true})
                     }}
-                >log out</Button>
+                >log out</Button> */}
             </div>
     )
 }
@@ -83,6 +80,5 @@ const SideBarRoutes = [
     {name : "Dashboard", src : "/dashboard", icons : <House strokeWidth={1.5} size={18}/>},
     {name : "Space", src : "/space", icons : <Rocket strokeWidth={1.5} size={18}/>},
     {name : "Forms", src : "/forms", icons : <Shredder strokeWidth={1.5} size={18}/> },
-    {name : "Submissions", src : "/submissions", icons : <Grid3x3 strokeWidth={1.5} size={18}/>},
     {name : "Account", src : "/account", icons : <User strokeWidth={1.5} size={18}/>},
 ]

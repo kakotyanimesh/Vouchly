@@ -24,7 +24,7 @@ export async function Dashboardstats({userId} : {userId : number}) {
         ] 
     
     return (
-        <div className="grid md:grid-cols-3 md:gap-10 gap-3">
+        <div className="grid xl:grid-cols-3 md:gap-10 gap-3">
             {DashboardCardData.map((d, k) => (
                 <DashboardCard title={d.title} data={d.data} desc={d.desc} key={k}/>
             ))}

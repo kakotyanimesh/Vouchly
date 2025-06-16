@@ -10,7 +10,7 @@ const ButtonVariants = cva(
         variants : {
             variant : {
                 primary : "bg-[hsl(var(--pure-white))]/80 text-black",
-                secondary : "bg-gradient-to-r from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] text-black",
+                secondary : "bg-gradient-to-r from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] text-white",
                 transparent : "hover:bg-[hsl(var(--primary))]/10 border border-[hsl(var(--tertiary))] text-[hsl(var(--primary))] hover:text-white",
                 fetch : "hover:underline decoration-[hsl(var(--card-bg-one))] bg-gradient-to-r  from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] bg-clip-text text-transparent underline-offset-2"
                 // decoration underline color 

@@ -12,23 +12,23 @@ import { revalidateCached } from "@/app/action/server_action/user"
 export const GridChanger = ({cachedName} : {cachedName : string}) => {
     const { setGridNumber, gridNumber } = useGridStore()
     return (
-        <Card className="py-7 md:fixed top-28 right-5 md:w-96 w-full px-5 space-y-5">
+        <Card className="py-7 md:fixed top-28 right-5 xl:w-96 w-fit px-5 space-y-5">
                     <h1 className="font-semibold text-xl">Customize Layout</h1>
                     <div className="space-y-4 flex md:flex-col flex-row space-x-2">
                         {LayoutArry.map((t, k) => (
                             <Card 
                             onClick={() => setGridNumber(t.id)}
-                            key={k} className={cn("flex md:flex-row flex-col h-full items-center p-3 gap-3  cursor-pointer hover:border-[hsl(var(--primary))] hover:border transition-colors duration-200 ease-linear", gridNumber === k +1 ? "bg-[hsl(var(--primary))]/70" : "hover:bg-[hsl(var(--primary))]/20")}>
+                            key={k} className={cn("flex md:flex-row flex-col h-full w-full items-center p-3 gap-3  cursor-pointer hover:border-[hsl(var(--primary))] hover:border transition-colors duration-200 ease-linear", gridNumber === k +1 ? "bg-[hsl(var(--primary))]/70" : "hover:bg-[hsl(var(--primary))]/20")}>
                                 <IconDiv className="rounded-full p-2 w-fit" reactNode={t.icon}/>
-                                <div className="-space-y-2">
+                                <div className="-space-y-2 ">
                                     <h1>{t.layoutStyle}</h1>
                                     <p className="text-sm hidden md:block text-[hsl(var(--secondary-foreground))]">{t.desc}</p>
                                 </div>
                             </Card>
                         ))}
                     </div>
-                    <h1 className="bg-pink-800/70 text-blue-100 rounded-full px-3 border border-blue-950 w-fit text-xs">For smaller screen its only 1 grid is available right now</h1>
-                    <h1 className="bg-blue-800/70 text-blue-100 rounded-full px-3 border border-blue-950 w-fit text-xs">More customization are coming ....</h1>
+                    <h1 className="bg-pink-800/70 text-blue-100 rounded-full xl:block hidden px-3 border border-blue-950 w-fit text-xs">For smaller screen its only 1 grid is available right now</h1>
+                    <h1 className="bg-blue-800/70 text-blue-100 rounded-full xl:block hidden px-3 border border-blue-950 w-fit text-xs">More customization are coming ....</h1>
                     <Button 
                         onClick={() => revalidateCached({cachedName})}
                         variant={"secondary"}>

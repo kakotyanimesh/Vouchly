@@ -57,3 +57,56 @@ export async function POST(req:NextRequest) {
         )
     }
 }
+
+
+// export async function PUT(req:NextRequest) {
+//     try {
+//         const parsedObject = updateObject.safeParse(await req.json())
+
+//         if(!parsedObject.success){
+//             throw parsedObject.error.errors
+//         }
+
+//         const { username, email, id} = parsedObject.data
+
+//         const user = await prisma.user.findUnique({
+//             where : {
+//                 id : Number(id)
+//             }
+//         })
+
+//         if(!user){
+//             return NextResponse.json(
+//                 {msg : "User with Your Id doesnot exits"},
+//                 {status : 404}
+//             )
+//         }
+
+//         await prisma.user.update({
+//             where : {
+//                 id : Number(id)
+//             },
+//             data : {
+//                 ...(username && {username}),
+//                 ...(email && {email})
+//                 // && returns first falsy value => means if username exits then it will return the object and we destructure it 
+//             }
+//         })
+
+//         return NextResponse.json(
+//             {msg : "User data updated Successgully"},
+//             {status : 200}
+//         )
+//     } catch (error) {
+//         if(error instanceof ZodError){
+//             return NextResponse.json(
+//                 {msg : "Invalid Inputs"},
+//                 {status : 409}
+//             )
+//         }
+//         return NextResponse.json(
+//             {msg : "Unable to upadate Your data"},
+//             {status : 500}
+//         )
+//     }
+// }

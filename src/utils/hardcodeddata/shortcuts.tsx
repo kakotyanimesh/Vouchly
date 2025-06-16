@@ -79,7 +79,7 @@ export const FormTableheaders = [
     { label: "Name", key: "Name" , isHidden : false},
     { label: "Space", key: "Space", isHidden : true },  
     { label: "Status", key: "status", isHidden : false },
-    { label: "Submissions", key: "submission" , isHidden : true},
+    { label: "Submissions", key: "Submissions" , isHidden : true},
     { label: "Actions", key: "actions" , isHidden : false}
 ]
 

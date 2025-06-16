@@ -27,6 +27,8 @@ async function WaitedForm() {
     // await new Promise(resolve => setTimeout(resolve, 2000));
 
     const data = await getAllTestimonials(Number(id), 10)
+    
+    
 
     if(!Array.isArray(data)){
         return (

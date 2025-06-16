@@ -38,7 +38,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
     
     return (
         <div className="space-y-5">
-            <section className="flex md:flex-row flex-col items-center justify-between">
+            <section className="flex xl:flex-row flex-col items-center justify-between">
                 <div>
                     <h1 className="font-semibold text-2xl">{data.Name}</h1> 
                     <p className="text-[hsl(var(--secondary-foreground))] text-sm">{data.Description}</p>
@@ -62,8 +62,8 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     </Button>
                 </div>
             </section>
-            <div className="grid md:grid-cols-3 grid-cols-1 gap-7">
-                <Card className="md:col-span-2 col-span-1 py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
+            <div className="grid xl:grid-cols-3 grid-cols-1 gap-7">
+                <Card className="xl:col-span-2 col-span-1 py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
                     <h1 className="text-md font-semibold">Update Your Testimonia Form here </h1>
                     <form className="space-y-5">
                         <InputBox 

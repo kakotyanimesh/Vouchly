@@ -97,7 +97,7 @@ export const AuthPage = ({authTypes} : {
             <div className="z-0 pointer-events-none absolute left-1/2 top-60 w-80 h-72 bg-gradient-to-r from-teal-400/20 to-emerald-400/15 rounded-full blur-3xl"></div>
             <div className="z-0 pointer-events-none absolute right-1/2 top-60  w-80 h-72 bg-gradient-to-r from-purple-500/20 to-violet-500/15 rounded-full blur-3xl"></div>
             
-            <Logo className="mb-10"/>
+            <Logo className="mb-4"/>
 
             <motion.div 
             initial={{
