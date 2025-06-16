@@ -33,9 +33,9 @@ export const NoCoding = () => {
                             {...downAnimation}
                             className="md:col-span-1 col-span-3"
                             textReview={t.textReview}
-                            username={t.username}
-                            userCompany={t.userCompany}
-                            starts={t.starts}
+                            customerName={t.customerName}
+                            customerCompany={t.customerCompany}
+                            stars={t.stars}
                             imageSrc={t.imageSrc}
                             key={k}
                             />
@@ -56,9 +56,9 @@ export const NoCoding = () => {
                             {...leftAnimation}
                             className="md:col-span-1 col-span-3"
                             textReview={t.textReview}
-                            username={t.username}
-                            userCompany={t.userCompany}
-                            starts={t.starts}
+                            customerName={t.customerName}
+                            customerCompany={t.customerCompany}
+                            stars={t.stars}
                             imageSrc={t.imageSrc}
                             key={k}
                             />
@@ -78,9 +78,9 @@ export const NoCoding = () => {
                             {...rightAnimation}
                             
                             textReview={t.textReview}
-                            username={t.username}
-                            userCompany={t.userCompany}
-                            starts={t.starts}
+                            customerName={t.customerName}
+                            customerCompany={t.customerCompany}
+                            stars={t.stars}
                             imageSrc={t.imageSrc}
                             key={k}
                             />
