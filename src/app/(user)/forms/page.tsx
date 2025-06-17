@@ -11,7 +11,7 @@ import { Suspense } from "react";
 export default async function Forms() {
     
     return (
-        <div className="space-y-10">
+        <div className="space-y-5">
             <FormsNavabar buttonTitle="Create Form" heading="All Forms" desc="Manage all your forms in one place."/>
             <Suspense fallback={<LoadingForm/>}>
                 <WaitedForm/>

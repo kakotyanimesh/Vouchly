@@ -1,5 +1,6 @@
 import { getTextReviews } from "@/app/action/server_action/user"
 import { DashboardNavbarText } from "@/components/ui/dashboardnavbartext"
+import { BackButton } from "@/components/ui/routerBack"
 import { GridChanger } from "@/components/walloflove/grid_changer"
 import { WallOfLoveText } from "@/components/walloflove/gridone"
 import { getUserSession } from "@/utils/lib/user_session"
@@ -18,6 +19,7 @@ export default async function Embaded({params} : {params : Promise<{formId : num
     
     return (
         <div className="space-y-10">
+            <BackButton/>
             <DashboardNavbarText h1Title="Wall of Love" desc="Customize and preview your wall of love design"/>        
             <div className="xl:w-[750px] w-[300px]">
                 <WallOfLoveText data={submissions}/>

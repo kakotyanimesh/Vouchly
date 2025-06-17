@@ -111,7 +111,7 @@ export const  FormDiv = () => {
                         className="w-full justify-center flex" 
                         onClick={() => addQuestionsArrray()}><Plus/></Button>
 
-                        <FileUploda fileType="Logo"/>
+                        <FileUploda disable={isPending} fileType="Logo"/>
 
                         <Button disabled={isPending}>Save Form</Button>
                     </form>

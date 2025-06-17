@@ -5,14 +5,14 @@ export const shortCutArrayDashboard = [
     {   
         title : "Create New Space", 
         icon : <Plus size={15}/>, 
-        parentColor: "shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)] bg-[hsl(var(--primary))]/20", 
-        iconStyle : "bg-[hsl(var(--primary))]/50 text-white",
+        parentColor: "group hover:shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)] bg-[hsl(var(--primary))]/10", 
+        iconStyle : "bg-[hsl(var(--primary))]/50",
         redirect : "/space"
     },
     {   
         title : "View Forms", 
         icon : <GitGraph size={15}/>, 
-        parentColor:"shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)] bg-blue-500/10", 
+        parentColor:"group hover:shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)] bg-blue-500/10", 
         iconStyle : "bg-blue-500/50",
         redirect : "/forms"
 
@@ -20,17 +20,17 @@ export const shortCutArrayDashboard = [
     {
         title : "Check Submissions", 
         icon : <MessageCircleDashed size={15}/>, 
-        parentColor:"shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)] bg-purple-500/10", 
+        parentColor:"group hover:shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)] bg-purple-500/10", 
         iconStyle : "bg-purple-500/50",
-        redirect : "/submissions"
+        redirect : "/space"
         
     },
     {
         title : "Manage Settings", 
         icon : <Settings size={15}/>, 
-        parentColor: "shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)] bg-orange-500/10",
+        parentColor: "hover:shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)] bg-orange-500/10",
         iconStyle : "bg-orange-500/50",
-        redirect : "/settings"
+        redirect : "/account"
         
     },
 ]

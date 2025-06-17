@@ -22,11 +22,12 @@ export default async function SubmitTestimonia({params}:{params : Promise<{slug 
     }
 
     // console.log(data);
+    const logoUrl = `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${data.brandLogo}`
     
 
     return (
         <div className="flex justify-center items-center mt-10">
-            <SubmitFormComponent adminId={decoded.adminId} formId={decoded.formId} spaceId={data.spaceId} Name={data.Name} Description={data.Description} questions={data.questions} />
+            <SubmitFormComponent logoUrl={logoUrl} adminId={decoded.adminId} formId={decoded.formId} spaceId={data.spaceId} Name={data.Name} Description={data.Description} questions={data.questions} />
         </div>
     )
 }

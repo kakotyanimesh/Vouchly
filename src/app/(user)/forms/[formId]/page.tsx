@@ -1,5 +1,6 @@
 import { getIndividualTestimonialFormData } from "@/app/action/server_action/user"
 import { IndividualFormDiv } from "@/components/individualformdiv"
+import { BackButton } from "@/components/ui/routerBack"
 import { generateToken } from "@/utils/lib/lib_new"
 import { getUserSession } from "@/utils/lib/user_session"
 
@@ -21,6 +22,7 @@ export default async function IndividualForms({params}:{params : Promise<{formId
     }
     return (
         <div className="">
+            <BackButton/>
             <IndividualFormDiv formId={Number(id)} token={token} questions={data.questions} Name={data.Name} Description={data.Description} submission={data._count.customerReview} createdAt={data.createdAt.toDateString()}/>
         </div>
     )

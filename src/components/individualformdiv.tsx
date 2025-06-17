@@ -7,10 +7,10 @@ import { TextArea } from "./ui/textbox"
 import { useEffect, useState } from "react"
 import { LinkTag } from "./ui/Link"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 
 export interface IndividualFormDivProps {
     Name : string,
+    logoUrl ?: string,
     Description : string,
     questions : string[],
     submission : number,
@@ -21,7 +21,6 @@ export interface IndividualFormDivProps {
 
 export const IndividualFormDiv = (data : IndividualFormDivProps) => {
 
-    const router = useRouter()
     const [copied, setCopied] = useState(false)
     
 
@@ -92,9 +91,14 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                             <h1 className="text-4xl font-bold">{data.submission}</h1>
                             <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Total submissions</p>
                         </section>
-                        <Button 
+                        {/* <Button 
                         onClick={() => router.push(`/forms/${data.formId}/embaded`)}
-                        className="w-full" variant={"secondary"}>View all Submissions</Button>
+                        className="w-full" variant={"secondary"}>View all Submissions</Button> */}
+                        <LinkTag 
+                            variants="secondary"
+                            sizes="md"
+                            href={`/forms/${data.formId}/embaded`}
+                            >View All Submissions</LinkTag>
                     </Card>
 
 

@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         protocol : "https",
         hostname : "i.pinimg.com",
         pathname : "/**"
+      },
+      {
+        // d3kl3yb9qelts0.cloudfront.net/
+        protocol : "https",
+        hostname : "d3kl3yb9qelts0.cloudfront.net",
+        pathname : "/**"
       }
     ]
   }

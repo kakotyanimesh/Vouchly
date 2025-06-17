@@ -345,7 +345,7 @@ export const getTextReviews = async({formId, adminId} : {formId : number, adminI
             customerName : t.customerName,
             customerCompany : t.customerCompany,
             stars : t.stars,
-            imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg",
+            imageSrc : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${t.customerImageUrl}`,
             textReview : t.textReview?.textReview as string
         }))
     } catch (error) {

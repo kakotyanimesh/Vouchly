@@ -25,6 +25,8 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
     const [isSubmitted, setisSubmitted] = useState<boolean>(false)
     const router = useRouter()
     
+    
+    
     const {imagefile, videofile, resetFile} = useFileStore()
 
     const {
@@ -136,12 +138,12 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
 
             
             {!isSubmitted ?
-            <Card className="w-fit mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/6 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
+            <Card className="xl:w-[700px] w-fit md:w-[600px] mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/6 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
             
             {/* <div className="z-0 pointer-events-none absolute left-1/2 top-90 w-80 h-72 bg-gradient-to-r from-teal-400/20 to-emerald-400/15 rounded-full blur-3xl"></div>
             <div className="z-0 pointer-events-none absolute right-1/2 top-60  w-80 h-72 bg-gradient-to-r from-purple-500/20 to-violet-500/15 rounded-full blur-3xl"></div>
              */}
-            <Image src={"/images/logo.png"} width={200} height={100} className="rounded-2xl" alt="form_logo"/>
+            <Image src={data.logoUrl!} width={200} height={100} className="rounded-2xl" alt="form_logo"/>
             <div>
                 <h1 className="text-2xl font-bold">{data.Name}</h1>
                 <p className="text-sm">{data.Description}</p>

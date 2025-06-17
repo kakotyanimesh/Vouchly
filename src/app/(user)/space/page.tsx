@@ -9,7 +9,7 @@ import { Suspense } from "react";
 export default async function Space() {
     
     return (
-        <div className="space-y-10">
+        <div className="space-y-5">
             <SpaceNavabr heading="My spaces" desc="Organize your projects and forms into dedicated workspaces" buttonTitle="Create Space"/>
             <Suspense fallback={<SpaceLoading/>}>
                 <SpaceContent/>

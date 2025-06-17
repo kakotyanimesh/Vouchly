@@ -1,5 +1,6 @@
 import { getSpaceTestimonialsDataWithId } from "@/app/action/server_action/user"
 import { FormCreation } from "@/components/fromModal"
+import { BackButton } from "@/components/ui/routerBack"
 import { getUserSession } from "@/utils/lib/user_session"
 
 
@@ -18,6 +19,7 @@ export default async function SpaceSlug({params} : {params : Promise<{slug : str
     
     return (
         <div>
+            <BackButton/>
             <FormCreation sName={sName} sId={sId} data={testimonialsData}/>
         </div>
     )
