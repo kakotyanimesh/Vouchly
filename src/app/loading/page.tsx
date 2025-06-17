@@ -1,6 +1,8 @@
 "use client"
 
-import { SubmissionTableheaders } from "@/utils/hardcodeddata/shortcuts"
+import { VideoElement } from "@/components/ui/videoelememt"
+
+
 
 // import { motion } from "motion/react"
 
@@ -73,22 +75,26 @@ export default function Loding() {
 
             
         // </div>
-        <div>
-            <table>
-                <thead>
-                    {SubmissionTableheaders.map((h, k) => (
-                        <tr key={k}>
-                            {h.label}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    <tr>animesh</tr>
-                    <tr>animesh</tr>
-                    <tr>animesh</tr>
-                    <tr>animesh</tr>
-                </tbody>
-            </table>
+        // <div>
+        //     <table>
+        //         <thead>
+        //             {SubmissionTableheaders.map((h, k) => (
+        //                 <tr key={k}>
+        //                     {h.label}
+        //                 </tr>
+        //             ))}
+        //         </thead>
+        //         <tbody>
+        //             <tr>animesh</tr>
+        //             <tr>animesh</tr>
+        //             <tr>animesh</tr>
+        //             <tr>animesh</tr>
+        //         </tbody>
+        //     </table>
+        // </div>
+        <div className="flex justify-center items-center h-screen flex-col">
+            <h1>anime</h1>
+            <VideoElement videoSrc="https://d3kl3yb9qelts0.cloudfront.net/testimonial-videos/237036c0-f3e5-42ca-a8b6-8fab369951e8/mp4"/>
         </div>
     )
 }

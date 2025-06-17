@@ -87,6 +87,13 @@ export interface TextReviewProps {
     stars : number
 }
 
+export interface VideoReviewProps {
+    videoLink : string,
+    customerName : string,
+    customerCompany : string,
+    stars : number
+}
+
 
 export interface ArrayOfTabs {
     title : string,

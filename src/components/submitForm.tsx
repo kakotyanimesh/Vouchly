@@ -216,7 +216,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
             </Button>
         </Card>
         :
-        <SubmissionThankyoudiv thankYoumsg="Your Review Submitted . You are a hero sir"/>    
+        <SubmissionThankyoudiv thankYoumsg="Review submitted! You`re awesome 🫶✨"/>    
         }
         </div>
     )

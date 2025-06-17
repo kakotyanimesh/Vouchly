@@ -21,7 +21,7 @@ export const SubmissionThankyoudiv = ({thankYoumsg} : {thankYoumsg : string}) =>
                 </div>
                 <div className="text-center">
                     <h1 className="font-bold text-3xl bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">Success !</h1>
-                    <h1 className=" bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">{thankYoumsg}</h1>
+                    <h1 className="text-white">{thankYoumsg}</h1>
                 </div>
             </Card>
 

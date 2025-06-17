@@ -1,7 +1,7 @@
 "use server"
 import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
-import { SpaceCardProps, TestimoniaTableDataTypes, TextReviewProps } from "@/utils/types/user_types"
+import { SpaceCardProps, TestimoniaTableDataTypes, TextReviewProps, VideoReviewProps } from "@/utils/types/user_types"
 import { revalidateTag, unstable_cache } from "next/cache"
 
 
@@ -316,7 +316,10 @@ const cachedTextReviews = ({formId, adminId} : {formId : number, adminId : numbe
     return await prisma.customerReview.findMany({
         where : {
             adminId : Number(adminId),
-            testimonialFormsId : Number(formId)
+            testimonialFormsId : Number(formId),
+            textReview : {
+                isNot : null
+            }
         },select : {
             customerName : true,
             customerImageUrl : true,
@@ -358,6 +361,58 @@ export const getTextReviews = async({formId, adminId} : {formId : number, adminI
     }
 }
 
+
+const cachedVideoReviews = ({formId, adminId} : {formId : number, adminId : number}) => unstable_cache(async() => {
+    return await prisma.customerReview.findMany({
+        where : {
+            adminId : Number(adminId),
+            testimonialFormsId : Number(formId),
+            videoReview : {
+                isNot : null
+            }
+        }, select : {
+            customerCompany : true,
+            customerName : true,
+            stars : true,
+            videoReview : {
+                select : {
+                    videoLink : true,
+                }
+            }
+        }
+    })
+},
+    [`video-reviews-cached${formId}-${adminId}`],
+    {
+        revalidate : 300,
+        tags : [`video-review-cached-${formId}-${adminId}`, `review-cached`]
+    }
+)
+
+
+export const getVideoReview = async({formId, adminId} : {formId : number, adminId : number}) => {
+    try {
+        const res = cachedVideoReviews({adminId, formId})
+        
+
+        return (await res()).map((vt) : VideoReviewProps => ({
+            customerName : vt.customerName,
+            customerCompany : vt.customerCompany,
+            stars : vt.stars,
+            videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${vt.videoReview?.videoLink}`
+
+        }))
+
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
 
 export const revalidateCached = async({cachedName} : {cachedName : string}) => {
     revalidateTag(`${cachedName}`)

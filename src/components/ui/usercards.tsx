@@ -12,7 +12,6 @@ type UIcardProps = React.HTMLAttributes<HTMLAnchorElement> & {
 }
 
 export const Usercards : React.FC<UIcardProps> = ({className, redirectLink, iconStyle, parentColor, icon, title, ...props}) => {
-    console.log(redirectLink);
     
     return (
         <LinkTag
