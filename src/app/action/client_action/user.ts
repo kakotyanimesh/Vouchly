@@ -2,6 +2,8 @@ import { handlerError } from "@/utils/lib/errorhandler"
 import { AWS_Folder_Name, CreateFormTypes, CreateSpaceTypes, ReviewTypes, SignupTypes } from "@/utils/types/user_types"
 import axios from "axios"
 
+const url = `${process.env.NEXT_PUBLIC_NEXT_URL}`
+
 export const createUser = async (data : SignupTypes) => {
     try {   
         const res = await fetch("/api/auth/signup", {
@@ -215,4 +217,35 @@ export const getScript = async({widgetId} : {widgetId : string}) => {
             status : err.statusCode
         }
     }
+}
+
+
+export const getReviews = async({embadedId} : {embadedId : string}) => {
+    try {
+        const res = await fetch(`${url}api/unprotected/embadeddisplay/${embadedId}`)
+        // console.log(res);
+        
+
+        if(!res.ok){
+            const errdata = await res.json()
+            throw new Error(errdata.msg || "No data found Invalid data")
+        }
+
+        const data = await res.json()
+
+        return {
+            orderedReviews : data.reviewWithOrder
+        }
+    } catch (error) {
+        console.log(error);
+                
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+
 }

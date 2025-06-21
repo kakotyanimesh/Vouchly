@@ -88,6 +88,30 @@ export interface TextReviewProps {
     stars : number
 }
 
+export interface VideoReviewProps {
+    videoLink : string,
+    customerName : string,
+    customerCompany : string,
+    stars : number
+}
+
+
+export type OrderredTextReviewType = {
+    id : number,
+    type : "text",
+    data : TextReviewProps
+} 
+
+export type OrderedVideoReviewType = {
+    id : number 
+    type : "video"
+    data : VideoReviewProps
+}
+
+// we have same type in zustand but prob with that it won't be able to differentiate b/w which one is text type or which one is video type 
+// and for users i dont want to take that risk
+
+export type OrderedReviewTypes = OrderredTextReviewType | OrderedVideoReviewType
 
 export interface TextReviewPropsWallOfLove {
     id :number,
@@ -98,12 +122,6 @@ export interface TextReviewPropsWallOfLove {
     stars : number
 }
 
-export interface VideoReviewProps {
-    videoLink : string,
-    customerName : string,
-    customerCompany : string,
-    stars : number
-}
 export interface VideoReviewPropsWallOflove {
     id : number,
     videoLink : string,
@@ -111,6 +129,9 @@ export interface VideoReviewPropsWallOflove {
     customerCompany : string,
     stars : number
 }
+
+
+
 
 
 export interface ArrayOfTabs {

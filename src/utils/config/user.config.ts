@@ -40,3 +40,4 @@ export const embadedTypes = z.object({
 export const widgetIdObject = z.object({
     widgetId : z.string()
 })
+

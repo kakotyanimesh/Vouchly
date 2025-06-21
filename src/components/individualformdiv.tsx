@@ -69,10 +69,12 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                                 <h1 className="text-md font-semibold">Embed Widget </h1>
                                 <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Copy and paste this code into your website to display your testimonials.</p>
                             </div>
-                            <h1 className="rounded-xl border-2 border-[hsl(var(--primary))]/40 px-5 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide w-fit">{data.script}</h1>
+                            <h1 className="rounded-xl border-2 border-[hsl(var(--primary))]/40 px-5 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide w-fit">
+                                {`<script src="${data.script}"></script>`}
+                            </h1>
                             <Button 
                             onClick={() => {
-                                navigator.clipboard.writeText(`${data.script}`)
+                                navigator.clipboard.writeText(`<script src="${data.script}"></script>`)
                                 toast.message("Embed script copied!", {
                                         description: "Paste it in your website's HTML to show the testimonial widget.",
                                 });
