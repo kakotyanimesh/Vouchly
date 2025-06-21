@@ -20,7 +20,7 @@ import { Logo } from "./ui/logo"
 import { useRouter } from "next/navigation"
 import LoadingCircleSpinner from "./ui/loadingspinner"
 
-export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "createdAt" | "submission" | "token"> & {spaceId : number, adminId : number, formId : number}) => {
+export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script" | "createdAt" | "submission" | "token"> & {spaceId : number, adminId : number, formId : number}) => {
     const { storeNumber } = InputBoxesTypesStore()
     const [isSubmitted, setisSubmitted] = useState<boolean>(false)
     const router = useRouter()
