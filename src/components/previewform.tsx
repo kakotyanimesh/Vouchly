@@ -16,7 +16,7 @@ export const PreviewForm = () => {
         })
     }
     return (
-        <Card className="h-full md:px-15 md:py-10 p-3 flex flex-col space-y-5 w-full border-[hsl(var(--primary))]/20">
+        <Card className="h-full md:px-10 md:py-10 p-3 flex flex-col space-y-5 w-fit border-[hsl(var(--primary))]/20">
            <div className="justify-center flex">
                 <Image 
                     src={previewUrl && previewUrl !== "" ? previewUrl : "/images/logo.png"} 
