@@ -188,7 +188,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
                         type="text"/>
 
                 </div>
-                <div className="flex flex-row items-center gap-2">
+                <div aria-disabled={isPending} className="flex flex-row items-center gap-2">
                     {Array.from({length : 5}).map((s, k) => (
                         <button 
                             type="button"
@@ -200,7 +200,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps,  "create
                         </button>
                     ))}
                 </div>
-                <FileUploda fileType="UserImage" className=""/>
+                <FileUploda disable={isPending} fileType="UserImage" className=""/>
                 <VerticalTabSwitcher tabs={tabS} />
                 {storeNumber === 0 && <TextReview isdisable={isPending} />}
                 {storeNumber === 1 && <FileUploda disable={isPending} fileType="Video" className="h-32"/>}

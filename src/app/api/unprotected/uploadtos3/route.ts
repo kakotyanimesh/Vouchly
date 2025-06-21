@@ -19,7 +19,7 @@ export async function POST(req:NextRequest) {
 
         const binaryName = fileName.split(".").pop() ?? fileType.split("/").pop() ?? "bin"
 
-        const uniqueKey = `${folderName}/${randomUUID()}/${binaryName}`
+        const uniqueKey = `${folderName}/${randomUUID()}.${binaryName}`
 
         const generatedS3Client = new S3Client({
             region : process.env.AWS_REGION!,

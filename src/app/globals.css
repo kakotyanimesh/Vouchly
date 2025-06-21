@@ -87,3 +87,9 @@ body {
 }
 
 
+/* ... */
+
+@plugin 'tailwind-scrollbar' {
+    nocompatible: true;
+    preferredStrategy: 'pseudoelements';
+}

@@ -1,4 +1,4 @@
-import { getIndividualTestimonialFormData } from "@/app/action/server_action/user"
+import { fetchEmbadedScript, getIndividualTestimonialFormData } from "@/app/action/server_action/user"
 import { IndividualFormDiv } from "@/components/individualformdiv"
 import { BackButton } from "@/components/ui/routerBack"
 import { generateToken } from "@/utils/lib/lib_new"
@@ -14,6 +14,12 @@ export default async function IndividualForms({params}:{params : Promise<{formId
 
     const token = generateToken(id, Number(adminId))
     // you cant use env variable in client component 
+
+    const getscript = await fetchEmbadedScript({formId : Number(id)})
+
+    //  too much of objects and i don't want to fix it
+    const script = !getscript.s3script ? "You dont have any script" : getscript.s3script
+    
     
     if(!data || "success" in data){
         return (
@@ -23,7 +29,7 @@ export default async function IndividualForms({params}:{params : Promise<{formId
     return (
         <div className="">
             <BackButton/>
-            <IndividualFormDiv formId={Number(id)} token={token} questions={data.questions} Name={data.Name} Description={data.Description} submission={data._count.customerReview} createdAt={data.createdAt.toDateString()}/>
+            <IndividualFormDiv script={script} formId={Number(id)} token={token} questions={data.questions} Name={data.Name} Description={data.Description} submission={data._count.customerReview} createdAt={data.createdAt.toDateString()}/>
         </div>
     )
 }

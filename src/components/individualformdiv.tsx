@@ -16,7 +16,8 @@ export interface IndividualFormDivProps {
     submission : number,
     createdAt : string,
     token : string,
-    formId : number
+    formId : number,
+    script : string | null
 }
 
 export const IndividualFormDiv = (data : IndividualFormDivProps) => {
@@ -61,28 +62,49 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     </Button>
                 </div>
             </section>
-            <div className="grid xl:grid-cols-3 grid-cols-1 gap-7">
-                <Card className="xl:col-span-2 col-span-1 py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
-                    <h1 className="text-md font-semibold">Update Your Testimonia Form here </h1>
-                    <form className="space-y-5">
-                        <InputBox 
-                            placeholder={data.Name} 
-                            name="New Title"/>
-                        <TextArea
-                            name="New Description" 
-                            placeholder={data.Description}/>
+            <div className="grid xl:grid-cols-3 grid-cols-1 gap-2">
+                <div className="xl:col-span-2 col-span-1 space-y-2">
+                    <Card className=" p-5  space-y-4 border-[hsl(var(--primary))]/20">
+                            <div>
+                                <h1 className="text-md font-semibold">Embed Widget </h1>
+                                <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Copy and paste this code into your website to display your testimonials.</p>
+                            </div>
+                            <h1 className="rounded-xl border-2 border-[hsl(var(--primary))]/40 px-5 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide w-fit">{data.script}</h1>
+                            <Button 
+                            onClick={() => {
+                                navigator.clipboard.writeText(`${data.script}`)
+                                toast.message("Embed script copied!", {
+                                        description: "Paste it in your website's HTML to show the testimonial widget.",
+                                });
+                            }}
+                            className="flex flex-row items-center gap-3">
+                                <Copy size={16}/>
+                                Copy Script
+                            </Button>
+                    </Card>
+                    <Card className=" py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
+                        <h1 className="text-md font-semibold">Update Your Testimonia Form here </h1>
+                        <form className="space-y-5">
+                            <InputBox 
+                                placeholder={data.Name} 
+                                name="New Title"/>
+                            <TextArea
+                                name="New Description" 
+                                placeholder={data.Description}/>
                         
-                        <h1 className="text-sm text-[hsl(var(--secondary-foreground))]">Advanced fileds will be added soon </h1>
-                        <Button 
-                            type="button" 
-                            variant={"secondary"} 
-                            onClick={() => toast.message("Hold up ⚙️", {description : "This update feature is cooking... check back soon!"})}>
-                            Update
-                        </Button>
-                    </form>
-                </Card>
-                <div className="space-y-4 col-span-1">
-                    <Card className=" py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
+                            <h1 className="text-sm text-[hsl(var(--secondary-foreground))]">Advanced fileds will be added soon </h1>
+                            <Button 
+                                type="button" 
+                                variant={"secondary"} 
+                                onClick={() => toast.message("Hold up ⚙️", {description : "This update feature is cooking... check back soon!"})}>
+                                Update
+                            </Button>
+                        </form>
+                    </Card>
+                </div>
+                
+                <div className="space-y-2 col-span-1">
+                    <Card className=" py-8 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
                         <section>
                             <h1 className="font-semibold text-2xl">Submissions</h1>
                             <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">View and manage responses to this form</p>
@@ -121,6 +143,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                     </Card>
                 </div>
             </div>
+            
         </div>
     )
 }

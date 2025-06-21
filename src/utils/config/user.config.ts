@@ -29,3 +29,14 @@ export const updateObject = z.object({
     email : z.string().email({message : "Enter a valid email address "}).optional(),
     username : z.string().max(20, {message : "Max 20 letters is allowed"}).optional(),
 })
+
+
+export const embadedTypes = z.object({
+    formId : z.string(),
+    embadedIds : z.number().array()
+})
+
+
+export const widgetIdObject = z.object({
+    widgetId : z.string()
+})

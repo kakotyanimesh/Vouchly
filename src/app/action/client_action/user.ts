@@ -184,3 +184,35 @@ export const submitTestimonials = async(data : ReviewTypes) => {
 }
 
 
+
+
+export const getScript = async({widgetId} : {widgetId : string}) => {
+    try {
+        const res = await fetch("/api/embaded", {
+            method : "POST",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            body : JSON.stringify({widgetId : widgetId})
+        })
+
+        if(!res.ok){
+            throw new Error("No script send here")
+        }
+
+        const { script } = await res.json()
+
+        return {
+            success : true,
+            script
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}

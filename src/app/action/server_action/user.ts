@@ -1,8 +1,11 @@
 "use server"
+import { embadedTypes } from "@/utils/config/user.config"
 import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
-import { SpaceCardProps, TestimoniaTableDataTypes, TextReviewProps, VideoReviewProps } from "@/utils/types/user_types"
-import { revalidateTag, unstable_cache } from "next/cache"
+import { getUserSession } from "@/utils/lib/user_session"
+import { SpaceCardProps, TestimoniaTableDataTypes, TextReviewPropsWallOfLove, VideoReviewPropsWallOflove } from "@/utils/types/user_types"
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
+import { ZodError } from "zod/v4"
 
 
 const cachedUserdataCount = (id : number) => unstable_cache(
@@ -321,6 +324,7 @@ const cachedTextReviews = ({formId, adminId} : {formId : number, adminId : numbe
                 isNot : null
             }
         },select : {
+            id : true,
             customerName : true,
             customerImageUrl : true,
             customerCompany : true,
@@ -344,7 +348,8 @@ export const getTextReviews = async({formId, adminId} : {formId : number, adminI
     try {
         const res = cachedTextReviews({formId, adminId})
 
-        return (await res()).map((t) : TextReviewProps => ({
+        return (await res()).map((t) : TextReviewPropsWallOfLove => ({
+            id : t.id,
             customerName : t.customerName,
             customerCompany : t.customerCompany,
             stars : t.stars,
@@ -371,6 +376,7 @@ const cachedVideoReviews = ({formId, adminId} : {formId : number, adminId : numb
                 isNot : null
             }
         }, select : {
+            id : true,
             customerCompany : true,
             customerName : true,
             stars : true,
@@ -395,7 +401,8 @@ export const getVideoReview = async({formId, adminId} : {formId : number, adminI
         const res = cachedVideoReviews({adminId, formId})
         
 
-        return (await res()).map((vt) : VideoReviewProps => ({
+        return (await res()).map((vt) : VideoReviewPropsWallOflove => ({
+            id : vt.id,
             customerName : vt.customerName,
             customerCompany : vt.customerCompany,
             stars : vt.stars,
@@ -419,179 +426,222 @@ export const revalidateCached = async({cachedName} : {cachedName : string}) => {
 }
 
 
-// export const updateUserData = async(data : UserProfileDataTypes) => {
-//     try {
-//         const parsedData = updateObject.safeParse(data)
-
-//         if(!parsedData.success){
-//             return {
-//                 success : false,
-//                 message : "Invalid Input values"
-//             }
-//         }
-
-//         const { email, username, id } = parsedData.data
-
-//         const user = await prisma.user.findUnique({
-//             where : {
-//                 id : Number(id)
-//             }
-//         })
-
-//         if(!user){
-//             return {
-//                 success : false,
-//                 message : "User does not exits bro"
-//             }
-//         }
-
-//         const updateUser = await prisma.user.update({
-//             where : {
-//                 id : Number(id)
-//             }, data : {
-//                 ...(username && {username}),
-//                 ...(email && {email})
-//             }
-//         })
-
-//         revalidatePath("/account")
-
-//         return {
-//             success : true,
-//             message : "Profile data updated successfully",
-//             user : {
-//                 username : updateUser.username,
-//                 email : updateUser.email
-//             }
-//         }
-//     } catch (error) {
-//         const err = await handlerError(error)
-
-//         return {
-//             success : false,
-//             message : err.errorMsg,
-//             status : err.statusCode
-//         }
-//     }
-// }
-
-// export const wallofSubmissions = async({formId, adminId} : {formId : number, adminId : number})=> {
-//     try {
-//         return await prisma.customerReview.findMany({
-//             where : {
-//                 adminId : Number(adminId),
-//                 testimonialFormsId : Number(formId)
-//             }, select : {
-//                 customerName : true,
-//                 customerCompany : true,
-//                 customerImageUrl : true,
-//                 viderId : true,
-//                 textReviewId : true,
-//                 stars : true
-//             },
-//             take : 12,
-//         })
-//     } catch (error) {
-//         const err = await handlerError(error)
-
-//         return {
-//             success : false,
-//             message : err.errorMsg,
-//             status : err.statusCode
-//         }
-//     }
-// }
 
 
 
-// const cachedSubmissionsTable = ({adminId, formId} : {adminId : number, formId : number}) => unstable_cache(async() => {
-//     return await prisma.customerReview.findMany({
-//         where : {
-//             adminId : adminId,
-//             testimonialFormsId : formId
-//         }, select : {
-//             customerName : true,
-//             customerCompany : true,
-//             createdAt : true,
-//             approved : true
-//         }
-//     })
-// },
-//     [`user-all-submission-${adminId}`],
-//     {
-//         revalidate : 300,
-//         tags : [`user-all-submission-${adminId}`]
-//     }
-// )
+export const addWidgetstoDb = async({formId, embadedIds, style } : {formId : number, embadedIds : number[], style : string}) => {
+    try {
+        const parsedObject = embadedTypes.safeParse({formId, embadedIds})
+
+        // update reviews table that these are in action right now
+        if(!parsedObject.success){
+            throw parsedObject.error.errors
+        }
+
+        const res = await prisma.embadedWall.create({
+            data : {
+                testimonialFormsId : Number(formId),
+                selectedReviews : embadedIds,
+                style : style
+            }, select : {
+                id : true
+            }
+        })
+
+        revalidatePath(`reviewwallcached-${formId}`)
+
+        return {
+            success : true,
+            id : res.id
+        }
+    } catch (error) {
+        console.log(error);
+        
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if((error as any).code === "P2002"){
+            return {
+                success : false,
+                message : "You already has one wall",
+                style : 409
+            }
+        }
+        
+        if(error instanceof ZodError){
+        return {
+            errorMsg : `Invalid Inputs at ${JSON.stringify(error.cause)}`,
+            statusCode : 400
+        }
+    }
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
 
 
-// export const getForSubmissionTable = async ({adminId, formId} : {adminId : number, formId : number}) => {
-//     try {
-//         const res = cachedSubmissionsTable({adminId, formId})
+export const saveScriptKey = async({s3ScriptKey, formId} : {s3ScriptKey : string, formId : number}) => {
+    try {
+        const { id } = await getUserSession()
 
-//         return (await res()).map((t) : SubmissionTableDatatypes => ({
-//             "Customer Name" : t.customerName,
-//             Status : !t.approved ? "Active" : "Draft",
-//             "Submitted At" : new Date(t.createdAt).toDateString()
-//         }))
-//     } catch (error) {
-//         const err = await handlerError(error)
+        await prisma.testimonialForm.update({
+            where : {
+                adminId : Number(id),
+                id : Number(formId)
+            }, data : {
+                scriptS3 : s3ScriptKey
+            }
+        })
+        return {
+            success : true
+        }
+    } catch (error) {
+        const err = await handlerError(error)
 
-//         return {
-//             success : false,
-//             message : err.errorMsg,
-//             status : err.statusCode
-//         }
-//     }
-// }
-
-
-
-// submit textreview and video link extra
-
-// export const submitTextReview = async(textReview : string) => {
-//     try {
-//         const { id } = await prisma.textReview.create({
-//             data : {
-//                 textReview
-//             }
-//         })
-
-//         return {
-//             id,
-//             success : true
-//         }
-//     } catch (error) {
-//         const err = await handlerError(error)
-
-//         return {
-//             success : false,
-//             message : err.errorMsg,
-//             status : err.statusCode
-//         } 
-//     }
-// }
+        return {
+            messgage : err.errorMsg,
+            status : err.statusCode,
+            success : false
+        }
+    }
+}
 
 
-// export const submiVideoReview = async(video : string) => {
-//     try {
-//         const { id } = await prisma.textReview.create({
-//             data : {
-//                 textReview
-//             }
-//         })
+const cachedEmbadedWall = async({formId} : {formId : number}) => {
+    const wall = await prisma.embadedWall.findUnique({
+        where : {
+            testimonialFormsId : Number(formId)
+        }, select : {
+            selectedReviews : true
+        }
+    })
 
-//         return {
-//             id,
-//             success : true
-//         }
-//     } catch (error) {
-//         const err = await handlerError(error)
+    if(!wall || wall.selectedReviews.length === 0){
+        return {
+            textReviewArray : [],
+            videoReviewArray : []
+        }
+        // {
+        //     // here Im returing new arrys not getiing access to those that are being declared after it
+        //     // textReviewArray : [],
+        //     // videoReviewArray : [] => worst gpt code ever im not going to add this 
+            
+        // }
+    }
 
-//         return {
-//             success : false,
-//             message : err.errorMsg,
-//             status : err.statusCode
-//         } 
-//     }
-// }
+    const reviewIds = wall.selectedReviews
+
+    const reviews = await prisma.customerReview.findMany({
+        where : {
+            id : {in : reviewIds}
+        }, include : {
+            textReview : {
+                select : {
+                    textReview : true
+                }
+            },
+            videoReview : {
+                select : {
+                    videoLink : true
+                }
+            }
+        }, omit : {
+            testimonialFormsId : true,
+            spaceId : true,
+            adminId : true,
+            createdAt : true
+        }
+    })
+
+
+    const textReviewArray : TextReviewPropsWallOfLove[] = []
+    const videoReviewArray : VideoReviewPropsWallOflove[] = []
+
+    for (const rvs of reviews) {
+        if(rvs.textReview){
+            textReviewArray.push({
+                id : rvs.id,
+                textReview : rvs.textReview.textReview,
+                customerName : rvs.customerName,
+                customerCompany : rvs.customerCompany,
+                stars : rvs.stars,
+                imageSrc : rvs.customerImageUrl
+            })
+        } else if(rvs.videoReview){
+            videoReviewArray.push({
+                id : rvs.id,
+                videoLink : rvs.videoReview.videoLink,
+                customerCompany : rvs.customerCompany,
+                customerName : rvs.customerName,
+                stars : rvs.stars
+            })
+        }
+    }
+
+    return {
+        textReviewArray,
+        videoReviewArray
+    }
+}
+
+
+export const getEmbadedWall = async({formId} : {formId : number}) => {
+    try {
+        const cachedFn = await cachedEmbadedWall({formId : formId})
+
+
+        const { textReviewArray, videoReviewArray } = cachedFn
+
+        const textReviewArrayWithURL = textReviewArray.map(rev => ({
+            ...rev,
+            imageSrc : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rev.imageSrc}`
+        }))
+
+        const videoReviewWithURL = videoReviewArray.map(rev => ({
+            ...rev,
+            videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rev.videoLink}`
+        }))
+        return {
+            success : true,
+            textReviewArrayWithURL,
+            videoReviewWithURL
+        }
+    } catch (error) {
+        console.log(error);
+        
+        const err = await handlerError(error)
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}
+
+export const fetchEmbadedScript = async({formId} : {formId: number} ) => {
+    try {
+        const res =  await prisma.testimonialForm.findUnique({
+            where : {
+                id : Number(formId)
+            }, select : {
+                scriptS3 : true
+            }
+        })
+
+        return {
+            s3script : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${res?.scriptS3}`,
+            success : true
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}

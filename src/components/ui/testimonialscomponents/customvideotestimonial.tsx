@@ -20,10 +20,11 @@ export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompan
         <motion.div 
         initial={false}
         whileHover={{
-            y : -2,
+            // y : -2,
+            scale : 1.01,
             transition : {
                 ease : "linear",
-                duration : 0.4
+                duration : 0.1
             }
         }}
         className={cn(" rounded-md bg_card_gradient" , className)} {...props}>

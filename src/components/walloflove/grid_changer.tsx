@@ -1,40 +1,142 @@
 "use client"
 
 import { Card } from "../ui/card"
-import { LayoutDashboard, LayoutGrid, User } from "lucide-react"
-import { IconDiv } from "../ui/icondiv"
-import { ReactNode } from "react"
-import { useGridStore } from "@/utils/zustand/gridState"
 import { cn } from "@/utils/lib/cn"
 import { Button } from "../ui/button"
-import { revalidateCached } from "@/app/action/server_action/user"
+import {  addWidgetstoDb, revalidateCached, saveScriptKey } from "@/app/action/server_action/user"
+import { ReactNode } from "react"
+import { IconDiv } from "../ui/icondiv"
+import { useGridStore, useReviewStore, useScriptStore } from "@/utils/zustand/gridState"
+import { LayoutDashboard, LayoutGrid, User } from "lucide-react"
+import { toast } from "sonner"
+import { getScript, uploadToS3 } from "@/app/action/client_action/user"
+import { useRouter } from "next/navigation"
 
-export const GridChanger = ({cachedName} : {cachedName : string}) => {
+
+
+
+// const GridGuideLines = [
+//   "✅ Select testimonials to display.",
+//   "🔢 Choose display order.",
+//   "✍️ Mix text and video freely.",
+//   "📱 Use 1 column on mobile.",
+//   "🧱 Pick number of columns from bottom",
+// ];
+
+
+export const GridGuideLinesDiv = ({cachedName, formId, className} : {cachedName : string, formId : number, className ?:string}) => {
     const { setGridNumber, gridNumber } = useGridStore()
+    console.log(formId);
+    
     return (
-        <Card className="py-7 md:fixed top-28 right-5 xl:w-96 w-fit px-5 space-y-5">
-                    <h1 className="font-semibold text-xl">Customize Layout</h1>
-                    <div className="space-y-4 flex md:flex-col flex-row space-x-2">
-                        {LayoutArry.map((t, k) => (
+        <Card className={cn("space-y-2 p-2 border-[hsl(var(--primary))]/20", className)}>
+            <h1 className="text-white xl:text-xl text-sm font-semibold text-center">Guidelines to Create Your Testimonial Script</h1>
+            <div className="flex flex-row gap-10">
+                <div className="flex flex-row gap-2 ">
+                {LayoutArry.map((t, k) => (
                             <Card 
                             onClick={() => setGridNumber(t.id)}
-                            key={k} className={cn("flex md:flex-row flex-col h-full w-full items-center p-3 gap-3  cursor-pointer hover:border-[hsl(var(--primary))] hover:border transition-colors duration-200 ease-linear", gridNumber === k +1 ? "bg-[hsl(var(--primary))]/70" : "hover:bg-[hsl(var(--primary))]/20")}>
-                                <IconDiv className="rounded-full p-2 w-fit" reactNode={t.icon}/>
-                                <div className="-space-y-2 ">
+                            key={k} 
+                            className={cn("cursor-pointer h-fit p-2 flex flex-col justify-center items-center hover:border-[hsl(var(--primary))] hover:border transition-colors duration-200 ease-linear", gridNumber === k + 1 ? "bg-[hsl(var(--primary))]/10" : "hover:bg-[hsl(var(--primary))]/20")}>
+                                <IconDiv className="rounded-full p-1 w-fit" reactNode={t.icon}/>
+                                <div className="-space-y-2 text-sm text-center">
                                     <h1>{t.layoutStyle}</h1>
                                     <p className="text-sm hidden md:block text-[hsl(var(--secondary-foreground))]">{t.desc}</p>
                                 </div>
                             </Card>
-                        ))}
-                    </div>
-                    <h1 className="bg-pink-800/70 text-blue-100 rounded-full xl:block hidden px-3 border border-blue-950 w-fit text-xs">For smaller screen its only 1 grid is available right now</h1>
-                    <h1 className="bg-blue-800/70 text-blue-100 rounded-full xl:block hidden px-3 border border-blue-950 w-fit text-xs">More customization are coming ....</h1>
-                    <Button 
-                        onClick={() => revalidateCached({cachedName})}
-                        variant={"secondary"}>
-                        Fetch Database
-                    </Button>
-            </Card>
+                ))}
+            </div>
+            <div className="flex flex-col gap-4">
+                <GenerateLayoutButton formId={formId} />
+                <Button
+                    className="w-full"
+                    onClick={() => revalidateCached({cachedName})}
+                    >
+                    Fetch Database
+                </Button>
+            </div>
+            </div>
+            
+            {/* <p className="bg-[hsl(var(--primary))]/10 text-[hsl(var(--destructive))]  border-[hsl(var(--destructive))] border rounded-full w-fit px-3 justify-self-center">Preview function will be here</p> */}
+        </Card>
+    )
+}
+
+
+
+const GenerateLayoutButton = ({formId} : {formId : number}) => {
+    const {embededIds} = useReviewStore()
+    const { gridNumber } = useGridStore()
+
+    const { setIsGenerated , setScriptKey} = useScriptStore()
+    const router = useRouter()
+
+
+    const createScript = async() => {
+        const toasterId = toast.loading("creating your embaded script")
+        try {
+            if(embededIds.length === 0){
+                toast.error("you haven't selected anything its empty", {
+                    id : toasterId
+                })
+                return
+            }
+
+            // const forNowGridStyl = "" im just sending grid number helll 
+
+            const embadedFormId = await addWidgetstoDb({formId, style: gridNumber.toString(),embadedIds : embededIds})
+
+            if(!embadedFormId.id){
+                throw new Error(embadedFormId.message)
+            }
+
+            toast.message("one step done, just few clicks away", {
+                id : toasterId
+            })
+
+            const script = await getScript({widgetId : embadedFormId.id})
+
+
+            const widgetFile = new File([script.script], `widget-${embadedFormId.id}.js`, {type : "application/javascript"})
+
+            const s3Widget = await uploadToS3(widgetFile, "widget")
+
+            if (!s3Widget || !s3Widget.uniqueKey) {
+                toast.error("Something went wrong.Please 😓 Try again?")
+                return
+            }
+
+
+            const updateForm = await saveScriptKey({s3ScriptKey : s3Widget.uniqueKey, formId : formId})
+
+            if(!updateForm.success){
+                toast.error("something went wrong while uploading to db")
+                return
+            }
+            
+            
+            toast.success(`id : ${s3Widget.uniqueKey} done for now`, {
+                id : toasterId
+            })
+
+            
+            setIsGenerated(true)
+            setScriptKey(s3Widget.uniqueKey)
+            router.push(`/forms/${formId}`)
+        } catch (error) {
+            const err = error instanceof Error ? error.message : "🌐 Network error. Please check your connection."
+
+            toast.error(err, {
+                id : toasterId
+            })
+        }
+    }
+    return (
+        <Button 
+            onClick={createScript}
+            variant={"secondary"} className="w-full">
+            Generate Layout
+        </Button>
     )
 }
 
@@ -60,6 +162,3 @@ const LayoutArry : {layoutStyle : string, desc : string, icon : ReactNode, id : 
     },
     
 ]
-
-
-

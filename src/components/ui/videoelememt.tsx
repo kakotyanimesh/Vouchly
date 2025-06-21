@@ -41,8 +41,8 @@ export const VideoElement : React.FC<VideoElementProps> = ({className, videoSrc,
                 <source src={videoSrc} type={`video/${type}`}/>
                 your brower does not support video 
             </video>
-            <button onClick={videoHandle} className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-white/20 rounded-full size-10 items-center justify-center flex cursor-pointer">
-                {!isPlaying ? <Play className="fill-white"/> : <Pause className="fill-white"/>} 
+            <button onClick={videoHandle} className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[hsl(var(--tertiary))]/70 text-[hsl(var(--primary))] rounded-full size-10 items-center justify-center flex cursor-pointer">
+                {!isPlaying ? <Play className="fill-[hsl(var(--primary))]"/> : <Pause className="fill-[hsl(var(--primary))]"/>} 
             </button>
         </div>
     )
@@ -50,7 +50,7 @@ export const VideoElement : React.FC<VideoElementProps> = ({className, videoSrc,
 
 
 const getVideoType = (url : string) => {
-    const type = url.split("/").pop()
+    const type = url.split(".").pop()
     switch (type) {
         case "mp4":
             return "mp4"

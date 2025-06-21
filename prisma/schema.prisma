@@ -57,6 +57,9 @@ model TestimonialForm  {
   createdAt                 DateTime                @default(now())
   updatedAt                 DateTime                @updatedAt
   status                    status                  @default(Draft)
+  embadedWidgets            EmbadedWall?
+  scriptS3                  String?             
+
 
   @@index([spaceId, adminId])
 }
@@ -103,4 +106,14 @@ model VidoeReview {
   customerReviewId         Int @unique
   CustomerReview           CustomerReview     @relation(fields: [customerReviewId], references: [id])
   videoLink                String
+}
+
+
+model EmbadedWall {
+  id                        String                @default(uuid())            @id 
+  testimonialFormsId        Int                   @unique
+  testimonialForms          TestimonialForm       @relation(fields: [testimonialFormsId], references: [id])
+  selectedReviews           Int[]
+  style                     String?
+  createdAt                 DateTime              @default(now())
 }

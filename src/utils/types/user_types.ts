@@ -76,10 +76,21 @@ export interface SubmissionTableDatatypes {
     "Submitted At" : string,
 } 
 
-export type AWS_Folder_Name = "form_logos" | "testimonial-videos"  | "user-images"
+export type AWS_Folder_Name = "form_logos" | "testimonial-videos"  | "user-images" | "widget"
 
 
 export interface TextReviewProps {
+    id ?:number,
+    textReview : string,
+    customerName : string,
+    customerCompany : string,
+    imageSrc : string,
+    stars : number
+}
+
+
+export interface TextReviewPropsWallOfLove {
+    id :number,
     textReview : string,
     customerName : string,
     customerCompany : string,
@@ -88,6 +99,13 @@ export interface TextReviewProps {
 }
 
 export interface VideoReviewProps {
+    videoLink : string,
+    customerName : string,
+    customerCompany : string,
+    stars : number
+}
+export interface VideoReviewPropsWallOflove {
+    id : number,
     videoLink : string,
     customerName : string,
     customerCompany : string,

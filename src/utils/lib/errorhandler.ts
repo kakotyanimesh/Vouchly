@@ -1,3 +1,4 @@
+// import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
 import axios from "axios";
 
 interface ErrroInterface {
@@ -6,7 +7,6 @@ interface ErrroInterface {
 }
 
 export const handlerError = async (error : unknown) : Promise<ErrroInterface> => {
-    console.log(error);
     
     if(error instanceof TypeError && error.message.includes("fetch")){
         return {
@@ -22,10 +22,19 @@ export const handlerError = async (error : unknown) : Promise<ErrroInterface> =>
         }
     }
 
+    
+
     if(error instanceof Response){
         const msg = (await error.json()).msg;
         return handlerStatuscode(error.status, msg); 
     }
+
+    // if(error instanceof PrismaClientKnownRequestError && error.code === "P2002"){
+    //     return {
+    //         errorMsg : "Its already in the database",
+    //         statusCode :409,
+    //     }
+    // }
 
     return {
         errorMsg : "An unexpected error occured",
