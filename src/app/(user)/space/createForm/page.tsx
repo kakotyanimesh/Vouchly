@@ -11,8 +11,8 @@ export default function TestimoniaForm() {
 
     
     return (
-        <div className="-mx-3">
-            <BackButton className="xl:left-56"/>
+        <div className="">
+            <BackButton className=""/>
             <div className="flex md:flex-row mt-3 mr-5 flex-col gap-2 justify-between">
                 <Suspense fallback={<h1>loading ....</h1>}>
                     <FormDiv/>

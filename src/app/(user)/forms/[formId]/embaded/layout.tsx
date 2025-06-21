@@ -4,6 +4,9 @@ import React from "react"
 export default async function EmbadedLayout(
     {children, textReviews, videoReviews, editor, params} : LayoutInterface
 ) {
+    return (
+        <h1 className="text-[hsl(var(--primary))] text-2xl justify-center items-center">This page is not in used please go back</h1>
+    )
     const formId = (await params).formId
     return (
         <div className="space-y-1 flex flex-col overflow-y-hidden gap-1">

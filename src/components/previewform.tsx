@@ -20,7 +20,7 @@ export const PreviewForm = () => {
            <div className="justify-center flex">
                 <Image 
                     src={previewUrl && previewUrl !== "" ? previewUrl : "/images/logo.png"} 
-                    className="rounded-4xl border-2 border-blue-600" width={200} height={200} alt="logo"/>
+                    className="rounded-4xl border-2 border-blue-600" width={100} height={200} alt="logo"/>
            </div>
            <div className="space-y-2 text-center">
                 <h1 className="text-2xl font-bold">{Name}</h1>

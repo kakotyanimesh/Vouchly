@@ -1,17 +1,18 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { Logo } from "./ui/logo"
 import { House, Rocket, Shredder, User } from "lucide-react";
 import { cn } from "@/utils/lib/cn"
 import { motion } from "motion/react";
 import Link from "next/link";
+import { useState } from "react";
 
 
 
 export const SideBar = () => {
     const pathName = usePathname()
 
+    const [showFullSidebar, setShowFullSidebar] = useState<boolean>(false)
     // console.log(`/${pathName.split("/")[1]}` );
     // console.log(pathName);
     
@@ -20,16 +21,23 @@ export const SideBar = () => {
 
     
     return (
-        <div className="md:h-full relative h-fit md:space-y-4 bg-gradient-to-b from-[hsl(var(--primary))]/4 to-[#0F0F0F] border-r border-[hsl(var(--pure-white))]/10 md:w-[240px] w-full">
-                <Logo className="text-2xl md:flex hidden items-center justify-center border-b border-[hsl(var(--pure-white))]/10 px-3 p-4"/>
-                <div className="space-y-3 md:px-3 relative flex md:flex-col flex-row">
+        <motion.div 
+            onHoverStart={() => setShowFullSidebar(true)}
+            onHoverEnd={() => setShowFullSidebar(false)}
+            
+            className={cn("md:h-full z-10 fixed md:space-y-4 bg-[#222121] transition-all ease-out duration-75  border-r-1 border-[hsl(var(--pure-white))]/10", showFullSidebar ? "md:w-48" : "w-16")}>
+                <Link href={"/"} className={cn("font-bold text-white text-2xl gap-2 pl-4 flex items-baseline border-b border-[hsl(var(--pure-white))]/10 py-4")}>
+                    <span className="bg_card_gradient rounded-md px-2 pt-1">T</span>
+                    { showFullSidebar ? <span className="bg-gradient-to-r from-[hsl(var(--card-bg-one))] to-[hsl(var(--card-bg-two))] text-transparent bg-clip-text">Testimonia</span> : undefined}
+                    
+                </Link>
+                <div className="space-y-2 md:px-3 relative flex md:flex-col flex-row">
                     {
                       activeIndex !== -1 && <motion.div 
                       initial={false}
                       animate={{
-                        y : activeIndex * 52,
+                        y : activeIndex * 48,
                         // height calculated (gpt hah)
-                        height : 38
                       }}
                       transition={{
                         type: "spring",
@@ -37,36 +45,22 @@ export const SideBar = () => {
                         damping: 30,
                         duration: 0.3
                       }}
-                      style={{
-                        zIndex: 0
-                      }}
-                      className="absolute md:block hidden inset-x-3 bg_card_gradient border border-[hsl(var(--primary))] rounded-md">
+                    //   style={{
+                    //     zIndex: 0
+                    //   }}
+                      className="absolute md:block hidden inset-x-3 w-[calc(100%-28px)] h-10 bg_card_gradient border border-[hsl(var(--primary))] rounded-md z-0">
 
                       </motion.div>   
                     }
-                    {SideBarRoutes.map((s, k) => (
-                        <Link 
-                            href={s.src} 
-                            key={k}
-                            className={cn("w-full cursor-pointer text-start flex md:flex-row flex-col items-center md:gap-3 py-2 md:px-3 px-1 md:mt-0 mt-4  rounded-md transition-colors duration-250 ease-linear z-10", 
-                            `/${pathName.split("/")[1]}` === s.src ? " text-white md:border-0 border  md:border-transparent border-[hsl(var(--primary))] rounded-2xl" : "hover:bg-[hsl(var(--pure-white))]/10")}
-
-                        >
-                            {s.icons}
-                            <span className="md:block hidden">{s.name}</span>
-                        </Link>
-                    ))
-                }
+                        {SideBarRoutes.map((s, k) => (
+                            <Link key={k} href={s.src} className={cn("cursor-pointer h-10 transition-colors duration-200 ease-linear rounded-md p-2 flex items-center gap-2", p === s.src ? "text-white" : "hover:bg-[hsl(var(--pure-white))]/20")}>
+                                {s.icons}
+                                {showFullSidebar ? `${s.name}` : undefined}
+                            </Link>
+                        ))
+                    }
                 </div>
-                {/* <Button   
-                    className="md:fixed hidden bottom-10 left-14" 
-                    variant={"secondary"} 
-                    onClick={() => {
-                        toast.message("✅ You’ve been logged out successfully.")
-                        signOut({callbackUrl : "/", redirect : true})
-                    }}
-                >log out</Button> */}
-            </div>
+            </motion.div>
     )
 }
 
