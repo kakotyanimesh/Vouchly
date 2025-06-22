@@ -13,7 +13,7 @@ export const TableTopUp = ({link} : {link : string}) => {
             ...
             </button>
             {
-                openManage && <Card className="absolute space-y-2 text-xs bg-[#1C1C1C] flex flex-col px-5 py-2 xl:right-28 right-0 w-full">
+                openManage && <Card className="absolute space-y-2 text-xs flex flex-col px-5 py-2 xl:right-28 right-0 w-36">
                     <LinkTag
                     className="flex flex-row items-center gap-2"
                     href={link}><Pencil size={10} />Manage</LinkTag>

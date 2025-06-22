@@ -19,6 +19,7 @@ import { SubmissionThankyoudiv } from "./ui/thankyoudiv"
 import { Logo } from "./ui/logo"
 import { useRouter } from "next/navigation"
 import LoadingCircleSpinner from "./ui/loadingspinner"
+import { reviewObject } from "@/utils/config/review.config"
 
 export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script" | "createdAt" | "submission" | "token"> & {spaceId : number, adminId : number, formId : number}) => {
     const { storeNumber } = InputBoxesTypesStore()
@@ -57,6 +58,33 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script"
             })
 
             try {
+                
+                const testimonialObject : ReviewTypes = {
+                    customerEmail,
+                    stars,
+                    customerCompany,
+                    customerName,
+                    customerImageUrl : "emapty for now will be uploaded after  s3",
+                    spaceId : data.spaceId,
+                    formId : data.formId,
+                    adminId : data.adminId,
+                    jobTitle,
+                    textReview: storeNumber === 0 ? textReview : undefined, 
+                    videoLink: storeNumber === 1 ? "placeholder" : undefined
+                }
+
+                const parsedObject = reviewObject.safeParse(testimonialObject)
+
+                if(!parsedObject.success){
+                    const validationError = parsedObject.error.errors.map(e => e.message).join('\n')
+                    toast.error(`Validation Failed ${validationError}`,{
+                        id : toastId
+                    })
+                    return
+                }
+
+                const validateObject : ReviewTypes = parsedObject.data
+
                 const userPfp = await uploadToS3(imagefile, "user-images") 
 
                 if (!userPfp || !userPfp.uniqueKey) {
@@ -64,19 +92,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script"
                     return
                 }
 
-                const customerImageUrl = userPfp.uniqueKey
-
-                const reviewObject : ReviewTypes = {
-                    customerEmail,
-                    stars,
-                    customerCompany,
-                    customerName,
-                    customerImageUrl,
-                    spaceId : data.spaceId,
-                    formId : data.formId,
-                    adminId : data.adminId,
-                    jobTitle
-                }
+                validateObject.customerImageUrl = userPfp.uniqueKey
 
 
                 if(storeNumber === 1){
@@ -97,18 +113,20 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script"
                         return;
                     }
 
-                    reviewObject.videoLink = videoLink.uniqueKey
+                    validateObject.videoLink = videoLink.uniqueKey
                 } else {
-                    reviewObject.textReview = textReview
+                    validateObject.textReview = textReview
                 }
-                // havent make the api route to submit testimonials haha -> I made it haha
+                // havent make the api route to submit testimonials haha -> I made it haha -> zod validation here also
+
+                
 
 
-                const submitReview = await submitTestimonials(reviewObject)
+                const submitReview = await submitTestimonials(validateObject)
 
 
                 if(!submitReview.success){
-                    throw new Error("Something went wrong 😕 Couldn`t submit your review right now.")
+                    throw new Error(submitReview.message)
                 }
 
                 toast.success("Review submitted! You`re awesome 🫶✨", {
@@ -143,7 +161,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script"
             {/* <div className="z-0 pointer-events-none absolute left-1/2 top-90 w-80 h-72 bg-gradient-to-r from-teal-400/20 to-emerald-400/15 rounded-full blur-3xl"></div>
             <div className="z-0 pointer-events-none absolute right-1/2 top-60  w-80 h-72 bg-gradient-to-r from-purple-500/20 to-violet-500/15 rounded-full blur-3xl"></div>
              */}
-            <Image src={data.logoUrl!} width={200} height={100} className="rounded-2xl" alt="form_logo"/>
+            <Image src={data.logoUrl!} width={100} height={100} className="rounded-2xl" alt="form_logo"/>
             <div>
                 <h1 className="text-2xl font-bold">{data.Name}</h1>
                 <p className="text-sm">{data.Description}</p>

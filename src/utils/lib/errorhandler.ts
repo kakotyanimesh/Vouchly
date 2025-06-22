@@ -21,9 +21,7 @@ export const handlerError = async (error : unknown) : Promise<ErrroInterface> =>
             statusCode : error.status
         }
     }
-
     
-
     if(error instanceof Response){
         const msg = (await error.json()).msg;
         return handlerStatuscode(error.status, msg); 
@@ -78,6 +76,12 @@ const handlerStatuscode = (status : number, message : string) : ErrorType=> {
                 errorMsg : "Sever down !! try again later",
                 statusCode : 500
             }
+        // case 400:
+        //     if(message.includes("Zod Error")){
+        //         return {
+        //             errorMsg : "Invalid Input Fields"
+        //         }
+        //     }
         default:
             return {
                 errorMsg: message || `Request failed with status ${status}`,

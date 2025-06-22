@@ -9,7 +9,8 @@ export async function POST(req: NextRequest) {
 
         if(!parsedObject.success){
             return NextResponse.json(
-                {msg : `zod error ${JSON.stringify(parsedObject.error.errors)}`}
+                {msg : `zod error ${JSON.stringify(parsedObject.error.errors)}`},
+                {status : 400}
             )
         }
 

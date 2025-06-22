@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
 
 export const TextBoxVariants = cva(
-    "w-full rounded-xl border focus:ring-2 focus:outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50",
+    "w-full rounded-md border focus:ring-2 focus:outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50",
     {
         variants : {
             variants : {

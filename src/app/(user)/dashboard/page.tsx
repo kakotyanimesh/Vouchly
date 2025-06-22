@@ -12,7 +12,7 @@ export default async function dashboard() {
     const { id,name } = await getUserSession()
 
     return (
-        <div className="md:space-y-10 space-y-5">
+        <div className="md:space-y-7 space-y-5">
             <h1 className="font-semibold text-2xl">Welcome {name}</h1>
             <div className="grid xl:grid-cols-4 xl:gap-10 gap-5 grid-cols-2 ">
                 {shortCutArrayDashboard.map((s, k) => (

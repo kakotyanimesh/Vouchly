@@ -64,12 +64,12 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
             </section>
             <div className="grid xl:grid-cols-3 grid-cols-1 gap-2">
                 <div className="xl:col-span-2 col-span-1 space-y-2">
-                    <Card className=" p-5  space-y-4 border-[hsl(var(--primary))]/70">
+                    <Card className=" p-5  space-y-4 border-[hsl(var(--primary))]/20">
                             <div>
                                 <h1 className="text-md font-semibold">Embed Widget </h1>
                                 <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Copy and paste this code into your website to display your testimonials.</p>
                             </div>
-                            <h1 className="rounded-xl border-2 border-[hsl(var(--primary))]/40 px-5 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide w-fit">
+                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))] px-5 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide w-fit">
                                 {`<script src="${data.script}"></script>`}
                             </h1>
                             <Button 
@@ -84,7 +84,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                                 Copy Script
                             </Button>
                     </Card>
-                    <Card className=" py-7 px-5  space-y-5 border-[hsl(var(--primary))]/70">
+                    <Card className=" py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
                         <h1 className="text-md font-semibold">Update Your Testimonia Form here </h1>
                         <form className="space-y-5">
                             <InputBox 
@@ -106,7 +106,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                 </div>
                 
                 <div className="space-y-2 col-span-1">
-                    <Card className=" py-8 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/70">
+                    <Card className=" py-8 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
                         <section>
                             <h1 className="font-semibold text-2xl">Submissions</h1>
                             <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">View and manage responses to this form</p>
@@ -121,12 +121,12 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                         <LinkTag 
                             variants="secondary"
                             sizes="md"
-                            href={`/forms/${data.formId}/embaded`}
+                            href={`/forms/${data.formId}/editor`}
                             >View All Submissions</LinkTag>
                     </Card>
 
 
-                    <Card className="py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/70">
+                    <Card className="py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
                         <section>
                             <h1 className="font-semibold text-2xl">Sharing & Details</h1>
                             <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Share your form and view its identifiers.</p>

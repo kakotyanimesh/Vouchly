@@ -173,7 +173,6 @@ export const submitTestimonials = async(data : ReviewTypes) => {
             message : datares
         }
     } catch (error) {
-        console.log(error);
         
         const err = await handlerError(error)
 

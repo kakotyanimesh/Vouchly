@@ -3,7 +3,7 @@ import { embadedTypes } from "@/utils/config/user.config"
 import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
 import { getUserSession } from "@/utils/lib/user_session"
-import { SpaceCardProps, TestimoniaTableDataTypes, TextReviewPropsWallOfLove, VideoReviewPropsWallOflove } from "@/utils/types/user_types"
+import { OrderedReviewTypes, SpaceCardProps, TestimoniaTableDataTypes, TextReviewPropsWallOfLove, VideoReviewPropsWallOflove } from "@/utils/types/user_types"
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
 import { ZodError } from "zod/v4"
 
@@ -311,7 +311,7 @@ export const getIndividualTestimonialFormData = async({adminId, formId} : {admin
 
 /**
  * two functions -> for text review 
- * another for vidoes
+ * another for vidoes => not in use im fetching everything with one function written in last
  */
 
 
@@ -647,3 +647,85 @@ export const fetchEmbadedScript = async({formId} : {formId: number} ) => {
 }
 
 
+const cachedAllReviews = ({formId, adminId} : {formId : number, adminId : number,}) => unstable_cache(async() => {
+
+    return await prisma.customerReview.findMany({
+        where : {
+            testimonialFormsId : Number(formId),
+            adminId : Number(adminId),
+        },
+        include : {
+            textReview : {
+                select : {
+                    textReview : true
+                }
+            },
+            videoReview : {
+                select : {
+                    videoLink : true
+                }
+            }
+        },
+        omit : {
+            testimonialFormsId : true,
+            spaceId : true,
+            adminId : true,
+        }
+    })
+},
+    [`review-cached-${formId}-${adminId}`],
+    {
+        revalidate : 100,
+        tags : [`${formId}-review-cached`, `review-cached`]
+    }
+)
+
+
+export const fetchedReviews = async({formId, adminId} : {formId : number, adminId : number}) => {
+    try {
+        const res = cachedAllReviews({formId, adminId})
+
+        const reviews = await res()
+        const orderedReviews : OrderedReviewTypes[] = reviews.map(r => {
+            if(r.textReview){
+                return {
+                    id : r.id,
+                    type : "text",
+                    data : {
+                        id : r.id,
+                        customerName : r.customerName,
+                        customerCompany : r.customerCompany,
+                        textReview : r.textReview.textReview,
+                        imageSrc : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${r.customerImageUrl}`,
+                        stars : r.stars
+                    }
+                } satisfies OrderedReviewTypes
+            }
+            if(r.videoReview){
+                return {
+                    id : r.id,
+                    type : "video",
+                    data : {
+                        videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${r.videoReview.videoLink}`,
+                        customerCompany : r.customerCompany,
+                        customerName : r.customerName,
+                        stars : r.stars
+                    }
+                } satisfies OrderedReviewTypes
+            }
+            return undefined
+        }).filter(Boolean) as OrderedReviewTypes[]
+
+        return {
+            orderedReviews 
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}

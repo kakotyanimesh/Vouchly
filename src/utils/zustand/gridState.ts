@@ -11,7 +11,7 @@ type GridActions = {
 }
 
 const initialState : WallOfLoveState = {
-    gridNumber : 3,
+    gridNumber : 1,
 }
 
 
