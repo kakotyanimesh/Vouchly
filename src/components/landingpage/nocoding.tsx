@@ -31,7 +31,7 @@ export const NoCoding = () => {
                     TextReviews.slice(0, 1).map((t, k) => (
                         <TextReviewOne
                             {...downAnimation}
-                            textreviewid={k + 1}
+                            textreviewid={t.textreviewid}
                             className="md:col-span-1 col-span-3"
                             textReview={t.textReview}
                             customerName={t.customerName}
@@ -54,7 +54,7 @@ export const NoCoding = () => {
                 {
                     TextReviews.slice(1, 2).map((t, k) => (
                         <TextReviewOne
-                            textreviewid={k + 1}
+                            textreviewid={t.textreviewid}
                             {...leftAnimation}
                             className="md:col-span-1 col-span-3"
                             textReview={t.textReview}
