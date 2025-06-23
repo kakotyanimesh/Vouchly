@@ -22,10 +22,10 @@ export const ClassicGridComponent = () => {
                             rotate : k  % 2 === 0 ? 2 : -2,
                             boxShadow: "0px 0px 6px 2px #d53f8c"
                         },
-                        transition : {
+                    transition : {
                             ease: "easeOut",
                             duration: 0.5
-                        }
+                    }
                 }})
             ))}
         </div>

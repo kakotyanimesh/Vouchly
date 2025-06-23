@@ -56,7 +56,7 @@ export async function GET(req:NextRequest, {params} : {params : Promise<{slug : 
                     id,
                     type : "text",
                     data : {
-                        id : rvs.id,
+                        textreviewid : rvs.id,
                         customerName : rvs.customerName,
                         customerCompany : rvs.customerCompany,
                         imageSrc : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rvs.customerImageUrl}`,
@@ -71,6 +71,7 @@ export async function GET(req:NextRequest, {params} : {params : Promise<{slug : 
                     id,
                     type : "video",
                     data : {
+                        videoReviewid : rvs.id,
                         customerName : rvs.customerName,
                         customerCompany : rvs.customerCompany,
                         videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rvs.videoReview.videoLink}`,

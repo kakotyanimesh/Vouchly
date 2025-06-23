@@ -23,6 +23,7 @@ export default async function FetchWidgetPage({params} : {params : Promise<{slug
                     if(rv.type === "text"){
                         return (
                             <TextReviewOne
+                                textreviewid={rv.data.textreviewid}
                                 key={k}
                                 customerName={rv.data.customerName}
                                 customerCompany={rv.data.customerCompany}
@@ -32,7 +33,8 @@ export default async function FetchWidgetPage({params} : {params : Promise<{slug
                         )
                     } else if (rv.type === "video") {
                         return (
-                            <VideoTestimonialOne 
+                            <VideoTestimonialOne
+                                stars={rv.data.stars}
                                 key={k}
                                 username={rv.data.customerName}
                                 usercompany={rv.data.customerCompany}

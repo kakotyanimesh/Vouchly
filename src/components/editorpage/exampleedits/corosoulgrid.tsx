@@ -23,7 +23,7 @@ export const CorosoulGrid = () => {
                 x : -totalLength,
                 transition : {
                     ease : "linear",
-                    duration : 20,
+                    duration : 40,
                     repeat : Infinity,
                     repeatType : "loop"
                 }
@@ -56,7 +56,7 @@ export const CorosoulGrid = () => {
     )
 }
 
-const hoverAnimation : MotionProps = {
+export const hoverAnimation : MotionProps = {
         initial : false,
         whileHover : {
             scale : 1.04,
