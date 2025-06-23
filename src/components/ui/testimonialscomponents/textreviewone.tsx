@@ -16,17 +16,9 @@ export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className
     return (
         <motion.div 
         onHoverStart={() => setisHoverStart(true)}
-        // onHoverEnd={() => setisHoverStart(false)}
-        initial={false}
-        whileHover={{
-            scale : 1.01,
-            // y : -2,
-            transition : {
-                ease : "linear",
-                duration : 0.1
-            }
-        }}
-        className={cn("rounded-md group bg-[hsl(var(--secondary))] w-fit py-4 px-3 text-left space-y-3", className)} {...props}>
+        // // onHoverEnd={() => setisHoverStart(false)
+
+        className={cn("rounded-md group bg-[hsl(var(--secondary))] w-fit  py-4 px-3 text-left space-y-3", className)} {...props}>
             <div className="flex flex-row gap-1">
                 {
                 Array.from({length : 5}).map((s, k) => (

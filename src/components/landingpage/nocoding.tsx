@@ -31,6 +31,7 @@ export const NoCoding = () => {
                     TextReviews.slice(0, 1).map((t, k) => (
                         <TextReviewOne
                             {...downAnimation}
+                            textreviewid={k + 1}
                             className="md:col-span-1 col-span-3"
                             textReview={t.textReview}
                             customerName={t.customerName}
@@ -53,6 +54,7 @@ export const NoCoding = () => {
                 {
                     TextReviews.slice(1, 2).map((t, k) => (
                         <TextReviewOne
+                            textreviewid={k + 1}
                             {...leftAnimation}
                             className="md:col-span-1 col-span-3"
                             textReview={t.textReview}
@@ -74,6 +76,7 @@ export const NoCoding = () => {
                 {
                     TextReviews.slice(2, 3).map((t, k) => (
                         <TextReviewOne
+                            textreviewid={k + 1}
                             className="md:col-span-1 col-span-3 w-full"
                             {...rightAnimation}
                             

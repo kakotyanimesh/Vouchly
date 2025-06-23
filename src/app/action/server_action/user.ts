@@ -692,7 +692,7 @@ export const fetchedReviews = async({formId, adminId} : {formId : number, adminI
                     id : r.id,
                     type : "text",
                     data : {
-                        id : r.id,
+                        textreviewid : r.id,
                         customerName : r.customerName,
                         customerCompany : r.customerCompany,
                         textReview : r.textReview.textReview,
@@ -706,6 +706,7 @@ export const fetchedReviews = async({formId, adminId} : {formId : number, adminI
                     id : r.id,
                     type : "video",
                     data : {
+                        videoReviewid : r.id,
                         videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${r.videoReview.videoLink}`,
                         customerCompany : r.customerCompany,
                         customerName : r.customerName,

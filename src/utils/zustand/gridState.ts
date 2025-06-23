@@ -1,44 +1,55 @@
 import { create } from "zustand";
-import { TextReviewPropsWallOfLove, VideoReviewPropsWallOflove } from "../types/user_types";
+import { TextReviewProps, VideoReviewProps } from "../types/user_types";
 
+
+export type gridTypes = "Carousel" | "Classic" | "Masonry"
 
 type WallOfLoveState = {
-    gridNumber : number,
+    gridType : gridTypes,
+    gridWidth : number,
+    openFinalWidget : boolean,
+    
 }
 
 type GridActions = {
-    setGridNumber : (n : number) => void
+    setgridType : (n : gridTypes) => void
+    setOpenFinalWidget : () => void
+    setGridWidth : (n : number) => void
 }
 
 const initialState : WallOfLoveState = {
-    gridNumber : 1,
+    gridType : "Masonry",
+    gridWidth : 40,
+    openFinalWidget : false
 }
 
 
 export const useGridStore = create<WallOfLoveState & GridActions>((set) => ({
     ...initialState,
-    setGridNumber : (n) => set({gridNumber : n})
+    setgridType : (n : gridTypes) => set({gridType : n}),
+    setOpenFinalWidget : () => set((state) => ({openFinalWidget : (!state.openFinalWidget)})),
+    setGridWidth : (n : number) => set({gridWidth : n})
 }))
 
 export type OrderedReview = {
     id: number;
     type: "text" | "video";
-    data: TextReviewPropsWallOfLove | VideoReviewPropsWallOflove;
+    data: TextReviewProps | VideoReviewProps;
 }
 
 
 
 type EmbadedIdState = {
     embededIds : number[],
-    textReviewState : TextReviewPropsWallOfLove[]
-    videoReviewState : VideoReviewPropsWallOflove[]
+    textReviewState : TextReviewProps[]
+    videoReviewState : VideoReviewProps[]
     orderedReviews: OrderedReview[] 
 }
 
 
 type useReviewActions = {
-    setTextReview : (tob : TextReviewPropsWallOfLove) => void
-    setVideoReview : (vob : VideoReviewPropsWallOflove) => void
+    setTextReview : (tob : TextReviewProps) => void
+    setVideoReview : (vob : VideoReviewProps) => void
     reset : () => void
 }
 
@@ -55,41 +66,41 @@ export const useReviewStore = create<useReviewActions & EmbadedIdState>((set) =>
     reset : () => set(initialReviewStore),
     setTextReview: (tr) =>
         set((state) => {
-            const isAdded = state.embededIds.includes(tr.id)
+            const isAdded = state.embededIds.includes(tr.textreviewid)
 
             if (isAdded) {
                 return {
-                    embededIds: state.embededIds.filter(id => id !== tr.id),
-                    textReviewState: state.textReviewState.filter(review => review.id !== tr.id),
+                    embededIds: state.embededIds.filter(id => id !== tr.textreviewid),
+                    textReviewState: state.textReviewState.filter(review => review.textreviewid !== tr.textreviewid),
                     videoReviewState: state.videoReviewState,
-                    orderedReviews: state.orderedReviews.filter(item => item.id !== tr.id)
+                    orderedReviews: state.orderedReviews.filter(item => item.id !== tr.textreviewid)
                 }
             } else {
                 return {
-                    embededIds: [...state.embededIds, tr.id],
+                    embededIds: [...state.embededIds, tr.textreviewid],
                     textReviewState: [...state.textReviewState, tr],
                     videoReviewState: state.videoReviewState,
-                    orderedReviews: [...state.orderedReviews, { id: tr.id, type: "text", data: tr }]
+                    orderedReviews: [...state.orderedReviews, { id: tr.textreviewid, type: "text", data: tr }]
                 }
             }
         }),
     setVideoReview: (vo) =>
         set((state) => {
-            const isAdded = state.embededIds.includes(vo.id)
+            const isAdded = state.embededIds.includes(vo.videoReviewid)
             
             if (isAdded) {
                 return {
-                    embededIds: state.embededIds.filter(id => id !== vo.id),
+                    embededIds: state.embededIds.filter(id => id !== vo.videoReviewid),
                     textReviewState: state.textReviewState,
-                    videoReviewState: state.videoReviewState.filter(video => video.id !== vo.id),
-                    orderedReviews: state.orderedReviews.filter(item => item.id !== vo.id)
+                    videoReviewState: state.videoReviewState.filter(video => video.videoReviewid !== vo.videoReviewid),
+                    orderedReviews: state.orderedReviews.filter(item => item.id !== vo.videoReviewid)
                 }
             } else {
                 return {
-                    embededIds: [...state.embededIds, vo.id],
+                    embededIds: [...state.embededIds, vo.videoReviewid],
                     textReviewState: state.textReviewState,
                     videoReviewState: [...state.videoReviewState, vo],
-                    orderedReviews: [...state.orderedReviews, { id: vo.id, type: "video", data: vo }]
+                    orderedReviews: [...state.orderedReviews, { id: vo.videoReviewid, type: "video", data: vo }]
                 }
             }
         })
@@ -111,3 +122,5 @@ export const useScriptStore = create<ScriptGeneratedProps>((set) => ({
     setScriptKey: (s) => set({scriptKey : s}),
     setIsGenerated : (n) => set({isGenerated : n})
 }))
+
+

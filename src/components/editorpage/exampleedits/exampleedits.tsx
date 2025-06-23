@@ -19,9 +19,9 @@ export const MassonaryGrid = () => {
 
 export const ClassicGrid = () => {
     return (
-        <Card className="grid grid-cols-3 gap-1 p-3">
+        <Card className="grid grid-cols-2 gap-1 p-3">
             {
-                Array.from({length : 6}).map((_, k) => (
+                Array.from({length : 4}).map((_, k) => (
                     <div key={k} className="w-full rounded-md bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] h-5">
 
                     </div>

@@ -80,7 +80,7 @@ export type AWS_Folder_Name = "form_logos" | "testimonial-videos"  | "user-image
 
 
 export interface TextReviewProps {
-    id ?:number,
+    textreviewid :number,
     textReview : string,
     customerName : string,
     customerCompany : string,
@@ -89,6 +89,7 @@ export interface TextReviewProps {
 }
 
 export interface VideoReviewProps {
+    videoReviewid : number,
     videoLink : string,
     customerName : string,
     customerCompany : string,
