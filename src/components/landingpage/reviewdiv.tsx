@@ -35,7 +35,8 @@ export const Reviewdiv = () => {
               Collect & 
               <span className="bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent ml-2">Showcase</span>
             </h1>
-            <TextReviewOne 
+            <TextReviewOne
+              textreviewid={1} 
               {...fromYanimation}
               className="md:w-[610px] w-full"
               textReview="ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page."
@@ -47,6 +48,7 @@ export const Reviewdiv = () => {
             
             <div className="flex md:flex-row flex-col gap-1">
               <TextReviewOne
+                textreviewid={2}
                 {...fromNXanimation}
                 className="md:w-[500px] w-full"
                 textReview="ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page."
