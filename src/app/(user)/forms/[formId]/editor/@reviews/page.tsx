@@ -1,5 +1,5 @@
 import { fetchedReviews } from "@/app/action/server_action/user";
-import { Card } from "@/components/ui/card";
+import { Card, InfiniteScrollCard } from "@/components/ui/card";
 import { CheckBox } from "@/components/ui/checkbox";
 import { VideoTestimonialOne } from "@/components/ui/testimonialscomponents/customvideotestimonial";
 import { TextReviewOne } from "@/components/ui/testimonialscomponents/textreviewone";
@@ -15,12 +15,13 @@ export default async function ReviewsPage({params}: {params : Promise<{formId : 
     
     
     return (
-        <Card className="flex-1 border-[hsl(var(--primary))]/20 h-[calc(100vh-11rem)]">
+        <Card className="flex-1 border-[hsl(var(--primary))]/20 h-[calc(100vh-11rem)] flex flex-col">
             {
                 !reviewData.orderedReviews?.length ?
                 <h1 className="text-center mt-10 text-xl bg-gradient-to-bl from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent font-semibold">You dont have any reviews yet !  <br /> Please Ask Your users to submit their reviews</h1>
                 :
-                <div className="grid grid-cols-3 gap-2 p-4 h-full overflow-y-auto scroll-smooth scrollbar scrollbar-thumb-[hsl(var(--tertiary))] scrollbar-w-0.7 ">
+                <InfiniteScrollCard>
+                    <div className="grid md:grid-cols-3 grid-cols-1 gap-2 p-4">
                     {
                         reviewData.orderedReviews.map((rv, k) => {
                             if(rv.type === "text"){
@@ -56,6 +57,7 @@ export default async function ReviewsPage({params}: {params : Promise<{formId : 
                         })
                     }
                 </div>
+                </InfiniteScrollCard>
             }
         </Card>
     )

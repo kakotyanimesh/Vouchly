@@ -9,20 +9,30 @@ import Image from "next/image"
 import { GlowingComponent } from "../glowingdiv"
 import { useState } from "react"
 
-export type TextReviewTypes = HTMLMotionProps<"div"> & TextReviewProps
+export type TextReviewTypes = HTMLMotionProps<"div"> & TextReviewProps & {
+    starColor ?:string
+}
 
-export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className, imageSrc,customerCompany, customerName, stars, ...props}) => {
+export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className, imageSrc,customerCompany, starColor, customerName, stars, ...props}) => {
     const [isHoverStart, setisHoverStart] = useState(false)
     return (
         <motion.div 
         onHoverStart={() => setisHoverStart(true)}
         // // onHoverEnd={() => setisHoverStart(false)
 
-        className={cn("rounded-md group bg-[hsl(var(--secondary))] w-fit  py-4 px-3 text-left space-y-3", className)} {...props}>
+        className={cn("rounded-xl group bg-[hsl(var(--secondary))] w-fit  py-4 px-3 text-left space-y-3", className)} {...props}>
             <div className="flex flex-row gap-1">
                 {
                 Array.from({length : 5}).map((s, k) => (
-                    <Star key={k} size={15} className={cn("text-[hsl(var(--primary))]", stars > k ? "fill-[hsl(var(--primary))]" : "")}/>
+                    <Star 
+                        key={k} size={15} 
+                        className={cn("text-[hsl(var(--primary))]", stars > k ? "fill-[hsl(var(--primary))]" : "")}
+                        style={{
+                            color : starColor,
+                            fill : stars > k ? starColor : undefined
+                        }}
+                        />
+                        
                 ))
                 }
             </div>

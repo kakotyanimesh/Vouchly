@@ -1,6 +1,6 @@
 "use client"
 import { ReactNode } from "react"
-import { Card } from "../ui/card"
+import { Card, InfiniteScrollCard } from "../ui/card"
 import { gridTypes, useGridStore } from "@/utils/zustand/gridState"
 import { cn } from "@/utils/lib/cn"
 import { Button } from "../ui/button"
@@ -8,6 +8,7 @@ import { Carousel, ClassicGrid, MassonaryGrid } from "./exampleedits/exampleedit
 import { ClassicGridComponent } from "./exampleedits/classicgrid"
 import { CorosoulGrid } from "./exampleedits/corosoulgrid"
 import { MassonaryGridComponent } from "./exampleedits/masonrygrid"
+import { X } from "lucide-react"
 
 const styleGuideArray : {title : string, desc : string, comp ?: ReactNode, type : gridTypes}[] = [
     {
@@ -43,24 +44,27 @@ export const WidgetCustomizer = () => {
     // }, [gridNumber])
     
     return (
-        <div className="space-y-4">
+        <div className="">
             {
                 openFinalWidget && <FinalGridCard/>
             }
-            {styleGuideArray.map((s, k) => (
-                    <Card 
+                <div className="grid grid-cols-3 lg:grid-cols-1 gap-3 space-x-2">
+                    { 
+                    styleGuideArray.map((s, k) => (
+                        <Card 
                         onClick={() => setgridType(s.type)}
                         role="button"
-                        key={k} className={cn("py-2 space-y-1 px-5 cursor-pointer relative rounded-xl transition-all ease-linear duration-300 hover:bg-[hsl(var(--tertiary))]/5", gridType === s.type  ? "shadow-[0px_0px_4px_2px_#cf10f1]" : undefined)}>
+                        key={k} className={cn("md:py-2 text-sm  space-y-1 h-full sm:px-5 p-1 cursor-pointer relative rounded-xl transition-all ease-linear duration-300 hover:bg-[hsl(var(--tertiary))]/5", gridType === s.type  ? "shadow-[0px_0px_4px_2px_#cf10f1]" : undefined)}>
                         <h1 className={cn(gridType === s.type ? "text-[hsl(var(--tertiary))]" :"bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent")}>
                             {s.title}
                         </h1>
-                        <p className="text-[hsl(var(--secondary-foreground))]/70 text-xs">{s.desc}</p>
+                        <p className="text-[hsl(var(--secondary-foreground))]/70 text-xs lg:block hidden">{s.desc}</p>
                         {s.comp}
                     </Card>
                 ))}
+                </div>
 
-                <Button variant={"secondary"} className="w-full" onClick={() => setOpenFinalWidget()}>Save Customization</Button>
+                <Button variant={"secondary"} className="w-full mt-4" onClick={() => setOpenFinalWidget()}>Save Customization</Button>
             
         </div>
     )
@@ -72,32 +76,54 @@ export const WidgetCustomizer = () => {
 
 const FinalGridCard = () => {
     const gridType = useGridStore(state => state.gridType)
+    const setOpenFinalWidget = useGridStore(state => state.setOpenFinalWidget)
+
+    // flex-1 overflow-y-auto h-full  overflow-x-hidden scrollbar scrollbar-thumb-[hsl(var(--tertiary))] scrollbar-w-0.7 flex justify-center items-center
 
     return (
-            <Card className="inset-x-56 inset-y-20 shadow-[0px_0px_5px_1px_#cf10f1] z-20 absolute py-4 px-10 flex flex-col space-y-2">
+            <Card className="xl:left-20 md:inset-y-10 md:right-5 md:left-20 right-1 left-3 top-10 bottom-15 z-20 absolute py-4 lg:px-10 px-5 flex flex-col space-y-2">
                 <h1 className="text-xl text-center bg-gradient-to-bl from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent font-semibold">
                     Your Generated Layout
                 </h1>
-                <Card className="justify-center h-full flex overflow-y-auto overflow-x-hidden py-4 scroll-smooth scrollbar scrollbar-thumb-[hsl(var(--tertiary))] scrollbar-w-0.7 ">
-                    {
-                        gridType === "Classic" ? <ClassicGridComponent/> : gridType === "Carousel" ? <CorosoulGrid/> : <MassonaryGridComponent/>
-                    }
-                </Card>
-                <EditorButtons/>
+                <Button variant={"transparent"} sizes={"sm"} className="absolute md:right-10 right-3 p-0" onClick={() => setOpenFinalWidget()}><X/></Button>
+                {/* <div className="flex md:flex-row flex-col overflow-hidden gap-5 h-full">
+                    <Card className="w-[80vw] flex-col flex min-h-0 ">
+                        <InfiniteScrollCard className="flex justify-center my-5 mx-10">
+                                {
+                            gridType === "Classic" ? <ClassicGridComponent/> : 
+                            gridType === "Carousel" ? <CorosoulGrid/> : 
+                            <MassonaryGridComponent/>
+                        }
+                            
+                        </InfiniteScrollCard>
+                    </Card>
+                    <EditorButtons/>
+                </div> */}
+                <div className="flex md:flex-row flex-col justify-between md:gap-4 gap-2">
+                    <Card className="xl:h-[550px] md:h-[450px] h-80 w-full overflow-hidden flex justify-center py-10 md:px-10 px-2">
+                        <InfiniteScrollCard className="flex justify-center h-full">
+                                {
+                            gridType === "Classic" ? <ClassicGridComponent/> : 
+                            gridType === "Carousel" ? <CorosoulGrid/> : 
+                            <MassonaryGridComponent/>
+                        }
+                            
+                        </InfiniteScrollCard>
+                    </Card>
+                    <EditorButtons/>
+                </div>
             </Card>
     )
 }
 
 
 const EditorButtons = () => {
-    const setOpenFinalWidget = useGridStore(state => state.setOpenFinalWidget)
-
     return (
-        <div className="space-x-5 mt-6 flex justify-end relative">
+        <Card className="flex flex-col p-5">
             <RangeSliderButton/>
             {/* <Button className="w-fit" onClick={() => setOpenFinalWidget()}>Close Customization</Button> */}
-            <Button className="w-fit" variant={"secondary"} onClick={() => setOpenFinalWidget()}>Generate Script</Button>
-        </div>
+            <Button className="w-full" variant={"secondary"}>Generate Script</Button>
+        </Card>
     )
 }
 

@@ -10,7 +10,7 @@ export const ClassicGridComponent = () => {
 
     
     return (
-        <div className={`grid grid-cols-2 gap-2`} style={{ width: `${gridWidth}vw` }}>
+        <div className={`grid grid-cols-2 gap-1 px-2`} style={{width : `${gridWidth}vw`}}>
             {orderedReviews.map((rv, k) => (
                 renderReview({
                     review : rv, 

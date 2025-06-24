@@ -82,11 +82,12 @@ export const createForms = async(data : CreateFormTypes) => {
             throw res
         }
 
-        const msg = (await res.json()).message
+        const {msg , formId} = await res.json()     
 
         
         return {
             success : true,
+            formId : formId,
             message : msg
         }
     } catch (error) {

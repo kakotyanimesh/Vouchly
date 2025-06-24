@@ -31,7 +31,7 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
         const { id } = await getUserSession()
 
 
-        await prisma.testimonialForm.create({
+        const res = await prisma.testimonialForm.create({
             data : {
                 Name,
                 Description,
@@ -39,6 +39,8 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
                 brandLogo,
                 spaceId : Number(spaceId),
                 adminId : Number(id)
+            },select : {
+                id : true
             }
         })
 
@@ -46,8 +48,9 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
         revalidateTag(`user-inidividual-space-testimoials-${spaceId}`)
         revalidateTag(`user-all-data-count-${id}`)
         revalidateTag(`all_testimonials-${id}`)
+
         return NextResponse.json(
-            {msg : "Testimonia Form Created Successfully !!"},
+            {msg : "Testimonia Form Created Successfully !!", formId : res.id},
             {status : 200}
         )
     } catch (error) {

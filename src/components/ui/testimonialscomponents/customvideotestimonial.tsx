@@ -13,10 +13,11 @@ type VideoTestimonialType = HTMLMotionProps<"div"> & {
     username : string,
     usercompany : string,
     videoSrc : any,
-    stars :number
+    stars :number,
+    borderRadius ?: number
 }
 
-export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompany, username, videoSrc , stars,className, ...props}) =>{
+export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompany, username, videoSrc , borderRadius, stars,className, ...props}) =>{
     const type = getVideoType(videoSrc)
     const videoRef = useRef<HTMLVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
@@ -47,10 +48,17 @@ export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompan
         //         duration : 0.1
         //     }
         // }}
-        className={cn(" rounded-md  h-full  relative" , className)} {...props}>
+        style={{
+            borderRadius : borderRadius
+        }}
+        className={cn(" rounded-2xl  h-full  relative overflow-hidden" , className)} {...props}>
             <video 
             ref={videoRef}
-            className={cn("w-full h-full object-fill rounded-md")}
+            style={{
+                borderRadius : borderRadius,
+                objectFit : "cover"
+            }}
+            className={cn("w-full h-full")}
             preload="metadata">
                 <source src={videoSrc} type={`video/${type}`}/>
                 your brower does not support video 
@@ -58,7 +66,7 @@ export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompan
             <button onClick={videoHandle} className="absolute top-2 left-3 bg-[hsl(var(--tertiary))]/70 text-[hsl(var(--primary))] rounded-full size-6 items-center justify-center flex cursor-pointer">
                 {!isPlaying ? <Play className="fill-[hsl(var(--primary))]" size={14}/> : <Pause className="fill-[hsl(var(--primary))]" size={14}/>} 
             </button>
-            <div className="font-semibold text-center absolute w-full rounded-b-md bottom-0 bg_card_gradient">
+            <div className="font-semibold text-center absolute w-full rounded-b-xl bottom-0 bg_card_gradient">
                 <h1>{username}</h1>
                 <p>{usercompany}</p>
                 <div className="flex flex-row gap-1 justify-center">

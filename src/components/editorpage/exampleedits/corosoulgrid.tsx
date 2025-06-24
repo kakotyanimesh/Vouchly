@@ -47,7 +47,7 @@ export const CorosoulGrid = () => {
                     renderReview({
                             review : rev, 
                             index : k,
-                            className : "h-[200px] w-[320px] flex-shrink-0",
+                            className : "md:h-[200px]  xl:w-[320px] md:w-[280px] w-[150px] flex-shrink-0",
                             motionProps : hoverAnimation
                         })
                 ))

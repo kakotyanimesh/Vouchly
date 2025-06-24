@@ -1,6 +1,6 @@
 "use client"
 import { useRenderReview } from "@/hooks/useReviewRenderer"
-import { OrderedReview, useReviewStore } from "@/utils/zustand/gridState"
+import { OrderedReview, useReviewStore, useReviewStyle } from "@/utils/zustand/gridState"
 import { motion, useAnimationControls, useMotionValue } from "motion/react"
 import { useEffect, useState } from "react"
 
@@ -16,7 +16,7 @@ export const MassonaryGridComponent = () => {
 
     return (
         <motion.div
-            className="flex flex-col gap-1 space-y-1 px-10 bg-red-700">
+            className="flex flex-col gap-1 space-y-1 px-10 ">
                 <SingleCorosoul review={totalFirstArray} totalLength={- 348 * totalFirstArray.length}/>
                 <SingleCorosoul review={totalSecondArry} totalLength={348 * totalSecondArry.length}/>
         </motion.div>
@@ -55,8 +55,6 @@ export const SingleCorosoul = ({review, totalLength } : {review : OrderedReview[
             style={{x : xValue}}
             className="flex flex-row gap-2 w-full relative"
         >
-            <div className="pointer-events-none absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-black/90 to-transparent z-10" />
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-black/90 to-transparent z-10" />
 
             {
                 review.map((rev, k) => (
@@ -64,7 +62,7 @@ export const SingleCorosoul = ({review, totalLength } : {review : OrderedReview[
                         review : rev,
                         index : k,
                         className : "h-[180px] w-[340px] flex-shrink-0",
-                        motionProps : hoverMotion(k)
+                        motionProps : HoverMotion(k)
                     })
                 ))
             }
@@ -72,13 +70,14 @@ export const SingleCorosoul = ({review, totalLength } : {review : OrderedReview[
     )
 }
 
-const hoverMotion = (k : number) => {
+const HoverMotion = (k : number) => {
+    const shadow = useReviewStyle(state => state.shadowColor)
         return {
             initial : false,
             whileHover : {
                 scale : 1.04,
                 rotate : k  % 2 === 0 ? 2 : -2,
-                boxShadow: "0px 0px 8px 2px #d53f8c"
+                boxShadow: `0px 0px 8px 2px ${shadow}`
             },
             transition : {
                 ease: "easeOut",

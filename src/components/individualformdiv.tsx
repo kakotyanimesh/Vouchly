@@ -38,7 +38,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
     
     return (
         <div className="space-y-5">
-            <section className="flex xl:flex-row flex-col items-center justify-between">
+            <section className="flex flex-col space-y-2 lg:flex-row lg:justify-between lg:items-center">
                 <div>
                     <h1 className="font-semibold text-2xl">{data.Name}</h1> 
                     <p className="text-[hsl(var(--secondary-foreground))] text-sm">{data.Description}</p>
@@ -69,7 +69,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                                 <h1 className="text-md font-semibold">Embed Widget </h1>
                                 <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Copy and paste this code into your website to display your testimonials.</p>
                             </div>
-                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))] px-5 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide w-fit">
+                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))] md:px-5 px-3 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide md:w-fit">
                                 {`<script src="${data.script}"></script>`}
                             </h1>
                             <Button 

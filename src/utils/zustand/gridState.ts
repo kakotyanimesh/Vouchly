@@ -11,6 +11,7 @@ type WallOfLoveState = {
     
 }
 
+
 type GridActions = {
     setgridType : (n : gridTypes) => void
     setOpenFinalWidget : () => void
@@ -31,6 +32,38 @@ export const useGridStore = create<WallOfLoveState & GridActions>((set) => ({
     setGridWidth : (n : number) => set({gridWidth : n})
 }))
 
+type ReviewStyleType = {
+    textColor : string,
+    bgColor : string,
+    meteorColor : string,
+    shadowColor : string,
+    roundedCorner : number
+}
+
+type ReviewStyleAction = {
+    setTextColor : (c : string) => void,
+    setBgColor : (C : string) => void,
+    setMeteor : (c : string) => void,
+    setShadowColor : (c : string) => void,
+    setRoundedCorner : ( cr : number) => void
+}
+
+const reviewStyleInitiateState : ReviewStyleType = {
+    textColor : "#FFFFFF",
+    bgColor :   "#242424",
+    meteorColor : "#26bfa7",
+    shadowColor : "#d53f8c",
+    roundedCorner : 12
+}
+
+export const useReviewStyle = create<ReviewStyleType & ReviewStyleAction>((set) => ({
+    ...reviewStyleInitiateState,
+    setBgColor : (c) => set({bgColor : c}),
+    setMeteor : (c) => set({meteorColor : c}),
+    setRoundedCorner : (cr) => set({roundedCorner : cr}),
+    setShadowColor : (c) => set({shadowColor : c}),
+    setTextColor : (c) => set({textColor : c})
+}))
 export type OrderedReview = {
     id: number;
     type: "text" | "video";

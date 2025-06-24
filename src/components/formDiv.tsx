@@ -4,7 +4,6 @@ import { Card } from "./ui/card"
 import { FileUploda } from "./ui/fileUpload"
 import { InputBox } from "./ui/input"
 import { TextArea } from "./ui/textbox"
-import { Plus } from "lucide-react"
 import { useTransition } from "react"
 import { CreateFormTypes } from "@/utils/types/user_types"
 import { useParseSpacedata } from "@/hooks/useSpacehook"
@@ -61,11 +60,12 @@ export const  FormDiv = () => {
                     id : loadingToast,
                     // position :
                 })
+                
 
                 reset()
                 resetFile()
-                router.push("/space")
-            } catch (error) {
+                router.push(`/forms/${res.formId}`)
+            } catch (error) {                
                 const errmsg = error instanceof Error ? error.message : "Something went wrong"
                 toast.error(errmsg, {
                     id : loadingToast
@@ -75,25 +75,25 @@ export const  FormDiv = () => {
         })
     }
     return ( 
-        <Card className="h-fit p-5 space-y-5 w-full border-[hsl(var(--primary))]/20">
-                    <div>
-                        <h1 className="text-2xl font-bold">Form Preview </h1>
-                        <p className="text-sm">After the Space is created, it will generate a dedicated page for collecting testimonials.</p>
+        <Card className="h-fit p-5 space-y-5 md:w-1/2 w-full border-[hsl(var(--primary))]/20">
+                    <div className=" lg:space-y-0 md:space-y-1">
+                        <h1 className="lg:text-2xl text-xl font-bold">Spin up a custom testimonial form</h1>
+                        <p className="lg:text-sm text-xs">Once your Space is live, you’ll get a branded page to collect authentic feedback via ✍️ text, 📹 video.</p>
                     </div>
                     <form onSubmit={createForm} className=" rounded-2xl space-y-5">
                         <InputBox 
                         disabled={isPending}
                         onChange={(e) => setName(e.target.value) }
-                        name="Name" 
+                        name="📝 Form Title" 
                         value={Name}
                         placeholder="Your Form Title here..."/>
 
                         <TextArea 
                         disabled={isPending}
                         onChange={(e) => setDescription(e.target.value) }
-                        name="Description" 
+                        name="💬 Welcome Message" 
                         value={Description}
-                        placeholder="A little description about your website"/>
+                        placeholder="Say hey 👋 and guide them a bit. Share what kind of testimonial you're looking for and why it matters."/>
 
                         {
                             questions.map((q, k) => (
@@ -101,7 +101,7 @@ export const  FormDiv = () => {
                                 disabled={isPending}
                                 value={q}
                                 onChange={(e) => upadatedQuestions(k, e.target.value)}
-                                name={`Question No ${k + 1} `} key={k} placeholder={`Write a question for your users`}/>
+                                name={`#️⃣ Question ${k + 1} `} key={k} placeholder={`Write a question for your users`}/>
                             ))
                         }
                         <Button
@@ -109,7 +109,7 @@ export const  FormDiv = () => {
                         type="button" 
                         variant={"transparent"} 
                         className="w-full justify-center flex" 
-                        onClick={() => addQuestionsArrray()}><Plus/></Button>
+                        onClick={() => addQuestionsArrray()}>➕ Add another question</Button>
 
                         <FileUploda disable={isPending} fileType="Logo"/>
 

@@ -7,7 +7,7 @@ export default function Layout({children} : {children : ReactNode}) {
     return (
         <div className="flex md:flex-row flex-col-reverse  h-screen overflow-hidden">
             <SideBar/>
-            <div className="pt-16 md:pr-5 md:ml-20 px-5 w-full h-full overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-[hsl(var(--primary))]/70 scrollbar-w-0.5">
+            <div className="pt-10 md:pr-5 md:ml-20 sm:pb-0 pb-20 px-5 w-full h-full overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-[hsl(var(--primary))]/70 scrollbar-w-0.5">
                 {children}
             </div>
         </div>

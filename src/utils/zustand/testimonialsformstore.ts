@@ -19,7 +19,7 @@ type FormActions = {
 
 const initialState : FormInterface = {
     Name : "Testimonia Form Title",
-    Description : "Write a warm message to your customers, and give them simple directions on how to make the best testimonial.",
+    Description : "Say hey 👋 and guide them a bit. Share what kind of testimonial you're looking for and why it matters.",
     questions : ["What is the best thing about [our product / service ?"],
 }
 

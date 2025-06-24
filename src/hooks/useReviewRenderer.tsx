@@ -1,7 +1,7 @@
 import { VideoTestimonialOne } from "@/components/ui/testimonialscomponents/customvideotestimonial"
 import { TextReviewOne } from "@/components/ui/testimonialscomponents/textreviewone"
 import { TextReviewProps, VideoReviewProps } from "@/utils/types/user_types"
-import { OrderedReview } from "@/utils/zustand/gridState"
+import { OrderedReview, useReviewStyle } from "@/utils/zustand/gridState"
 import { MotionProps } from "motion/react"
 
 interface RenderReviewProps {
@@ -12,11 +12,18 @@ interface RenderReviewProps {
 }
 
 export const useRenderReview = () => {
+    const {bgColor, textColor, meteorColor, roundedCorner} = useReviewStyle()
     const renderReview = ({review, index, className, motionProps} : RenderReviewProps) => {
         if(review.type === "text"){
             const data = review.data as TextReviewProps
             return (
                 <TextReviewOne
+                    style={{
+                        backgroundColor : bgColor,
+                        color : textColor,
+                        borderRadius : roundedCorner
+                    }}
+                    starColor={meteorColor}
                     {...motionProps}
                     className={className}
                     customerName={data.customerName}
@@ -33,6 +40,11 @@ export const useRenderReview = () => {
             return (
                 <VideoTestimonialOne
                     {...motionProps}
+                    style={{
+                        color : textColor,
+                        borderRadius : roundedCorner
+                    }}
+                    borderRadius={roundedCorner}
                     className={className}
                     videoSrc={data.videoLink}
                     stars={data.stars}
