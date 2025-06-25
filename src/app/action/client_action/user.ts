@@ -188,7 +188,7 @@ export const submitTestimonials = async(data : ReviewTypes) => {
 
 
 
-export const getScript = async({widgetId} : {widgetId : string}) => {
+export const createScript = async({widgetId} : {widgetId : string}) => {
     try {
         const res = await fetch("/api/embaded", {
             method : "POST",
@@ -199,7 +199,7 @@ export const getScript = async({widgetId} : {widgetId : string}) => {
         })
 
         if(!res.ok){
-            throw new Error("No script send here")
+            throw new Error("Unable to create Script ")
         }
 
         const { script } = await res.json()

@@ -1,8 +1,9 @@
 "use client"
-import { motion, MotionProps, useAnimationControls, useMotionValue } from "motion/react"
+import { motion, useAnimationControls, useMotionValue } from "motion/react"
 import { OrderedReview, useReviewStore } from "@/utils/zustand/gridState"
 import { useEffect, useState } from "react"
 import { useRenderReview } from "@/hooks/useReviewRenderer"
+import { HoverAnimation } from "./masonrygrid"
 
 export const CorosoulGrid = () => {
     const orderedReviews  = useReviewStore(state => state.orderedReviews)
@@ -48,7 +49,7 @@ export const CorosoulGrid = () => {
                             review : rev, 
                             index : k,
                             className : "md:h-[200px]  xl:w-[320px] md:w-[280px] w-[150px] flex-shrink-0",
-                            motionProps : hoverAnimation
+                            motionProps : HoverAnimation(k)
                         })
                 ))
             }
@@ -56,16 +57,19 @@ export const CorosoulGrid = () => {
     )
 }
 
-export const hoverAnimation : MotionProps = {
-        initial : false,
-        whileHover : {
-            scale : 1.04,
-            rotate : 2,
-            boxShadow: "0px 0px 6px 2px #d53f8c"
-        },
-        transition : {
-            ease: "easeOut",
-            duration: 0.5
-        }
+// export const CorosoulHoverAnimation = () => {
+//     const shadow = useReviewStyle(state => state.shadowColor)
+//     return {
+//         initial : false,
+//         whileHover : {
+//             scale : 1.04,
+//             rotate : 2,
+//             boxShadow: `0px 0px 6px 2px ${shadow}`
+//         },
+//         transition : {
+//             ease: "easeOut",
+//             duration: 0.5
+//         }
 
-}
+// }
+// }

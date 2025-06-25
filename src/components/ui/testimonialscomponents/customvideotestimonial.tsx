@@ -14,10 +14,11 @@ type VideoTestimonialType = HTMLMotionProps<"div"> & {
     usercompany : string,
     videoSrc : any,
     stars :number,
-    borderRadius ?: number
+    borderRadius ?: number,
+    bgColor ?:string
 }
 
-export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompany, username, videoSrc , borderRadius, stars,className, ...props}) =>{
+export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompany, bgColor, username, videoSrc , borderRadius, stars,className, ...props}) =>{
     const type = getVideoType(videoSrc)
     const videoRef = useRef<HTMLVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
@@ -66,7 +67,9 @@ export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompan
             <button onClick={videoHandle} className="absolute top-2 left-3 bg-[hsl(var(--tertiary))]/70 text-[hsl(var(--primary))] rounded-full size-6 items-center justify-center flex cursor-pointer">
                 {!isPlaying ? <Play className="fill-[hsl(var(--primary))]" size={14}/> : <Pause className="fill-[hsl(var(--primary))]" size={14}/>} 
             </button>
-            <div className="font-semibold text-center absolute w-full rounded-b-xl bottom-0 bg_card_gradient">
+            <div 
+                style={bgColor ? {backgroundColor : bgColor} : {}}
+                className="font-semibold text-center absolute w-full rounded-b-xl bottom-0 bg_card_gradient">
                 <h1>{username}</h1>
                 <p>{usercompany}</p>
                 <div className="flex flex-row gap-1 justify-center">

@@ -1,3 +1,4 @@
+import { gridTypes } from "@/generated/prisma"
 import { z } from "zod"
 
 export const signinObject = z.object({
@@ -33,7 +34,11 @@ export const updateObject = z.object({
 
 export const embadedTypes = z.object({
     formId : z.string(),
-    embadedIds : z.number().array()
+    embadedIds : z.number().array(),
+    style : z.string().optional(),
+    shadowColor : z.string().optional(),
+    starColor : z.string().optional(),
+    gridType : z.nativeEnum(gridTypes)
 })
 
 

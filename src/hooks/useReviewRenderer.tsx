@@ -12,7 +12,7 @@ interface RenderReviewProps {
 }
 
 export const useRenderReview = () => {
-    const {bgColor, textColor, meteorColor, roundedCorner} = useReviewStyle()
+    const {bgColor, textColor, meteorColor, starColor, roundedCorner} = useReviewStyle()
     const renderReview = ({review, index, className, motionProps} : RenderReviewProps) => {
         if(review.type === "text"){
             const data = review.data as TextReviewProps
@@ -23,7 +23,8 @@ export const useRenderReview = () => {
                         color : textColor,
                         borderRadius : roundedCorner
                     }}
-                    starColor={meteorColor}
+                    starColor={starColor}
+                    meteorColor={meteorColor}
                     {...motionProps}
                     className={className}
                     customerName={data.customerName}
@@ -42,8 +43,10 @@ export const useRenderReview = () => {
                     {...motionProps}
                     style={{
                         color : textColor,
-                        borderRadius : roundedCorner
+                        borderRadius : roundedCorner,
+                        
                     }}
+                    bgColor= {bgColor}
                     borderRadius={roundedCorner}
                     className={className}
                     videoSrc={data.videoLink}

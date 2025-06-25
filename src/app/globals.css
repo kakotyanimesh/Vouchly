@@ -94,3 +94,24 @@ body {
     nocompatible: true;
     preferredStrategy: 'pseudoelements';
 }
+
+
+.input_color{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.input_color::-webkit-color-swatch {
+  border-radius: 3px;
+  border: none;
+}
+.input_color::-moz-color-swatch {
+  border-radius: 3px;
+  border: none;
+}

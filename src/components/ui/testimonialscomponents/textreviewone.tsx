@@ -10,11 +10,13 @@ import { GlowingComponent } from "../glowingdiv"
 import { useState } from "react"
 
 export type TextReviewTypes = HTMLMotionProps<"div"> & TextReviewProps & {
-    starColor ?:string
+    starColor ?:string,
+    meteorColor ?:string
 }
 
-export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className, imageSrc,customerCompany, starColor, customerName, stars, ...props}) => {
+export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className,meteorColor, imageSrc,customerCompany, starColor, customerName, stars, ...props}) => {
     const [isHoverStart, setisHoverStart] = useState(false)
+    
     return (
         <motion.div 
         onHoverStart={() => setisHoverStart(true)}
@@ -46,7 +48,7 @@ export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 1, delay : 0.4, ease: "easeOut" }}
-                        className="bg-gradient-to-r from-[hsl(var(--primary))] w-20 rounded-4xl h-[2px] to-transparent"/>}
+                        className={cn("bg-gradient-to-r w-20 rounded-4xl h-[2px] to-transparent", !meteorColor ? `from-[${meteorColor}]` : "from-[hsl(var(--primary))]")}/>}
                 </div>
             </div>
         </motion.div>

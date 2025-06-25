@@ -33,7 +33,9 @@ export const useGridStore = create<WallOfLoveState & GridActions>((set) => ({
 }))
 
 type ReviewStyleType = {
+    editorCardBg : string
     textColor : string,
+    starColor : string,
     bgColor : string,
     meteorColor : string,
     shadowColor : string,
@@ -45,7 +47,9 @@ type ReviewStyleAction = {
     setBgColor : (C : string) => void,
     setMeteor : (c : string) => void,
     setShadowColor : (c : string) => void,
-    setRoundedCorner : ( cr : number) => void
+    setStarColor : (c : string) => void,
+    setRoundedCorner : ( cr : number) => void,
+    setEditorCardBg : (c : string) => void
 }
 
 const reviewStyleInitiateState : ReviewStyleType = {
@@ -53,16 +57,20 @@ const reviewStyleInitiateState : ReviewStyleType = {
     bgColor :   "#242424",
     meteorColor : "#26bfa7",
     shadowColor : "#d53f8c",
-    roundedCorner : 12
+    starColor : "#26bfa7",
+    roundedCorner : 12,
+    editorCardBg : "#121212"
 }
 
 export const useReviewStyle = create<ReviewStyleType & ReviewStyleAction>((set) => ({
     ...reviewStyleInitiateState,
     setBgColor : (c) => set({bgColor : c}),
+    setEditorCardBg : (c) => set({editorCardBg : c}),
     setMeteor : (c) => set({meteorColor : c}),
     setRoundedCorner : (cr) => set({roundedCorner : cr}),
     setShadowColor : (c) => set({shadowColor : c}),
-    setTextColor : (c) => set({textColor : c})
+    setTextColor : (c) => set({textColor : c}),
+    setStarColor : (c) => set({starColor : c})
 }))
 export type OrderedReview = {
     id: number;

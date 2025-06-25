@@ -62,7 +62,7 @@ export const SingleCorosoul = ({review, totalLength } : {review : OrderedReview[
                         review : rev,
                         index : k,
                         className : "h-[180px] w-[340px] flex-shrink-0",
-                        motionProps : HoverMotion(k)
+                        motionProps : HoverAnimation(k)
                     })
                 ))
             }
@@ -70,7 +70,7 @@ export const SingleCorosoul = ({review, totalLength } : {review : OrderedReview[
     )
 }
 
-const HoverMotion = (k : number) => {
+export const HoverAnimation = (k : number) => {
     const shadow = useReviewStyle(state => state.shadowColor)
         return {
             initial : false,

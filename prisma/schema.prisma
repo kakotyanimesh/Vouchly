@@ -12,7 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -59,7 +59,7 @@ model TestimonialForm  {
   status                    status                  @default(Draft)
   embadedWidgets            EmbadedWall?
   scriptS3                  String?             
-
+  ReviewStyle               ReviewStyle?
 
   @@index([spaceId, adminId])
 }
@@ -114,6 +114,22 @@ model EmbadedWall {
   testimonialFormsId        Int                   @unique
   testimonialForms          TestimonialForm       @relation(fields: [testimonialFormsId], references: [id])
   selectedReviews           Int[]
-  style                     String?
   createdAt                 DateTime              @default(now())
+}
+
+
+enum gridTypes {
+    Carousel  
+    Classic 
+    Masonry 
+}
+
+model ReviewStyle {
+  id                        Int                    @default(autoincrement())     @id
+  inlinestyle               String?
+  shadowColor               String?
+  starColor                 String?
+  gridType                  gridTypes               @default(Masonry)
+  testimonialFormId         Int                    @unique
+  testimonialForms          TestimonialForm        @relation(fields: [testimonialFormId], references: [id])
 }

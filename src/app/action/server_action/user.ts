@@ -1,4 +1,5 @@
 "use server"
+import { gridTypes } from "@/generated/prisma"
 import { embadedTypes } from "@/utils/config/user.config"
 import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
@@ -428,34 +429,58 @@ export const revalidateCached = async({cachedName} : {cachedName : string}) => {
 
 
 
+type AddWidgetTypes = {
+    formId : number,
+    embadedIds : number[],
+    style : string,
+    shadowColor : string,
+    starColor : string,
+    gridType : gridTypes
+}
 
-export const addWidgetstoDb = async({formId, embadedIds, style } : {formId : number, embadedIds : number[], style : string}) => {
+export const addWidgetstoDb = async({formId, embadedIds, style, shadowColor, starColor, gridType } : AddWidgetTypes) => {
     try {
-        const parsedObject = embadedTypes.safeParse({formId, embadedIds})
+        const parsedObject = embadedTypes.safeParse({formId, embadedIds, shadowColor, starColor, style, gridType})
 
         // update reviews table that these are in action right now
         if(!parsedObject.success){
             throw parsedObject.error.errors
         }
 
-        const res = await prisma.embadedWall.create({
-            data : {
-                testimonialFormsId : Number(formId),
-                selectedReviews : embadedIds,
-                style : style
-            }, select : {
-                id : true
-            }
+        const parseddata = parsedObject.data
+        console.log(parseddata.gridType);
+        
+        const embadedId = await prisma.$transaction(async() => {
+            await prisma.reviewStyle.create({
+                data : {
+                    testimonialFormId : Number(parseddata.formId),
+                    inlinestyle : parseddata.style,
+                    shadowColor : parseddata.shadowColor,
+                    starColor : parseddata.starColor,
+                    gridType : parseddata.gridType
+                }
+            })
+
+            const emabdedRes = await prisma.embadedWall.create({
+                data : {
+                    testimonialFormsId : Number(parseddata.formId),
+                    selectedReviews : parseddata.embadedIds,
+                }, select : {
+                    id : true
+                }
+            })
+
+            return emabdedRes.id
         })
 
         revalidatePath(`reviewwallcached-${formId}`)
 
         return {
             success : true,
-            id : res.id
+            id : embadedId
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if((error as any).code === "P2002"){
