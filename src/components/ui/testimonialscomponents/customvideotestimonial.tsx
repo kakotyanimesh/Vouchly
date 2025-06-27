@@ -15,10 +15,11 @@ type VideoTestimonialType = HTMLMotionProps<"div"> & {
     videoSrc : any,
     stars :number,
     borderRadius ?: number,
-    bgColor ?:string
+    bgColor ?:string,
+    starColor ?:string
 }
 
-export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompany, bgColor, username, videoSrc , borderRadius, stars,className, ...props}) =>{
+export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompany, bgColor, username, videoSrc ,starColor, borderRadius, stars,className, ...props}) =>{
     const type = getVideoType(videoSrc)
     const videoRef = useRef<HTMLVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
@@ -74,8 +75,16 @@ export const VideoTestimonialOne : React.FC<VideoTestimonialType> = ({usercompan
                 <p>{usercompany}</p>
                 <div className="flex flex-row gap-1 justify-center">
                 {
-                    Array.from({length : 5}).map((s, k) => (
-                    <Star key={k} size={15} className={cn("text-[hsl(var(--primary))]", stars > k ? "fill-[hsl(var(--primary))]" : "")}/>
+                    Array.from({length : 5}).map((_, k) => (
+                    <Star 
+                        key={k} 
+                        size={15} 
+                        className={cn("text-[hsl(var(--primary))]", stars > k ? "fill-[hsl(var(--primary))]" : "")}
+                        style={{
+                            color : starColor,
+                            fill : stars > k ? starColor : undefined
+                        }}
+                        />
                     ))
                 }
                 </div>

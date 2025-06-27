@@ -69,12 +69,12 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                                 <h1 className="text-md font-semibold">Embed Widget </h1>
                                 <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Copy and paste this code into your website to display your testimonials.</p>
                             </div>
-                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))] md:px-5 px-3 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide md:w-fit">
-                                {`<script src="${data.script}"></script>`}
+                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))] bg-white/5 whitespace-nowrap md:px-5 px-3 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto scrollbar scrollbar-h-1.5 scrollbar-thumb-rounded-full scrollbar-track-[hsl(var(--primary))]/20 scrollbar-thumb-[hsl(var(--primary))]/80 overflow-scroll">
+                                {`${data.script}`}
                             </h1>
                             <Button 
                             onClick={() => {
-                                navigator.clipboard.writeText(`<script src="${data.script}"></script>`)
+                                navigator.clipboard.writeText(`${data.script}`)
                                 toast.message("Embed script copied!", {
                                         description: "Paste it in your website's HTML to show the testimonial widget.",
                                 });
@@ -132,7 +132,7 @@ export const IndividualFormDiv = (data : IndividualFormDivProps) => {
                             <p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">Share your form and view its identifiers.</p>
                         </section>
                         <section className="flex flex-row gap-2 justify-between">
-                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))]/40 p-2 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar-hide">{process.env.NEXT_PUBLIC_NEXT_URL}/submit/{data.token}</h1>
+                            <h1 className="rounded-md border-2 border-[hsl(var(--primary))]/40 p-2 text-[hsl(var(--secondary-foreground))] overflow-x-auto whitespace-nowrap scrollbar scrollbar-h-1.5 scrollbar-thumb-rounded-full scrollbar-track-[hsl(var(--primary))]/20 scrollbar-thumb-[hsl(var(--primary))]/80 overflow-scroll overflow-y-hidden">{process.env.NEXT_PUBLIC_NEXT_URL}/submit/{data.token}</h1>
                             <Button variant={"transparent"} sizes={"sm"} onClick={() => {
                                 navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`)
                                 setCopied(true)

@@ -12,10 +12,9 @@ import { Scan, X } from "lucide-react"
 import { DimensionInput } from "../ui/editorpageelements/dimensionInput"
 import { ColorPicker } from "../ui/editorpageelements/colorPicker"
 import { toast } from "sonner"
-import { addWidgetstoDb } from "@/app/action/server_action/user"
+import { addWidgetstoDb, saveScriptKey } from "@/app/action/server_action/user"
 import { useRouter } from "next/navigation"
 import LoadingCircleSpinner from "../ui/loadingspinner"
-import { createScript, uploadToS3 } from "@/app/action/client_action/user"
 
 const styleGuideArray : {title : string, desc : string, comp ?: ReactNode, type : gridTypes}[] = [
     {
@@ -84,7 +83,11 @@ export const WidgetCustomizer = ({formId} : {formId : number}) => {
 const FinalGridCard = ({formId} : {formId : number}) => {
     const gridType = useGridStore(state => state.gridType)
     const setOpenFinalWidget = useGridStore(state => state.setOpenFinalWidget)
-    const {editorCardBg} = useReviewStyle()
+    const {parentBgColor} = useReviewStyle()
+    const orderedReviewss = useReviewStore(state => state.orderedReviews) 
+    const reviewStyles = useReviewStyle()
+
+
 
     // flex-1 overflow-y-auto h-full  overflow-x-hidden scrollbar scrollbar-thumb-[hsl(var(--tertiary))] scrollbar-w-0.7 flex justify-center items-center
 
@@ -97,15 +100,15 @@ const FinalGridCard = ({formId} : {formId : number}) => {
                 <div className="flex md:flex-row flex-col justify-between md:gap-4 gap-2">
                     <Card 
                         style={{
-                            backgroundColor : editorCardBg
+                            backgroundColor : parentBgColor
                         }}
                         className="xl:h-[550px] md:h-[450px] h-80 w-full overflow-hidden flex justify-center py-10 md:px-10 px-2">
                         <InfiniteScrollCard className="flex justify-center h-full">
-                                {
-                            gridType === "Classic" ? <ClassicGridComponent/> : 
-                            gridType === "Carousel" ? <CorosoulGrid/> : 
-                            <MassonaryGridComponent/>
-                        }
+                            {
+                                gridType === "Classic" ? <ClassicGridComponent orderedReviews={orderedReviewss} reviewStyles={reviewStyles}/> : 
+                                gridType === "Carousel" ? <CorosoulGrid orderedReviews={orderedReviewss} reviewStyles={reviewStyles} direction="left"/> : 
+                                <MassonaryGridComponent reviewStyles={reviewStyles} orderedReviews={orderedReviewss}/>
+                            }
                             
                         </InfiniteScrollCard>
                     </Card>
@@ -118,14 +121,18 @@ const FinalGridCard = ({formId} : {formId : number}) => {
 
 const EditorButtons = ({formId} : {formId : number}) => {
     const router = useRouter()
+    const resetEditiorPage = useReviewStore(state => state.reset)
+    const resetStyles = useReviewStyle(state => state.restyles)
+    const setOpenFinalWidget = useGridStore(state => state.setOpenFinalWidget)
     const {
-        bgColor, setBgColor, 
+        rewiewCardBg, setrewiewCardBg,
         textColor, setTextColor, 
         // setMeteor, meteorColor, 
         setRoundedCorner, roundedCorner,
         shadowColor, setShadowColor,
         starColor, setStarColor,
-        editorCardBg, setEditorCardBg
+        parentBgColor, setparentBgColor
+
         } = useReviewStyle()
 
         const gridType = useGridStore(state => state.gridType)
@@ -138,47 +145,41 @@ const EditorButtons = ({formId} : {formId : number}) => {
                 
                 const toasterId = toast.loading("🛠️ Saving your style magic...")
                 try {
-                    const style = `bg-[${bgColor}] text-[${textColor}] rounded-[${roundedCorner}]`
 
                     const res = await addWidgetstoDb({
                         formId,
-                        starColor,
-                        style,
-                        shadowColor,
+                        style : {
+                            rewiewCardBg,
+                            textColor,
+                            roundedCorner,
+                            shadowColor,
+                            parentBgColor,
+                            starColor,
+                        },
+                        
                         gridType : gridType,
-                        embadedIds : embededIds, 
+                        embadedIds : embededIds
                     })
 
                     if(!res.success || !res.id){
                         throw new Error(res.message || "Could not save widget settings")
                     }
 
-                    toast.loading("📦 Generating your embed script...", {
-                        id : toasterId
-                    })
-
                     
-                    const script = await createScript({widgetId : res.id})
 
-                    if(!script.success){
-                        throw new Error(script.message || "Failed to generate script.")
+                    const saveEmbadedId = await saveScriptKey({embadedId : res.id, formId : formId})
+
+                    if(!saveEmbadedId.success){
+                        throw new Error("Failed to generate script.")
                     }
-
-                    
-                    const scripFile = new File([script.script], `testimonailsection-${res.id}`, {
-                        type : "application/javascript"
-                    } )
-                    const s3Upload = await uploadToS3(scripFile, `widget`)
-
-                    if(!s3Upload.uniqueKey){
-                        throw new Error("☁️ Upload failed. Try again.")
-                    }
-
 
                     toast.success("🎉 Testimonial Wall created! Grab your embed from the Widget section.", {
                         id : toasterId
                     })
                     router.push(`/forms/${formId}`)
+                    resetEditiorPage()
+                    setOpenFinalWidget()
+                    resetStyles()
                     // const 
                 } catch (error) {
                     console.log(error);
@@ -194,6 +195,7 @@ const EditorButtons = ({formId} : {formId : number}) => {
         <Card className="flex flex-col p-5 w-96 space-y-5">
             {/* <RangeSliderButton/> */}
             <form onSubmit={saveCustomization} className="space-y-5">
+                <h1>Don&apos;t forget to change the required Styles & match the bg color now its black </h1>
                 <DimensionInput 
                     
                     label="🍩Rounded Vibes" 
@@ -203,12 +205,12 @@ const EditorButtons = ({formId} : {formId : number}) => {
                     />
                 <ColorPicker 
                     title="🌈Hero Shade" 
-                    initialValue={editorCardBg} 
-                    onChangeFunction={(e : React.ChangeEvent<HTMLInputElement>) => setEditorCardBg(e.target.value)}/>
+                    initialValue={parentBgColor} 
+                    onChangeFunction={(e : React.ChangeEvent<HTMLInputElement>) => setparentBgColor(e.target.value)}/>
                 <ColorPicker 
                     title="🌈Review Card Drip" 
-                    initialValue={bgColor} 
-                    onChangeFunction={(e : React.ChangeEvent<HTMLInputElement>) => setBgColor(e.target.value)}/>
+                    initialValue={rewiewCardBg} 
+                    onChangeFunction={(e : React.ChangeEvent<HTMLInputElement>) => setrewiewCardBg(e.target.value)}/>
                 <ColorPicker 
                     title="✨Hype Stars" 
                     initialValue={starColor} onChangeFunction={(e : React.ChangeEvent<HTMLInputElement>) => setStarColor(e.target.value)}/>
