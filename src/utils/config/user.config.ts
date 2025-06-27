@@ -35,14 +35,12 @@ export const updateObject = z.object({
 export const embadedTypes = z.object({
     formId : z.string(),
     embadedIds : z.number().array(),
-    style : z.string().optional(),
-    shadowColor : z.string().optional(),
-    starColor : z.string().optional(),
-    gridType : z.nativeEnum(gridTypes)
+    gridType : z.nativeEnum(gridTypes),
 })
 
 
 export const widgetIdObject = z.object({
-    widgetId : z.string()
+    widgetId : z.string(),
+    formId : z.number()
 })
 

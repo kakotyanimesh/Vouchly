@@ -1,30 +1,63 @@
 "use client"
-import { motion, useAnimationControls, useMotionValue } from "motion/react"
-import { OrderedReview, useReviewStore } from "@/utils/zustand/gridState"
+import { motion, useAnimationControls } from "motion/react"
+import { OrderedReview, ReviewStyleType } from "@/utils/zustand/gridState"
 import { useEffect, useState } from "react"
 import { useRenderReview } from "@/hooks/useReviewRenderer"
 import { HoverAnimation } from "./masonrygrid"
 
-export const CorosoulGrid = () => {
-    const orderedReviews  = useReviewStore(state => state.orderedReviews)
+export const getWidth = ({gap}: {gap : number}) => {
+    if(typeof window !== "undefined"){
+        if(window.innerWidth >= 1280) return 230 + gap
+        if(window.innerWidth >= 768) return 280 + gap
+    }  
+    return 320 + gap
+}
+
+type CorosoulGridTypes = {
+    orderedReviews : OrderedReview[], 
+    reviewStyles : Omit<ReviewStyleType, "parentBgColor">, 
+    direction : "left" | "right"
+}
+export const CorosoulGrid = ({orderedReviews, reviewStyles, direction} : CorosoulGridTypes) => {
     const [ishoverd, setIshoverd] = useState<boolean>(false)
     const { renderReview } = useRenderReview()
+    const [totalLength, setTotalLength] = useState<number>(0)
+
+    
+    // const {rewiewCardBg, textColor, meteorColor, starColor, roundedCorner} = useReviewStyle()
+    const {shadowColor}  = reviewStyles
 
     const newReviews : OrderedReview[] = [...orderedReviews, ...orderedReviews, ...orderedReviews]
 
     const controls = useAnimationControls()
-    const xValue = useMotionValue(0)
 
-    const totalLength = 328 * orderedReviews.length
+    
+
+    useEffect(() => {
+      const lengthOfAnimation = () => {
+        setTotalLength(getWidth({gap : 4}) * orderedReviews.length)
+      }
+      lengthOfAnimation()
+      window.addEventListener("resize", lengthOfAnimation)
+      return () => window.removeEventListener("resize", lengthOfAnimation)
+    }, [orderedReviews.length])
+    
+
+    useEffect(() => {
+        controls.set({x : direction === "left" ? 0 : -totalLength})
+    
+    }, [controls, totalLength, direction])
+    
 
 
     useEffect(() => {
         if(!ishoverd){
-            controls.start({
-                x : -totalLength,
+
+            controls.start({ 
+                x : direction === "left" ? -totalLength : 0,
                 transition : {
                     ease : "linear",
-                    duration : 40,
+                    duration : Math.abs(totalLength/ 50),
                     repeat : Infinity,
                     repeatType : "loop"
                 }
@@ -32,24 +65,25 @@ export const CorosoulGrid = () => {
         } else {
             controls.stop()
         }
-    }, [controls, ishoverd, orderedReviews.length, totalLength])
+    }, [controls, ishoverd, orderedReviews.length, totalLength, direction])
 
     
 
     return (
         <motion.div 
+            initial={false}
             onHoverStart={() => setIshoverd(true)}
             onHoverEnd={() => setIshoverd(false)}
             animate={controls}
-            style={{x : xValue}}
-            className="flex flex-row gap-2 w-full justify-center items-center">
+            className="flex flex-row gap-1 w-full justify-center items-center">
             {
                 newReviews.map((rev, k) => (
                     renderReview({
+                            reviewStyles,
                             review : rev, 
                             index : k,
-                            className : "md:h-[200px]  xl:w-[320px] md:w-[280px] w-[150px] flex-shrink-0",
-                            motionProps : HoverAnimation(k)
+                            className : "h-[210px] pb-2 xl:w-[320px] md:w-[280px] w-[150px] flex-shrink-0",
+                            motionProps : HoverAnimation({k, shadowColor})
                         })
                 ))
             }

@@ -1,50 +1,49 @@
-import { getReviews } from "@/app/action/client_action/user";
-import { VideoTestimonialOne } from "@/components/ui/testimonialscomponents/customvideotestimonial";
-import { TextReviewOne } from "@/components/ui/testimonialscomponents/textreviewone";
-import { OrderedReviewTypes } from "@/utils/types/user_types";
+import { getReviews } from "@/app/action/client_action/user"
+import { ClassicGridComponent } from "@/components/editorpage/exampleedits/classicgrid"
+import { CorosoulGrid } from "@/components/editorpage/exampleedits/corosoulgrid"
+import { MassonaryGridComponent } from "@/components/editorpage/exampleedits/masonrygrid"
+import { OrderedReviewTypes } from "@/utils/types/user_types"
+import Script from "next/script"
 
-export default async function FetchWidgetPage({params} : {params : Promise<{slug : string}>}){
-    const embadedId =  (await params).slug
+export default async function EmbadedScript({params}:{params : Promise<{slug : string}>}) {
+    const embadedId = (await params).slug
 
-    const data = await getReviews({embadedId : embadedId})
-    
-    if(!data.orderedReviews){
-        return <h1>You don&apos;t have any reviews yet</h1>
+    const {orderedReviews, reviewStyle} = await getReviews({embadedId})
+
+    if(!orderedReviews){
+        return <div className="flex justify-center items-center text-center min-h-screen bg-[hsl(var(--tertiary))]/30">
+            <h1 className="text-2xl bg-gradient-to-b from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent">There is no reviews for this url Please contact Providers</h1>
+        </div>
     }
 
+    const { shadowColor, starColor,textColor,rewiewCardBg, roundedCorner, parentPageBgColor, gridType } = reviewStyle
 
-    const reviews : OrderedReviewTypes[] = data.orderedReviews
-    
-    
+    const inlineStyles = {
+        shadowColor,
+        starColor,
+        textColor,
+        rewiewCardBg,
+        roundedCorner,
+        meteorColor : starColor
+    }
+
+    const reviews : OrderedReviewTypes[] = orderedReviews
+
+    const IfrmaeSrc = process.env.CLOUD_FRONT_DOMAIN_NAME
+
     return (
-        <div className="grid grid-cols-3">
-            {
-                reviews.map((rv,k) => {
-                    if(rv.type === "text"){
-                        return (
-                            <TextReviewOne
-                                textreviewid={rv.data.textreviewid}
-                                key={k}
-                                customerName={rv.data.customerName}
-                                customerCompany={rv.data.customerCompany}
-                                textReview={rv.data.textReview}
-                                stars={rv.data.stars}
-                                imageSrc={rv.data.imageSrc}/>
-                        )
-                    } else if (rv.type === "video") {
-                        return (
-                            <VideoTestimonialOne
-                                stars={rv.data.stars}
-                                key={k}
-                                username={rv.data.customerName}
-                                usercompany={rv.data.customerCompany}
-                                videoSrc={rv.data.videoLink}
-                                />
-
-                        )
+        <div className="w-full min-h-screen p-3" style={{backgroundColor : parentPageBgColor}}>
+            <Script src={`${IfrmaeSrc}/js/iframeResize.max.js`}/>
+                {/* out div that has whole width and height ( get from db ) */}
+                <div className="flex justify-center items-center text-center">
+                    {
+                    
+                        gridType === "Classic" ? <ClassicGridComponent orderedReviews={reviews} reviewStyles={inlineStyles}/> : 
+                        gridType === "Carousel" ? <CorosoulGrid direction="left"  orderedReviews={reviews} reviewStyles={inlineStyles}/> : 
+                        <MassonaryGridComponent reviewStyles={reviewStyle} orderedReviews={reviews}/>
+                    
                     }
-                })
-            }
+                </div>
         </div>
     )
 }

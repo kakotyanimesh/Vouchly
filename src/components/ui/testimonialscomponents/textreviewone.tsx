@@ -11,7 +11,7 @@ import { useState } from "react"
 
 export type TextReviewTypes = HTMLMotionProps<"div"> & TextReviewProps & {
     starColor ?:string,
-    meteorColor ?:string
+    meteorColor ?:string,
 }
 
 export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className,meteorColor, imageSrc,customerCompany, starColor, customerName, stars, ...props}) => {

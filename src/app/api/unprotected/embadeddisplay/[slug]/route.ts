@@ -11,6 +11,7 @@ export async function GET(req:NextRequest, {params} : {params : Promise<{slug : 
             where : {
                 id : widgetId
             }, select : {
+                testimonialFormsId : true,
                 selectedReviews : true
             }
         })
@@ -24,34 +25,44 @@ export async function GET(req:NextRequest, {params} : {params : Promise<{slug : 
 
         const ids = res.selectedReviews
 
-        const reviews = await prisma.customerReview.findMany({
-            where : {
-                id : {in : ids}
-            }, include : {
-                textReview : {
-                    select : {
-                        textReview : true
-                    }
-                }, 
-                videoReview : {
-                    select : {
-                        videoLink : true
-                    }
-                }
-            }, omit : {
-                testimonialFormsId : true,
-                spaceId : true,
-                adminId : true,
-                createdAt : true
-            }
-        })
+        const [reviews, reviewStyle ] = await Promise.all([
+            await prisma.customerReview.findMany({
+                where : {
+                    id : {in : ids}
+                }, include : {
+                    textReview : {
+                        select : {
+                            textReview : true
+                        }
+                    }, 
+                    videoReview : {
+                        select : {
+                            videoLink : true
+                        }
+                    },
 
+                }, omit : {
+                    spaceId : true,
+                    adminId : true,
+                    createdAt : true
+                }
+            }),
+
+            await prisma.reviewStyle.findUnique({
+                where : {
+                    testimonialFormId : res.testimonialFormsId
+                }, omit : {
+                    testimonialFormId : true,
+                    id : true
+                }
+            })
+        ])
 
         const reviewWithOrder : OrderedReviewTypes[] = ids.map(id => {
             const rvs = reviews.find(rv => rv.id === id)
             if(!rvs) return undefined
 
-            if(rvs.textReview){
+            if(rvs.textReview){                
                 return {
                     id,
                     type : "text",
@@ -84,7 +95,7 @@ export async function GET(req:NextRequest, {params} : {params : Promise<{slug : 
         }).filter(Boolean) as OrderedReviewTypes[]
 
         return NextResponse.json(
-            {msg : "Fetched Reviews successfully", reviewWithOrder},
+            {msg : "Fetched Reviews successfully", reviewWithOrder, reviewStyle},
             {status : 200}
         )
         

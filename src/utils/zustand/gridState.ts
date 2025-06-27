@@ -32,45 +32,47 @@ export const useGridStore = create<WallOfLoveState & GridActions>((set) => ({
     setGridWidth : (n : number) => set({gridWidth : n})
 }))
 
-type ReviewStyleType = {
-    editorCardBg : string
+export type ReviewStyleType = {
+    parentBgColor : string
     textColor : string,
     starColor : string,
-    bgColor : string,
+    rewiewCardBg : string,
     meteorColor : string,
     shadowColor : string,
-    roundedCorner : number
+    roundedCorner : number,
 }
 
 type ReviewStyleAction = {
     setTextColor : (c : string) => void,
-    setBgColor : (C : string) => void,
+    setrewiewCardBg : (C : string) => void,
     setMeteor : (c : string) => void,
     setShadowColor : (c : string) => void,
     setStarColor : (c : string) => void,
     setRoundedCorner : ( cr : number) => void,
-    setEditorCardBg : (c : string) => void
+    setparentBgColor : (c : string) => void,
+    restyles : () => void
 }
 
 const reviewStyleInitiateState : ReviewStyleType = {
     textColor : "#FFFFFF",
-    bgColor :   "#242424",
+    rewiewCardBg :   "#242424",
     meteorColor : "#26bfa7",
     shadowColor : "#d53f8c",
     starColor : "#26bfa7",
     roundedCorner : 12,
-    editorCardBg : "#121212"
+    parentBgColor : "#121212",
 }
 
 export const useReviewStyle = create<ReviewStyleType & ReviewStyleAction>((set) => ({
     ...reviewStyleInitiateState,
-    setBgColor : (c) => set({bgColor : c}),
-    setEditorCardBg : (c) => set({editorCardBg : c}),
+    setrewiewCardBg : (c) => set({rewiewCardBg : c}),
+    setparentBgColor : (c) => set({parentBgColor : c}),
     setMeteor : (c) => set({meteorColor : c}),
     setRoundedCorner : (cr) => set({roundedCorner : cr}),
     setShadowColor : (c) => set({shadowColor : c}),
     setTextColor : (c) => set({textColor : c}),
-    setStarColor : (c) => set({starColor : c})
+    setStarColor : (c) => set({starColor : c}),
+    restyles : () => set(reviewStyleInitiateState)
 }))
 export type OrderedReview = {
     id: number;

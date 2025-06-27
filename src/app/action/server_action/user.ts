@@ -5,6 +5,7 @@ import { handlerError } from "@/utils/lib/errorhandler"
 import prisma from "@/utils/lib/prisma"
 import { getUserSession } from "@/utils/lib/user_session"
 import { OrderedReviewTypes, SpaceCardProps, TestimoniaTableDataTypes, TextReviewPropsWallOfLove, VideoReviewPropsWallOflove } from "@/utils/types/user_types"
+import { ReviewStyleType } from "@/utils/zustand/gridState"
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
 import { ZodError } from "zod/v4"
 
@@ -432,32 +433,35 @@ export const revalidateCached = async({cachedName} : {cachedName : string}) => {
 type AddWidgetTypes = {
     formId : number,
     embadedIds : number[],
-    style : string,
-    shadowColor : string,
-    starColor : string,
-    gridType : gridTypes
+    style : Omit<ReviewStyleType, "meteorColor">,
+    gridType : gridTypes,
 }
 
-export const addWidgetstoDb = async({formId, embadedIds, style, shadowColor, starColor, gridType } : AddWidgetTypes) => {
+export const addWidgetstoDb = async({formId, embadedIds, style, gridType } : AddWidgetTypes) => {
     try {
-        const parsedObject = embadedTypes.safeParse({formId, embadedIds, shadowColor, starColor, style, gridType})
+        const parsedObject = embadedTypes.safeParse({formId, embadedIds ,gridType})
 
         // update reviews table that these are in action right now
+        // we have to parsed styles also but for now lets don't do this
         if(!parsedObject.success){
             throw parsedObject.error.errors
         }
 
         const parseddata = parsedObject.data
-        console.log(parseddata.gridType);
+        console.log(style.roundedCorner);
+        
         
         const embadedId = await prisma.$transaction(async() => {
             await prisma.reviewStyle.create({
                 data : {
                     testimonialFormId : Number(parseddata.formId),
-                    inlinestyle : parseddata.style,
-                    shadowColor : parseddata.shadowColor,
-                    starColor : parseddata.starColor,
-                    gridType : parseddata.gridType
+                    textColor : style.textColor,
+                    rewiewCardBg : style.rewiewCardBg,
+                    roundedCorner : style.roundedCorner.toLocaleString(),
+                    shadowColor : style.shadowColor,
+                    starColor : style.starColor,
+                    gridType : parseddata.gridType,
+                    parentPageBgColor : style.parentBgColor
                 }
             })
 
@@ -480,7 +484,7 @@ export const addWidgetstoDb = async({formId, embadedIds, style, shadowColor, sta
             id : embadedId
         }
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if((error as any).code === "P2002"){
@@ -508,7 +512,7 @@ export const addWidgetstoDb = async({formId, embadedIds, style, shadowColor, sta
 }
 
 
-export const saveScriptKey = async({s3ScriptKey, formId} : {s3ScriptKey : string, formId : number}) => {
+export const saveScriptKey = async({embadedId, formId} : {embadedId : string, formId : number}) => {
     try {
         const { id } = await getUserSession()
 
@@ -517,7 +521,7 @@ export const saveScriptKey = async({s3ScriptKey, formId} : {s3ScriptKey : string
                 adminId : Number(id),
                 id : Number(formId)
             }, data : {
-                scriptS3 : s3ScriptKey
+                embadedId
             }
         })
         return {
@@ -652,12 +656,28 @@ export const fetchEmbadedScript = async({formId} : {formId: number} ) => {
             where : {
                 id : Number(formId)
             }, select : {
-                scriptS3 : true
+                embadedId : true
             }
         })
 
+        const embadedScript = `
+            <script type="text/javascript" src="${process.env.CLOUD_FRONT_DOMAIN_NAME}/js/iframeResizer.min.js" ></script>
+            <iframe
+                id="review-wall-${res?.embadedId}"
+                src=${process.env.NEXT_PUBLIC_NEXT_URL}embadedwall/${res?.embadedId}
+                frameborder="0"
+                scrolling="no"
+                width="100%">
+            </iframe>
+            <script>
+                window.addEventListener("load", function () {
+                    iFrameResize({ log: false, checkOrigin: false }, "#review-wall-${res?.embadedId}")
+                })
+            </script>
+        `
+        
         return {
-            s3script : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${res?.scriptS3}`,
+            embadedScript,
             success : true
         }
     } catch (error) {

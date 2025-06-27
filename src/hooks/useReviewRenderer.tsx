@@ -1,7 +1,7 @@
 import { VideoTestimonialOne } from "@/components/ui/testimonialscomponents/customvideotestimonial"
 import { TextReviewOne } from "@/components/ui/testimonialscomponents/textreviewone"
 import { TextReviewProps, VideoReviewProps } from "@/utils/types/user_types"
-import { OrderedReview, useReviewStyle } from "@/utils/zustand/gridState"
+import { OrderedReview, ReviewStyleType } from "@/utils/zustand/gridState"
 import { MotionProps } from "motion/react"
 
 interface RenderReviewProps {
@@ -9,17 +9,18 @@ interface RenderReviewProps {
     index : number,
     className ?: string,
     motionProps ?: MotionProps
+    reviewStyles : Omit<ReviewStyleType, "parentBgColor"| "shadowColor">
 }
 
 export const useRenderReview = () => {
-    const {bgColor, textColor, meteorColor, starColor, roundedCorner} = useReviewStyle()
-    const renderReview = ({review, index, className, motionProps} : RenderReviewProps) => {
+    const renderReview = ({review, index, className, motionProps, reviewStyles} : RenderReviewProps) => {
+        const {rewiewCardBg, textColor, meteorColor, starColor, roundedCorner} = reviewStyles
         if(review.type === "text"){
             const data = review.data as TextReviewProps
             return (
                 <TextReviewOne
                     style={{
-                        backgroundColor : bgColor,
+                        backgroundColor : rewiewCardBg,
                         color : textColor,
                         borderRadius : roundedCorner
                     }}
@@ -46,7 +47,7 @@ export const useRenderReview = () => {
                         borderRadius : roundedCorner,
                         
                     }}
-                    bgColor= {bgColor}
+                    bgColor= {rewiewCardBg}
                     borderRadius={roundedCorner}
                     className={className}
                     videoSrc={data.videoLink}

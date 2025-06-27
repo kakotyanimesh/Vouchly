@@ -58,7 +58,7 @@ model TestimonialForm  {
   updatedAt                 DateTime                @updatedAt
   status                    status                  @default(Draft)
   embadedWidgets            EmbadedWall?
-  scriptS3                  String?             
+  embadedId                  String?             
   ReviewStyle               ReviewStyle?
 
   @@index([spaceId, adminId])
@@ -126,9 +126,12 @@ enum gridTypes {
 
 model ReviewStyle {
   id                        Int                    @default(autoincrement())     @id
-  inlinestyle               String?
+  textColor                 String?
+  rewiewCardBg              String?
+  roundedCorner             String?
   shadowColor               String?
   starColor                 String?
+  parentPageBgColor         String
   gridType                  gridTypes               @default(Masonry)
   testimonialFormId         Int                    @unique
   testimonialForms          TestimonialForm        @relation(fields: [testimonialFormId], references: [id])

@@ -188,37 +188,37 @@ export const submitTestimonials = async(data : ReviewTypes) => {
 
 
 
-export const createScript = async({widgetId} : {widgetId : string}) => {
-    try {
-        const res = await fetch("/api/embaded", {
-            method : "POST",
-            headers : {
-                "Content-type" : "application/json"
-            },
-            body : JSON.stringify({widgetId : widgetId})
-        })
+// export const createScript = async({widgetId, formId} : {widgetId : string, formId : number}) => {
+//     try {
+//         const res = await fetch("/api/embaded", {
+//             method : "POST",
+//             headers : {
+//                 "Content-type" : "application/json"
+//             },
+//             body : JSON.stringify({widgetId : widgetId, formId : Number(formId)})
+//         })
 
-        if(!res.ok){
-            throw new Error("Unable to create Script ")
-        }
+//         if(!res.ok){
+//             throw new Error("Unable to create Script ")
+//         }
 
-        const { script } = await res.json()
+//         const { script } = await res.json()
 
-        return {
-            success : true,
-            script
-        }
-    } catch (error) {
-        const err = await handlerError(error)
+//         return {
+//             success : true,
+//             script
+//         }
+//     } catch (error) {
+//         const err = await handlerError(error)
 
-        return {
-            success : false,
-            message : err.errorMsg,
-            status : err.statusCode
-        }
-    }
-}
-
+//         return {
+//             success : false,
+//             message : err.errorMsg,
+//             status : err.statusCode
+//         }
+//     }
+// }
+// not being used haha give me lots of pain
 
 export const getReviews = async({embadedId} : {embadedId : string}) => {
     try {
@@ -234,7 +234,9 @@ export const getReviews = async({embadedId} : {embadedId : string}) => {
         const data = await res.json()
 
         return {
-            orderedReviews : data.reviewWithOrder
+            success : true,
+            orderedReviews : data.reviewWithOrder,
+            reviewStyle : data.reviewStyle
         }
     } catch (error) {
         console.log(error);

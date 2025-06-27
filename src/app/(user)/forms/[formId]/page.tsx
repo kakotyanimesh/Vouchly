@@ -18,7 +18,7 @@ export default async function IndividualForms({params}:{params : Promise<{formId
     const getscript = await fetchEmbadedScript({formId : Number(id)})
 
     //  too much of objects and i don't want to fix it
-    const script = !getscript.s3script ? "You dont have any script" : getscript.s3script
+    const script = !getscript.embadedScript ? "You dont have any script" : getscript.embadedScript
     
     
     if(!data || "success" in data){
