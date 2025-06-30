@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Embriefy – Build Testimonial Pages in minutes
 
-First, run the development server:
+![Embriefy Banner](https://testimonia-two.vercel.app/og-image.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+**Live App**: [https://testimonia-two.vercel.app](https://testimonia-two.vercel.app)
+
+---
+
+**Embriefy** is a testimonial collection platform designed to help creators and businesses collect powerful video and text testimonials and embed them seamlessly on their websites.
+
+This tool allows you to approve, feature, and display testimonials in a customizable, embeddable wall — just like Testimonial.to — but with your own brand and full control.
+
+---
+
+## ✨ Features
+
+- 📥 Public form to collect **video** or **text** testimonials  
+- 🔒 Admin dashboard for **approving**, **rejecting**, and **featuring** submissions  
+- 🧱 Embed wall builder with **select & preview** functionality  
+- 📜 Auto-generated **embed script** for use on external sites  
+- 🎬 **Ads Free** Video testimonials
+- ⚡️ Optimized delivery via optional **CloudFront CDN**  
+- 🔐 Authentication via **NextAuth (credentials-based)**  
+- 🎨 Clean, responsive UI built with **Tailwind CSS** and **Shadcn UI**
+
+---
+
+## 🌐 Embedding Testimonials
+
+Once you've created an embed wall from the dashboard:
+
+1. Copy the generated `<script>` tag  
+2. Paste it into the HTML of any external site
+
+```html
+<script type="text/javascript" src="https://cdn-not-readyyet.com/js/iframeResizer.min.js"></script>
+
+<iframe
+  id="review-wall-abc123"
+  src="https://testimonia-two.vercel.app/embadedwall/{embadedWallId}"
+  frameborder="0"
+  scrolling="no"
+  width="100%">
+</iframe>
+
+<script>
+  window.addEventListener("load", function () {
+    iFrameResize({ log: false, checkOrigin: false }, "#review-wall-abc123");
+  });
+</script>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will inject a responsive iframe showing your selected testimonials. It auto-adjusts height using `iframe-resizer`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
+## 🛡️ License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Private project. All rights reserved © 2025 [Animesh Kakoty](https://github.com/kakotyanimesh)
