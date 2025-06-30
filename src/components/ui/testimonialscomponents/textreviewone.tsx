@@ -22,7 +22,7 @@ export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className
         onHoverStart={() => setisHoverStart(true)}
         // // onHoverEnd={() => setisHoverStart(false)
 
-        className={cn("rounded-xl group bg-[hsl(var(--secondary))] w-fit  py-4 px-3 text-left space-y-3", className)} {...props}>
+        className={cn("rounded-2xl group bg-[hsl(var(--primary))]/20 w-fit  py-4 px-3 text-left space-y-3", className)} {...props}>
             <div className="flex flex-row gap-1">
                 {
                 Array.from({length : 5}).map((s, k) => (
@@ -48,7 +48,7 @@ export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 1, delay : 0.4, ease: "easeOut" }}
-                        className={cn("bg-gradient-to-r w-20 rounded-4xl h-[2px] to-transparent", !meteorColor ? `from-[${meteorColor}]` : "from-[hsl(var(--primary))]")}/>}
+                        className={cn("bg-gradient-to-r w-20 rounded-4xl h-[2px] to-transparent", meteorColor ? `from-[${meteorColor}]` : "from-[hsl(var(--primary))]")}/>}
                 </div>
             </div>
         </motion.div>

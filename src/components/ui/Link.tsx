@@ -6,12 +6,12 @@ import React from "react"
 // import { motion } from "motion/react"
 
 const LinkVariant = cva(
-    "w-fit disabled:cursor-not-allowed",
+    "w-fit disabled:cursor-not-allowed rounded-xl",
     {
         variants : {
             variants : {
                 primary : "text-[hsl(var(--primary))]",
-                secondary : "bg-gradient-to-r from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] text-white rounded-md"
+                secondary : "bg-gradient-to-r from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] text-white "
             },
             sizes : {
                 sm : "",

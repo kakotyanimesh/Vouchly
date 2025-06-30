@@ -33,7 +33,9 @@ export async function POST(req:NextRequest) {
             {msg : "User created successfully"},
             {status : 200}
         )
-    } catch (error) {        
+    } catch (error) {      
+        console.log(error);
+          
         if(error instanceof PrismaClientKnownRequestError && error.code === "P2002"){
             return NextResponse.json(
                 {msg : "User already exists"},

@@ -3,12 +3,12 @@ import { cva, VariantProps } from "class-variance-authority"
 import React, { ReactNode } from "react"
 
 export const InputVariants = cva(
-    "w-full rounded-md border focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ",
+    "w-full rounded-xl border focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ",
     {
         variants : {
             variants : {
-                primary : "bg-[hsl(var(--primary))]/5 placeholder:text-[hsl(var(--secondary-foreground))] text-white border-[hsl(var(--primary))]/13 focus:ring-[hsl(var(--primary))]",
-                secondary : "bg-[hsl(var(--secondary))]/20 placeholder:text-[hsl(var(--secondary-foreground))] text-white border-white/20 focus:ring-[hsl(var(--primary))]"
+                primary : "bg-[hsl(var(--tertiary))]/2 placeholder:text-[hsl(var(--secondary-foreground))] text-white border-[hsl(var(--tertiary))]/40 focus:ring-[hsl(var(--tertiary))]",
+                secondary : "bg-[hsl(var(--primary))]/2 placeholder:text-[hsl(var(--secondary-foreground))] text-white border-[hsl(var(--primary))]/40 focus:ring-[hsl(var(--primary))]"
             },
             sizes : {
                 sm : "text-sm h-10",
@@ -16,7 +16,7 @@ export const InputVariants = cva(
             }
         },
         defaultVariants : {
-            variants : "primary",
+            variants : "secondary",
             sizes : "sm"
         }
     }
@@ -34,7 +34,7 @@ export const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(({clas
             <label htmlFor="" className="text-sm text-[hsl(var(--primary))]">{props.name}</label>
             <div className="relative">
             {
-                icon && <span className="absolute top-3 left-5 text-[hsl(var(--primary))] ">{icon}</span>
+                icon && <span className={cn("absolute top-3 left-5 text-[hsl(var(--tertiary))]")}>{icon}</span>
             }
             
             <input

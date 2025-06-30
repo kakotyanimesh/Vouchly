@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
 import { motion } from "motion/react"
 import { GlowingComponent } from "../ui/glowingdiv"
+import { GradientText } from "../ui/gradienteText"
 
 export const LandingHeader = () => {
     const router = useRouter()
@@ -32,14 +33,19 @@ export const LandingHeader = () => {
                     ))
                 }
                 <br/>
-                <motion.span
-                initial={initial}
-                animate={animate}
-                transition={{duration : 0.5 , delay : 0.4, ease : "easeIn"}} 
-                className="bg-gradient-to-r relative from-[hsl(var(--primary))] to-teal-500 bg-clip-text text-transparent">
+                <GradientText
+                    initial={initial}
+                    animate={animate}
+                    transition={{duration : 0.5 , delay : 0.4, ease : "easeIn"}} >
                     in minutes
                     
-                </motion.span>
+                    <GlowingComponent 
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 1, delay : 0.4, ease: "easeOut" }}
+                        className="left-1/2 -translate-x-1/2 -mt-1 bg-gradient-to-r from-transparent via-[hsl(var(--primary))] md:w-64 w-40 rounded-4xl h-[2px] to-transparent"/>
+            
+                </GradientText>
             </h1>
             <motion.p 
             initial={initial}
@@ -56,11 +62,6 @@ export const LandingHeader = () => {
             </motion.div>
             {/* <GlowingComponent className="left-1/2 bottom-1  from-teal-400/20 to-emerald-400/15"/> */}
             {/* <GlowingComponent className="left-1/2  bottom-20 -translate-x-1/2 from-teal-400/20 to-emerald-400/15 rounded-tl-4xl w-full rounded-tr-4xl "/> */}
-            <GlowingComponent 
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay : 0.4, ease: "easeOut" }}
-                className="xl:top-[59vh] top-[50vh] md:top-[72vh] lg:top-[74vh]  bg-gradient-to-r from-transparent via-[hsl(var(--primary))] md:w-64 w-40 rounded-4xl h-[2px] to-transparent"/>
             
         </div>
     )

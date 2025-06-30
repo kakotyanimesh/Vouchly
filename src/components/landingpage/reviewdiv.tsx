@@ -1,4 +1,5 @@
 "use client"
+import { GradientText } from "../ui/gradienteText"
 import { TextReviewOne } from "../ui/testimonialscomponents/textreviewone"
 import { VideoTestimonial } from "../ui/testimonialscomponents/videotestimonial"
 import animeshvideo from "@/videos/animeshvideo.mp4.json"
@@ -33,7 +34,7 @@ export const Reviewdiv = () => {
             <h1 className="md:text-4xl text-2xl z-10">
               Everything You Need to
               Collect & 
-              <span className="bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent ml-2">Showcase</span>
+              <GradientText className="ml-2">Showcase</GradientText>
             </h1>
             <TextReviewOne
               textreviewid={1} 

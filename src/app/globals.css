@@ -19,9 +19,12 @@
     --primary-foreground: 0 0% 3%;
 
     --tertiary: 292 77% 58%; 
+    --primary-light	: 182 57% 53%;
     
     --secondary: 0 0% 14%;
     --secondary-foreground: 0 0% 68%;
+
+    --feature-preview : 270 95% 65%;
     
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
