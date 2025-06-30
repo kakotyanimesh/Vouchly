@@ -1,42 +1,90 @@
-"use client"
+"use client";
 
-import { cn } from "@/utils/lib/cn"
-import { HTMLMotionProps, motion } from "motion/react"
-import React, { useState } from "react"
+import { cn } from "@/utils/lib/cn";
+import { HTMLMotionProps, motion } from "motion/react";
+import React, { useState } from "react";
+import { BlurdivTertiary } from "./animateddivs";
+import { DashboardPreview } from "./featuresReactNodes/dashboardPreview";
+import { FormPreview } from "./featuresReactNodes/templatePreviewGrid";
+import { EmbadedPreview } from "./featuresReactNodes/embadedPreview";
+import { ModerationPreview } from "./featuresReactNodes/moderationPreview";
+import { ReviewTamplatePreview } from "./featuresReactNodes/reviewTamplatesPreview";
+import { GlowingComponent } from "./glowingdiv";
+
+export type featureIconTypes = "Templates" | "Form" | "Dashboard" | "Moderation" | "Embaded"
 
 type FeatureCardProps = HTMLMotionProps<"div"> & {
-    icon : React.ReactElement,
-    title : string,
-    desc : string
-}
+	title: string;
+	desc: string;
+	featureIconTypes: featureIconTypes;
+};
+
+export const FeatureCard: React.FC<FeatureCardProps> = ({
+	className,
+	title,
+	desc,
+	featureIconTypes,
+	...props
+}) => {
+	const [isHover, setisHover] = useState<boolean>(false)
+	return (
+		<motion.div
+			viewport={{ once: true }}
+			onHoverStart={() => setisHover(true)}
+			className={cn("relative", className)}
+			{...props}
+		>
+			<BlurdivTertiary
+				viewport={{ once: true }}
+				initial={{ scale: 0, opacity: 0 }}
+				whileInView={{ scale: 1, opacity: 0.7 }}
+				transition={{
+					duration: 0.4,
+					// delay : 0.4,
+					ease: "linear",
+				}}
+				className="right-0 size-20 rounded-2xl opacity-30 -z-10"
+			/>
+			<div
+				className={
+					"rounded-2xl group space-y-2 h-full bg-[hsl(var(--primary))]/10 backdrop-blur-3xl py-3 px-5 text-left"
+				}
+			>
+				{returnIcon({ iconType: featureIconTypes, isHover })}
+
+				<h1 className="">{title}</h1>
+				{featureIconTypes === "Templates" && isHover && (
+					<GlowingComponent
+						initial={{ scaleX: 0 }}
+						animate={{ scaleX: 1 }}
+						transition={{
+							duration: 1,
+							delay: 0.2,
+							ease: "easeOut",
+						}}
+						className="-mt-3 bg-gradient-to-r from-transparent via-[hsl(var(--primary))] rounded-4xl h-[1px] w-28 to-transparent "
+					/>
+				)}
+				<p className="text-sm text-white/70">{desc}</p>
+			</div>
+		</motion.div>
+	);
+};
 
 
-export const FeatureCard : React.FC<FeatureCardProps> = ({className, icon, title, desc, ...props}) => {
-    const [ishovered, setIshovered] = useState(false)
-    const animte = {
-        color : ishovered ? "#24D7C283" : "#ffffff"
-    }
-    return (
-        <motion.div 
-            viewport={{once : true}}
-            whileHover={{y : -1}}
-            onHoverStart={() => setIshovered(true)}
-            onTapStart={() => setIshovered(true)}
-            className={cn("rounded-md group space-y-2 h-full bg-[hsl(var(--pure-white))]/7 py-4 px-3 text-left hover:shadow-[2px_2px_2px_0px_#a62fd5] transition-all duration-200 ease-linear", className)} {...props}>
-                {/* shadow-[5px_5px_0px_0px_rgba(109,40,217)] */}
-            <div
-                className=" bg_card_gradient rounded-full p-2 w-fit">
-                {
-                    React.cloneElement(icon)
-                }
-            </div>
-            <h1 className="text-[#a62fd5]">
-                {title}
-            </h1>
-            <motion.p
-                animate={animte}
-                transition={{duration : 0.3, ease : "easeInOut"}}
-            className="text-xs">{desc}</motion.p>
-        </motion.div>
-    )
+const returnIcon = ({iconType, isHover} : {iconType : featureIconTypes, isHover : boolean}) => {
+	switch (iconType) {
+		case "Dashboard":
+			return <DashboardPreview isHover={isHover} />;
+		case "Form":
+			return <FormPreview isHover={isHover} />;
+		case "Embaded":
+			return <EmbadedPreview isHover={isHover} />;
+		case "Moderation":
+			return <ModerationPreview isHover={isHover} />;
+		case "Templates":
+			return <ReviewTamplatePreview/>;
+		default:
+			return <DashboardPreview isHover={isHover} />;
+	}
 }

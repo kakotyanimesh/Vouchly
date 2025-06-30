@@ -37,9 +37,9 @@ export const FileUploda = ({fileType, className, disable} : FileUploadProps) => 
         >
 
             {
-                fileName ? <div className="place-items-center">
+                fileName ? <div className="flex justify-center items-center flex-col space-y-2">
                     <h1 className="text-sm text-[hsl(var(--primary))]">Selected File : {fileName}</h1>
-                    {fileType !== "Video" && previewUrl && <Image width={60} height={70} alt="image" className="rounded-full" src={previewUrl}/>}
+                    {fileType !== "Video" && previewUrl && <Image width={100} height={100} alt="image" className="rounded-full object-cover max-h-10" src={previewUrl}/>}
                 </div> 
                 : 
                 <IconDiv reactNode={fileType === "UserImage" ? <User size={14}/> : fileType === "Video" ?  <Video size={13}/> : <FileQuestion size={13}/>} className="p-2"/>

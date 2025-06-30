@@ -16,7 +16,6 @@ import { useFileStore } from "@/utils/zustand/testimonialsformstore"
 import { toast } from "sonner"
 import { ReviewTypes } from "@/utils/types/user_types"
 import { SubmissionThankyoudiv } from "./ui/thankyoudiv"
-import { Logo } from "./ui/logo"
 import { useRouter } from "next/navigation"
 import LoadingCircleSpinner from "./ui/loadingspinner"
 import { reviewObject } from "@/utils/config/review.config"
@@ -156,12 +155,12 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script"
 
             
             {!isSubmitted ?
-            <Card className="xl:w-[700px] w-fit md:w-[600px] mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/6 md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
+            <Card className="xl:w-[700px] w-fit md:w-[600px] mx-2 rounded-2xl bg-[hsl(var(--pure-white))]/5 border border-[hsl(var(--primary))]/20 backdrop-blur-3xl md:px-14 px-5 py-5 text-center space-y-4 flex flex-col justify-center items-center ">
             
             {/* <div className="z-0 pointer-events-none absolute left-1/2 top-90 w-80 h-72 bg-gradient-to-r from-teal-400/20 to-emerald-400/15 rounded-full blur-3xl"></div>
             <div className="z-0 pointer-events-none absolute right-1/2 top-60  w-80 h-72 bg-gradient-to-r from-purple-500/20 to-violet-500/15 rounded-full blur-3xl"></div>
              */}
-            <Image src={data.logoUrl!} width={100} height={100} className="rounded-2xl" alt="form_logo"/>
+            <Image src={data.logoUrl!}  width={100} height={100} className="rounded-2xl max-h-20 object-cover" alt="form_logo"/>
             <div>
                 <h1 className="text-2xl font-bold">{data.Name}</h1>
                 <p className="text-sm">{data.Description}</p>
@@ -230,7 +229,7 @@ export const SubmitFormComponent = (data : Omit<IndividualFormDivProps, "script"
                 variant={"fetch"} 
                 className="bg-gradient-to-r from-teal-400 to-emerald-400" 
                 onClick={() => router.push(process.env.NEXT_PUBLIC_NEXT_URL as string)}>
-                Built With <Logo className="text-sm"/>
+                Built With <span className="bg-gradient-to-r from-[hsl(var(--card-bg-one))] to-[hsl(var(--card-bg-two))] text-transparent bg-clip-text">Embriefy</span>
             </Button>
         </Card>
         :

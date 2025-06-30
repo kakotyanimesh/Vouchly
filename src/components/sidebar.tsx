@@ -25,10 +25,10 @@ export const SideBar = () => {
             onHoverStart={() => setShowFullSidebar(true)}
             onHoverEnd={() => setShowFullSidebar(false)}
             
-            className={cn("md:h-full z-10 fixed md:space-y-4 bg-[#171717] transition-all ease-out duration-75  border-r-1 border-[hsl(var(--pure-white))]/10", showFullSidebar ? "md:w-48 w-full" : "md:w-16 w-full")}>
+            className={cn("md:h-full z-10 fixed md:space-y-4 bg-[#0f0e0e]/10 backdrop-blur-3xl transition-all ease-out duration-75  border-r-1 border-[hsl(var(--pure-white))]/10", showFullSidebar ? "md:w-48 w-full" : "md:w-16 w-full")}>
                 <Link href={"/"} className={cn("font-bold hidden text-white text-2xl gap-2 pl-4 md:flex items-baseline border-b border-[hsl(var(--pure-white))]/10 py-4")}>
-                    <span className="bg_card_gradient rounded-md px-2 pt-1">T</span>
-                    { showFullSidebar ? <span className="bg-gradient-to-r from-[hsl(var(--card-bg-one))] to-[hsl(var(--card-bg-two))] text-transparent bg-clip-text">Testimonia</span> : undefined}
+                    <span className="bg_card_gradient rounded-md px-2 pt-1">E</span>
+                    { showFullSidebar ? <span className="bg-gradient-to-r from-[hsl(var(--card-bg-one))] to-[hsl(var(--card-bg-two))] text-transparent bg-clip-text">Embriefy</span> : undefined}
                     
                 </Link>
                 <div className="space-y-2 md:px-3 px-10 md:py-0 py-2 relative flex md:flex-col flex-row justify-between">
@@ -48,12 +48,12 @@ export const SideBar = () => {
                     //   style={{
                     //     zIndex: 0
                     //   }}
-                      className="absolute md:block hidden inset-x-3 w-[calc(100%-24px)] h-10 bg_card_gradient border border-[hsl(var(--primary))] rounded-md z-0">
+                      className="absolute md:block hidden inset-x-3 w-[calc(100%-24px)] h-10 bg_card_gradient border border-[hsl(var(--primary))] rounded-xl z-0">
 
                       </motion.div>   
                     }
                         {SideBarRoutes.map((s, k) => (
-                            <Link key={k} href={s.src} className={cn("cursor-pointer h-10 transition-colors duration-200 ease-linear rounded-md p-2 flex items-center gap-2 z-10", p === s.src ? "text-white md:bg-transparent bg_card_gradient" : "hover:bg-[hsl(var(--pure-white))]/20")}>
+                            <Link key={k} href={s.src} className={cn("cursor-pointer h-10 transition-colors duration-200 ease-linear rounded-xl p-2 flex items-center gap-2 z-10", p === s.src ? "text-white md:bg-transparent bg_card_gradient" : "hover:bg-[hsl(var(--pure-white))]/20")}>
                                 {s.icons}
                                 {showFullSidebar ? `${s.name}` : undefined}
                             </Link>

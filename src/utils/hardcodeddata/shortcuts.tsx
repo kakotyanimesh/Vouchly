@@ -1,5 +1,7 @@
-import { BarChart, GitGraph, MessageCircleDashed, MessageSquare, Plus, Settings, Shield, Users, Video } from "lucide-react"
+import { GitGraph, MessageCircleDashed, Plus, Settings} from "lucide-react"
 import { RecentelyActiveProps, TableHeader, TextReviewProps } from "../types/user_types"
+import { featureIconTypes } from "@/components/ui/featurecard"
+import { MotionProps } from "motion/react"
 
 export const shortCutArrayDashboard = [
     {   
@@ -146,54 +148,63 @@ export const TextReviews : TextReviewProps[] = [
 ]
 
 
+type BentoGridFeaturesTypes = {
+	id: number;
+	featureIconTypes: featureIconTypes;
+	title: string;
+	desc: string;
+	className: string;
+	initial: MotionProps["initial"];
+	whileInView : MotionProps["whileInView"]
+};
 
-export const BentoGridFeatures = [
-    {
-        id: 1,
-        icon: <Video size={18}/>,
-        title: "Video Testimonials",
-        desc: "Collect authentic video reviews that build real trust with your audience and boost conversions",
-        className: "md:col-span-2 col-span-1",
-        initial : {x : -20, opacity : 0},
-        whileInView : { x : 0, opacity : 1}
-    },
-    {
-        id: 2,
-        icon: <Users size={18}/>,
-        title: "Custom Forms",
-        desc: "Beautiful, branded forms that match your website perfectly",
-        className: "col-span-1",
-        initial : {x : 20, opacity : 0},
-        whileInView : { x : 0, opacity : 1}
-    },
-    {
-        id: 3,
-        icon: <Shield size={18}/>,
-        title: "Smart Moderation",
-        desc: "AI-powered content filtering and approval workflows",
-        className: "col-span-1",
-        initial : {x : -20, opacity : 0},
-        whileInView : { x : 0, opacity : 1}
-    },
-    {
-        id: 4,
-        icon: <BarChart size={18}/>,
-        title: "Analytics Dashboard",
-        desc: "Track performance and engagement metrics in real-time",
-        className: "col-span-1",
-        initial : {y : 20, opacity : 0},
-        whileInView : { y : 0, opacity : 1}
-    },
-    {
-        id: 5,
-        icon: <MessageSquare size={18}/>,
-        title: "Review Management",
-        desc: "Organize and showcase testimonials across all platforms",
-        className: "col-span-2 md:col-span-1",
-        initial : {x : 20, opacity : 0},
-        whileInView : { x : 0, opacity : 1}
-    }
-]
+export const BentoGridFeatures: BentoGridFeaturesTypes[] = [
+	{
+		id: 1,
+		featureIconTypes: "Form",
+		title: "Smart Form Generator",
+		desc: "Get handpicked testimonial form layouts based on your vibe and you're collecting reviews in style 📋.",
+		className: "md:col-span-2 col-span-1",
+		initial: { x: -20, opacity: 0 },
+		whileInView: { x: 0, opacity: 1 },
+	},
+	{
+		id: 2,
+		featureIconTypes: "Templates",
+		title: "Aesthetic Templates",
+		desc: "Showcase your reviews with stunning layouts🔥.",
+		className: "col-span-1",
+		initial: { x: 20, opacity: 0 },
+		whileInView: { x: 0, opacity: 1 },
+	},
+	{
+		id: 3,
+		featureIconTypes: "Dashboard",
+		title: "Smart Dashboard",
+		desc: "Keep track of everything in one slick place 📈.",
+		className: "col-span-1",
+		initial: { x: -20, opacity: 0 },
+		whileInView: { x: 0, opacity: 1 },
+	},
+	{
+		id: 4,
+		featureIconTypes: "Moderation",
+		title: "Effortless Moderation",
+		desc: "Approve, reject, or auto-filter reviews in just a few clicks✨.",
+		className: "col-span-1",
+		initial: { y: 20, opacity: 0 },
+		whileInView: { y: 0, opacity: 1 },
+	},
+	{
+		id: 5,
+		title: "Embed Anywhere, Instantly",
+		featureIconTypes: "Embaded",
+		desc: "Copy a script, paste it on your site & your testimonial wall goes live 🧩.",
+		className: "col-span-2 md:col-span-1",
+		initial: { x: 20, opacity: 0 },
+		whileInView: { x: 0, opacity: 1 },
+	},
+];
 
 
 export const FooterLinks : {fHead : string, features : string[]}[] = [

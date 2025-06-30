@@ -5,13 +5,13 @@ import React from "react";
 import { motion } from "motion/react";
 
 const ButtonVariants = cva(
-    "w-fit rounded-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-linear duration-200",
+    "w-fit rounded-xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-linear duration-200",
     {
         variants : {
             variant : {
                 primary : "bg-[hsl(var(--pure-white))]/80 text-black",
-                secondary : "bg-gradient-to-r from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] text-white",
-                transparent : "bg-[hsl(var(--primary))]/10 border border-[hsl(var(--tertiary))] text-white",
+                secondary : "bg-gradient-to-r from-[hsl(var(--tertiary))]/60 to-[hsl(var(--primary))]/60 text-white hover:shadow-[0px_0px_2px_1px_#f687b3]",
+                transparent : "bg-[hsl(var(--primary))]/10 border border-[hsl(var(--primary))]/50 text-white hover:bg-[hsl(var(--primary))]/50",
                 fetch : "hover:underline decoration-[hsl(var(--card-bg-one))] bg-gradient-to-r  from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] bg-clip-text text-transparent underline-offset-2"
                 // decoration underline color 
             },
