@@ -22,7 +22,7 @@ export const NoCoding = () => {
 				</span>
 			</h1>
 			<div className="space-y-1">
-				<div className="grid grid-cols-3 gap-1 md:w-[650px] w-full ">
+				<div className="grid grid-cols-3 gap-1 lg:w-[850px] md:[w-550px] w-full ">
 					<VideoTestimonial
 						{...leftAnimation}
 						className="md:col-span-1 col-span-3 bg-gradient-to-bl from-[hsl(var(--feature-preview))]/40 to-[hsl(var(--primary))]/60"
@@ -51,7 +51,7 @@ export const NoCoding = () => {
 						videoSrc={animeshvideo}
 					/>
 				</div>
-				<div className="grid grid-cols-3 gap-1 md:w-[650px] w-full ">
+				<div className="grid grid-cols-3 gap-1 lg:w-[850px] md:[w-550px] w-full ">
 					{TextReviews.slice(1, 2).map((t, k) => (
 						<TextReviewOne
 							textreviewid={t.textreviewid}

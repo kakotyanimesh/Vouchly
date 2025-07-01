@@ -4,7 +4,7 @@ import { LinkTag } from "../ui/Link"
 
 export const Footer = () => {
     return (
-        <div className="border-t border-[hsl(var(--secondary))] mt-20 md:-mx-20 -mx-5 md:py-14 py-5 flex md:flex-row flex-col justify-between md:px-56 px-5 space-y-4">
+        <div className="border-t border-[hsl(var(--secondary))] mt-20 md:-mx-20 -mx-5 md:py-14 py-5 flex md:flex-row flex-col justify-between lg:px-56 px-5 space-y-4">
             <div className="flex flex-col gap-2">
                 <Logo className="text-xl"/>
                 <p className="text-xs ">The modern way of collecting & howcase <br /> your customer review</p>

@@ -34,8 +34,8 @@ export const PricingCard: React.FC<PricingProps> = ({
 				// backgroundColor : "black"
 			}}
 			transition={{
-				ease: "linear",
-				duration: 0.3,
+				ease: "easeOut",
+				duration: 0.1,
 				// delay : 0.1
 			}}
 			className={cn(
