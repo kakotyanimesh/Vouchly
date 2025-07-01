@@ -16,7 +16,8 @@ export const DashboardPreview: React.FC<FeatureIconDivProps> = ({
 	const [heights, setHeights] = useState<number[]>([]);
 
 	useEffect(() => {
-		const randomHeight = Array.from({ length: 9 }).map(
+		const randomHeight = Array.from({ length: 15 }).map(
+
 			() => Math.floor(Math.random() * 30) + 40
 		);
 

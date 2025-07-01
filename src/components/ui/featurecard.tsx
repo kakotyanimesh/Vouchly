@@ -31,6 +31,9 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
 		<motion.div
 			viewport={{ once: true }}
 			onHoverStart={() => setisHover(true)}
+
+			onTapStart={() => setisHover(true)}
+
 			className={cn("relative", className)}
 			{...props}
 		>
@@ -43,7 +46,9 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
 					// delay : 0.4,
 					ease: "linear",
 				}}
-				className="right-0 size-20 rounded-2xl opacity-30 -z-10"
+
+				className="right-2 size-20 rounded-2xl opacity-30 -z-10"
+
 			/>
 			<div
 				className={

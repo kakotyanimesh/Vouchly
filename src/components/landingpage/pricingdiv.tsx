@@ -12,8 +12,9 @@ export const PricingDiv = () => {
 				<GradientText className=" mx-2">Grow</GradientText>
 			</h1>
 
-			
-			<div className="grid md:grid-cols-3 grid-cols-1 gap-2 md:w-[700px]">
+
+			<div className="grid md:grid-cols-3 grid-cols-1 gap-5 lg:w-[850px] md:[w-550px]">
+
 				<PricingCard
 					// className="-rotate-3"
 					title="Free"

@@ -38,7 +38,7 @@ export const TextReviewOne : React.FC<TextReviewTypes> = ({textReview, className
                 ))
                 }
             </div>
-            <h1 className="text-sm break-all">{textReview}</h1>
+            <h1 className="text-sm ">{textReview}</h1>
             <div className="flex flex-row items-center gap-3">
                 <Image src={imageSrc} alt="User image" width={30} height={30} className="rounded-full"/>
                 <div className="text-xs relative">
