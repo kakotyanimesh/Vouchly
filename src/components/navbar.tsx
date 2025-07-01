@@ -8,6 +8,7 @@ import { AnimatePresence, motion, Variants } from "motion/react";
 import { useRouter } from "next/navigation";
 import { BlurdivPrimary, BlurdivTertiary } from "./ui/animateddivs";
 
+
 export const Navbar = () => {
 	const [openmenu, setOpenmenu] = useState(false);
 	const router = useRouter();

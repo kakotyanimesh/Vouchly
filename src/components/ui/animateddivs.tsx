@@ -23,7 +23,9 @@ type BlurdivProps = HTMLMotionProps<"div">
 export const BlurdivPrimary : React.FC<BlurdivProps> = ({className, ...props}) => {
     return (
         <motion.div
+
             className={cn("absolute bg-gradient-to-r from-teal-400/20 to-emerald-400/20", className)}
+
             {...props}
         >
 

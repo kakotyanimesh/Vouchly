@@ -51,7 +51,9 @@ export const NoCoding = () => {
 						videoSrc={animeshvideo}
 					/>
 				</div>
+
 				<div className="grid grid-cols-3 gap-1 lg:w-[850px] md:[w-550px] w-full ">
+
 					{TextReviews.slice(1, 2).map((t, k) => (
 						<TextReviewOne
 							textreviewid={t.textreviewid}

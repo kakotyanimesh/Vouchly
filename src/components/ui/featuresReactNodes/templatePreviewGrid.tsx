@@ -1,3 +1,4 @@
+
 "use client";
 import { motion, Variants } from "motion/react";
 import { cn } from "@/utils/lib/cn";
@@ -11,8 +12,11 @@ export const FormPreview: React.FC<FeatureIconDivProps> = ({
 	...props
 }) => {
 	return (
+
 		<div className={cn("h-28 md:mx-7 relative", className)} {...props}>
 			<DeskTopFormCard isHover={isHover} />
+
+
 			<MobileFormCard isHover={isHover} />
 		</div>
 	);
@@ -73,10 +77,12 @@ const MobileFormCard = ({ isHover }: { isHover: boolean }) => {
 		>
 			<MotionDiv variants={childVarient} className="w-6 h-4 bg-[hsl(var(--feature-preview))]" />
 			<MotionDiv variants={childVarient} className="w-1/2 h-2 bg-[hsl(var(--feature-preview))]" />
+
 			<div className="w-full flex flex-col justify-center items-center space-y-0.5">
 				{Array.from({ length: 3 }).map((_, k) => (
 					<MotionDiv
 						key={k}
+
 						variants={childVarient}
 						className={cn(
 							" h-1 bg-[hsl(var(--feature-preview))]",
@@ -85,6 +91,7 @@ const MobileFormCard = ({ isHover }: { isHover: boolean }) => {
 					/>
 				))}
 			</div>
+
 			<MotionDiv variants={childVarient} className=" bg-gradient-to-b from-[hsl(var(--feature-preview))] to-transparent w-28 h-full rounded" />
 		</motion.div>
 	);
@@ -98,9 +105,11 @@ export const MotionDiv: React.FC<HTMLMotionProps<"div">> = ({
 		<motion.div
 			className={cn(
 				"bg-[hsl(var(--primary))] w-6 h-5 border-0 rounded-2xl",
+
 				className
 			)}
 			{...props}
 		/>
 	);
 };
+
