@@ -4,7 +4,7 @@ import { GradientText } from "../ui/gradienteText"
 
 export const FeaturesDiv = () => {
     return (
-		<div className=" space-y-4 lg:w-[850px] md:[w-550px] w-full">
+		<div className="space-y-4 lg:w-[850px] md:[w-550px] w-full xl:mt-7 md:-mt-20">
 			<h1 className="md:text-4xl text-2xl">
 				From
 				<GradientText className="mx-2">Collection</GradientText>
