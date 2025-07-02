@@ -1,4 +1,4 @@
-export const useAnimationProps = (direction : "left" | "right" | "up" | "down", duration = 0.5, delay = 0.1 ) => {
+export const useAnimationProps = (direction : "left" | "right" | "up" | "down", duration = 0.5, delay = 0.3 ) => {
     const transition = {
         duration,
         delay,

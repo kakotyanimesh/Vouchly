@@ -23,7 +23,7 @@ export const LandingHeader = () => {
 		y: 0,
 	};
 	return (
-		<div className="flex justify-center md:my-48 mt-30 mb-20 items-center text-center flex-col md:gap-5 gap-3">
+		<div className="flex justify-center md:my-48 mt-30 mb-20 items-center text-center flex-col md:gap-5 gap-3 relative ">
 			<h1 className="md:text-6xl text-3xl">
 				{headLine.split(" ").map((w, index) => (
 					<motion.span
@@ -44,6 +44,7 @@ export const LandingHeader = () => {
 				<GradientText
 					initial={initial}
 					animate={animate}
+					className="relative"
 					transition={{ duration: 0.5, delay: 0.4, ease: "easeIn" }}
 				>
 					in minutes
@@ -89,23 +90,23 @@ export const LandingHeader = () => {
 				</Button>
 			</motion.div>
 			<TextReviewOne
-				className="w-60 md:w-96 xl:w-80 absolute xl:right-40 xl:-bottom-10 -bottom-28 md:-bottom-40 rotate-6 shadow-[5px_5px_12px_0px_#38b2ac]"
-				initial={{ opacity : 0 , y : 20,}}
-                viewport={{once : true}}
-                whileInView={{opacity : 1, y : 0}}
-                transition={{
-                    type : "spring",
-                    damping : 20,
-                    stiffness : 100,
-                    delay : 0.5,
-                    duration : 0.9
-                }}
+				className="w-60 md:w-96 xl:w-80 rotate-6 shadow-[5px_5px_12px_0px_#38b2ac] xl:absolute xl:translate-x-6/4 mt-12 xl:-bottom-36"
+				initial={{ opacity: 0, y: 20 }}
+				viewport={{ once: true }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{
+					type: "spring",
+					damping: 20,
+					stiffness: 100,
+					delay: 0.5,
+					duration: 0.9,
+				}}
 				textreviewid={1}
 				customerCompany="Embriefy"
 				customerName="Animesh kakoty"
 				stars={5}
 				imageSrc="https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
-				textReview="Embrify transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page."
+				textReview="Vouchly transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their vouchly wall to our landing page."
 			/>
 			{/* <GlowingComponent className="left-1/2 bottom-1  from-teal-400/20 to-emerald-400/15"/> */}
 			{/* <GlowingComponent className="left-1/2  bottom-20 -translate-x-1/2 from-teal-400/20 to-emerald-400/15 rounded-tl-4xl w-full rounded-tr-4xl "/> */}
