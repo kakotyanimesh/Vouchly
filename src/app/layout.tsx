@@ -8,6 +8,7 @@ const myFont = localFont({ src: "../font/localfont.otf" });
 export const metadata: Metadata = {
 	title: "Vouchly",
 	description: "Collect Customer Stories Effortlessly",
+
 	openGraph: {
 		title: "Vouchly",
 		description: "Build Testimonial Pages in minutes",
