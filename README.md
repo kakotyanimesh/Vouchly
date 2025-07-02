@@ -1,14 +1,14 @@
 
-# Embriefy – Build Testimonial Pages in minutes
+# Vouchly – Build Testimonial Pages in minutes
 
-![Embriefy Banner](https://vouchly.kakoty.me/og-image.png)
+![Vouchly Banner](https://vouchly.kakoty.me/og-image.png)
 
 
 **Live App**: ([text](https://vouchly.kakoty.me))
 
 ---
 
-**Embriefy** is a testimonial collection platform designed to help creators and businesses collect powerful video and text testimonials and embed them seamlessly on their websites.
+**Vouchly** is a testimonial collection platform designed to help creators and businesses collect powerful video and text testimonials and embed them seamlessly on their websites.
 
 This tool allows you to approve, feature, and display testimonials in a customizable, embeddable wall — just like Testimonial.to — but with your own brand and full control.
 
@@ -35,21 +35,9 @@ Once you've created an embed wall from the dashboard:
 2. Paste it into the HTML of any external site
 
 ```html
-<script type="text/javascript" src="https://cdn-not-readyyet.com/js/iframeResizer.min.js"></script>
-
-<iframe
-  id="review-wall-abc123"
-  src="https://testimonia-two.vercel.app/embadedwall/{embadedWallId}"
-  frameborder="0"
-  scrolling="no"
-  width="100%">
-</iframe>
-
-<script>
-  window.addEventListener("load", function () {
-    iFrameResize({ log: false, checkOrigin: false }, "#review-wall-abc123");
-  });
-</script>
+<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>
+<iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="https://vouchly.kakoty.me//embadedwall/7d39dab1-00a9-477d-a0a1-73160ea07676" frameborder="0" scrolling="no" width="100%"></iframe>
+<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676")})</script>
 ```
 
 This will inject a responsive iframe showing your selected testimonials. It auto-adjusts height using `iframe-resizer`.
