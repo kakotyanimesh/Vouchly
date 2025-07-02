@@ -1,10 +1,10 @@
 
 # Embriefy – Build Testimonial Pages in minutes
 
-![Embriefy Banner](https://testimonia-two.vercel.app/og-image.png)
+![Embriefy Banner](https://vouchly.kakoty.me/og-image.png)
 
 
-**Live App**: [https://testimonia-two.vercel.app](https://testimonia-two.vercel.app)
+**Live App**: ([text](https://vouchly.kakoty.me))
 
 ---
 

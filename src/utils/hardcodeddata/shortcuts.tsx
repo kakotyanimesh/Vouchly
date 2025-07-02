@@ -120,32 +120,38 @@ export const FormTabledata = [
 
 
 
-export const TextReviews : TextReviewProps[] = [
-    {
-        textreviewid : 1,
-        textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
-        customerName : "Animesh",
-        customerCompany : "Kakoty.tech",
-        stars : 4,
-        imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
-    },
-    {
-        textreviewid : 2,
-        textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
-        customerName : "Animesh",
-        customerCompany : "Kakoty.tech",
-        stars : 4,
-        imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
-    },
-    {
-        textreviewid : 3,
-        textReview : "ProofCloud transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their testimonial wall to our landing page.",
-        customerName : "Animesh",
-        customerCompany : "Kakoty.tech",
-        stars : 4,
-        imageSrc : "https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg"
-    }
-]
+export const TextReviews: TextReviewProps[] = [
+	{
+		textreviewid: 1,
+		textReview:
+			"Vouchly transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their vouchly wall to our landing page.",
+		customerName: "Animesh",
+		customerCompany: "Kakoty.tech",
+		stars: 4,
+		imageSrc:
+			"https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg",
+	},
+	{
+		textreviewid: 2,
+		textReview:
+			"Vouchly transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their vouchly wall to our landing page.",
+		customerName: "Animesh",
+		customerCompany: "Kakoty.tech",
+		stars: 4,
+		imageSrc:
+			"https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg",
+	},
+	{
+		textreviewid: 3,
+		textReview:
+			"Vouchly transformed how we collect and display testimonials. Our conversion rate increased by 30% after adding their vouchly wall to our landing page.",
+		customerName: "Animesh",
+		customerCompany: "Kakoty.tech",
+		stars: 4,
+		imageSrc:
+			"https://i.pinimg.com/736x/22/c9/fd/22c9fd09af9b520ca3678e441be77723.jpg",
+	},
+];
 
 
 type BentoGridFeaturesTypes = {
