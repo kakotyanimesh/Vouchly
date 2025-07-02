@@ -6,23 +6,23 @@ import { Toaster } from "sonner";
 const myFont = localFont({ src: "../font/localfont.otf" });
 
 export const metadata: Metadata = {
-	title: "Embriefy",
+	title: "Vouchly",
 	description: "Collect Customer Stories Effortlessly",
 	openGraph: {
-		title: "Embriefy",
+		title: "Vouchly",
 		description: "Build Testimonial Pages in minutes",
 		images: [
 			{
 				url: `${process.env.NEXT_PUBLIC_NEXT_URL}og-image.png`,
 				width: 1200,
 				height: 630,
-				alt: "Embriefy Banner",
+				alt: "Vouchly Banner",
 			},
 		],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Embriefy",
+		title: "Vouchly",
 		description: "Build Testimonial Pages in minutes",
 		images: [`${process.env.NEXT_PUBLIC_NEXT_URL}og-image.png`],
 	},
