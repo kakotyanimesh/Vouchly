@@ -21,13 +21,23 @@ export async function POST(req:NextRequest) {
     try {  
         const hasedPassword = await bcrypt.hash(password, 10)
 
-        await prisma.user.create({
-            data : {
-                email,
-                password : hasedPassword,
-                username
-            }
-        })
+        await prisma.$transaction([
+            prisma.user.create({
+                data : {
+                    email,
+                    password : hasedPassword,
+                    username
+                }
+            }),
+
+            prisma.subscriptionList.create({
+                data : {
+                    useremail : email,
+                    endDate : new Date(Date.now() + (7 * 24 * 60 * 60 * 1000))
+                    // 7 days of trial period
+                }
+            })
+        ])
 
         return NextResponse.json(
             {msg : "User created successfully"},

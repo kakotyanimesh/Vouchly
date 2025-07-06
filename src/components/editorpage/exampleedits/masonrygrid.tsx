@@ -1,42 +1,62 @@
-"use client"
-import { OrderedReview, ReviewStyleType } from "@/utils/zustand/gridState"
-import { motion } from "motion/react"
-import { CorosoulGrid } from "./corosoulgrid"
+"use client";
+import { OrderedReview, ReviewStyleType } from "@/utils/zustand/gridState";
+import { motion, MotionProps, Target } from "motion/react";
+import { CorosoulGrid } from "./corosoulgrid";
 
-export const MassonaryGridComponent = ({orderedReviews, reviewStyles} : {orderedReviews : OrderedReview[], reviewStyles : Omit<ReviewStyleType, "parentBgColor">}) => {
+export const MassonaryGridComponent = ({
+	orderedReviews,
+	reviewStyles,
+}: {
+	orderedReviews: OrderedReview[];
+	reviewStyles: Omit<ReviewStyleType, "parentBgColor">;
+}) => {
+	const firstArray = orderedReviews.slice(
+		0,
+		Math.floor(orderedReviews.length / 2),
+	);
+	const totalFirstArray = [...firstArray, ...firstArray];
+	const secondArray = orderedReviews.slice(
+		Math.floor(orderedReviews.length / 2),
+	);
+	const totalSecondArry = [...secondArray, ...secondArray];
+	return (
+		<motion.div className="flex flex-col space-y-1 px-10 ">
+			<CorosoulGrid
+				direction="left"
+				reviewStyles={reviewStyles}
+				orderedReviews={totalFirstArray}
+			/>
+			<CorosoulGrid
+				direction="right"
+				reviewStyles={reviewStyles}
+				orderedReviews={totalSecondArry}
+			/>
+		</motion.div>
+	);
+};
 
-    const firstArray = orderedReviews.slice(0, Math.floor(orderedReviews.length / 2 ))
-    const totalFirstArray = [...firstArray, ...firstArray]
-    const secondArray = orderedReviews.slice(Math.floor(orderedReviews.length / 2 ))
-    const totalSecondArry = [...secondArray, ...secondArray]
-    return (
-        <motion.div
-            className="flex flex-col space-y-1 px-10 ">
-            <CorosoulGrid direction="left" reviewStyles={reviewStyles} orderedReviews={totalFirstArray}/>
-            <CorosoulGrid direction="right" reviewStyles={reviewStyles} orderedReviews={totalSecondArry}/>
-
-        </motion.div>
-    )
-}
-
-
-
-
-export const HoverAnimation = ({k, shadowColor} : {k : number, shadowColor : string}) => {
-        return {
-            initial : false,
-            whileHover : {
-                scale : 1.04,
-                rotate : k  % 2 === 0 ? 2 : -2,
-                boxShadow: `0px 0px 8px 2px ${shadowColor}`
-            },
-            transition : {
-                ease: "easeOut",
-                duration: 0.5
-            }
-        }
-}
-
+export const HoverAnimation = ({
+	k,
+	shadowColor,
+}: {
+	k: number;
+	shadowColor: string;
+}): MotionProps => {
+	const animtaion: Target = {
+		scale: 1.04,
+		rotate: k % 2 === 0 ? 2 : -2,
+		boxShadow: `0px 0px 8px 2px ${shadowColor}`,
+	};
+	return {
+		initial: false,
+		whileHover: { ...animtaion },
+		whileTap: { ...animtaion },
+		transition: {
+			ease: "easeOut",
+			duration: 0.5,
+		},
+	};
+};
 
 // export const SingleCorosoul = ({review, totalLength } : {review : OrderedReview[], totalLength : number}) => {
 //     const [ishoverd, setIshoverd] = useState(false)
@@ -60,7 +80,6 @@ export const HoverAnimation = ({k, shadowColor} : {k : number, shadowColor : str
 //       }
 
 //     }, [ishoverd, animationControls, totalLength])
-    
 
 //     return (
 //             <motion.div

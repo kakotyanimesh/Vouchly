@@ -23,6 +23,7 @@ model User {
   spaces                    Spaces[]
   testimonialForms          TestimonialForm[]
   customerReview            CustomerReview[]
+  subscription              SubscriptionList[]
   createdAt                 DateTime                 @default(now())
 }
 
@@ -125,7 +126,7 @@ enum gridTypes {
 }
 
 model ReviewStyle {
-  id                        Int                    @default(autoincrement())     @id
+  id                        Int                     @default(autoincrement())     @id
   textColor                 String?
   rewiewCardBg              String?
   roundedCorner             String?
@@ -133,6 +134,43 @@ model ReviewStyle {
   starColor                 String?
   parentPageBgColor         String
   gridType                  gridTypes               @default(Masonry)
-  testimonialFormId         Int                    @unique
-  testimonialForms          TestimonialForm        @relation(fields: [testimonialFormId], references: [id])
+  testimonialFormId         Int                     @unique
+  testimonialForms          TestimonialForm         @relation(fields: [testimonialFormId], references: [id])
+}
+
+
+model SubscriptionList {
+  id                    String                            @default(cuid())        @id
+  useremail             String                            
+  user                  User                              @relation(fields: [useremail], references: [email])
+  Active                SubscriptionStatus                @default(ACTIVE)
+  subscriptionName      SubscriptionPlanType              @default(TRIAL)
+  subscriptionData      SubscriptionData                  @relation(fields: [subscriptionName], references: [name])
+  createdAt             DateTime                          @default(now())
+  startDate             DateTime                          @default(now())     
+  endDate               DateTime                          
+  upadtedAt             DateTime                          @updatedAt
+} 
+
+
+model SubscriptionData {
+  name                  SubscriptionPlanType             @id    @unique
+  maxSpace              Int
+  maxTestimonialForm    Int
+  maxReview             Int
+  maxVideoReview        Int
+  SubscriptionList      SubscriptionList[]
+}
+
+enum SubscriptionPlanType {
+  TRIAL
+  PRO
+  ENTERPRICE
+}
+
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
 }

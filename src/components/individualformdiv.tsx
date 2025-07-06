@@ -7,6 +7,7 @@ import { TextArea } from "./ui/textbox";
 import { useEffect, useState } from "react";
 import { LinkTag } from "./ui/Link";
 import { toast } from "sonner";
+import { SubscriptionPlanType } from "@/generated/prisma";
 
 export interface IndividualFormDivProps {
 	Name: string;
@@ -14,6 +15,8 @@ export interface IndividualFormDivProps {
 	Description: string;
 	questions: string[];
 	submission: number;
+	subcriptionPlanName : SubscriptionPlanType,
+	remainingReviews : number,
 	createdAt: string;
 	token: string;
 	formId: number;
@@ -54,7 +57,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 					<Button
 						onClick={() => {
 							navigator.clipboard.writeText(
-								`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`
+								`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`,
 							);
 							toast.info("URL copied");
 						}}
@@ -70,7 +73,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 					<Card className=" p-5  space-y-4 border-[hsl(var(--primary))]/20">
 						<div>
 							<h1 className="text-md font-semibold">
-								Embed Widget{" "}
+								Embed Widget
 							</h1>
 							<p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">
 								Copy and paste this code into your website to
@@ -96,7 +99,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 					</Card>
 					<Card className=" py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
 						<h1 className="text-md font-semibold">
-							Update Your Testimonia Form here{" "}
+							Update Your Testimonia Form here
 						</h1>
 						<form className="space-y-5">
 							<InputBox
@@ -109,7 +112,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 							/>
 
 							<h1 className="text-sm text-[hsl(var(--secondary-foreground))]">
-								Advanced fileds will be added soon{" "}
+								Advanced fileds will be added soon
 							</h1>
 							<Button
 								type="button"
@@ -128,7 +131,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 				</div>
 
 				<div className="space-y-2 col-span-1">
-					<Card className=" py-8 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
+					<Card className=" p-5  h-fit space-y-2 border-[hsl(var(--primary))]/20">
 						<section>
 							<h1 className="font-semibold text-2xl">
 								Submissions
@@ -155,6 +158,11 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 						>
 							View All Submissions
 						</LinkTag>
+						<h1 className="bg-[hsl(var(--primary))]/60 px-5 mt-4 text-sm rounded-xl w-fit border-2 border-[hsl(var(--tertiary))]">
+							You can collect up to {data.remainingReviews || 0}{" "}
+							reviews with the{" "}
+							{data.subcriptionPlanName || "Free"} plan.
+						</h1>
 					</Card>
 
 					<Card className="py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
@@ -176,7 +184,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 								sizes={"sm"}
 								onClick={() => {
 									navigator.clipboard.writeText(
-										`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`
+										`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`,
 									);
 									setCopied(true);
 									toast.info("URL copied");
@@ -189,9 +197,9 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 								)}
 							</Button>
 						</section>
-						<span className="bg-[hsl(var(--primary))]/60 px-5 text-sm rounded-xl w-fit border-2 border-[hsl(var(--tertiary))]">
+						<h1 className="bg-[hsl(var(--primary))]/60 px-5 text-sm rounded-xl w-fit border-2 border-[hsl(var(--tertiary))]">
 							{data.createdAt}
-						</span>
+						</h1>
 					</Card>
 				</div>
 			</div>
