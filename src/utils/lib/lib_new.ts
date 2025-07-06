@@ -5,7 +5,6 @@ export const endcodeURL = (p : string) => {
 }
 
 
-
 export const generateToken = (formId : number, adminId : number) => {
     return Buffer.from(JSON.stringify({formId, adminId})).toString("base64url")
 }

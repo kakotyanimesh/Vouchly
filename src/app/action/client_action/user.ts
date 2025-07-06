@@ -251,3 +251,64 @@ export const getReviews = async({embadedId} : {embadedId : string}) => {
     }
 
 }
+
+/**
+ * now get requests for checking users limit , which for creating spaces , creeating testimonials im doing at the backend first but now as it have to upload images to s3 or videos so i have to check in my first 
+ * the  problem is here is that we can do all this steps inside "use server also but use server only returns 200 status code which is not that good"
+ * 
+ */
+
+export const checkTestimonialFormUsages = async () => {
+    try {
+        const res = await fetch(`${url}api/limitcheck/can-upload-formlogo`)
+
+        
+    
+        const data = await res.json()
+
+        
+        if(!res.ok){
+            throw new Error(data.msg || "Something went wrong")
+        }
+
+        return {
+            success : true,
+            message : data.msg,
+            status : 201
+        }
+
+    } catch (error) {
+        const err = await handlerError(error)
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode 
+        }
+    }
+
+}
+
+export const checkReviewUsages = async({adminId, reviewType} : {adminId : number, reviewType : "video" | "text"}) => {
+    try {
+        const res = await fetch(`${url}api/limitcheck/can-upload-review?adminId=${adminId}&reviewType=${reviewType}`)
+
+        const data = await res.json()
+        if(!res.ok){
+            throw new Error(data.msg || "Something went wrong Please stay with us")
+        }
+
+        return {
+            success : true,
+            message : data.msg,
+            status : 201
+        }
+    } catch (error) {
+        const err = await handlerError(error)
+
+        return {
+            success : false,
+            message : err.errorMsg,
+            status : err.statusCode
+        }
+    }
+}

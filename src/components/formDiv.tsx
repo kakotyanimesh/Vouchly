@@ -7,7 +7,7 @@ import { TextArea } from "./ui/textbox"
 import { useTransition } from "react"
 import { CreateFormTypes } from "@/utils/types/user_types"
 import { useParseSpacedata } from "@/hooks/useSpacehook"
-import { createForms, uploadToS3 } from "@/app/action/client_action/user"
+import { checkTestimonialFormUsages, createForms, uploadToS3 } from "@/app/action/client_action/user"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -31,6 +31,15 @@ export const  FormDiv = () => {
             })
 
             try {
+                const canUpload = await checkTestimonialFormUsages()
+                console.log("canUpload", canUpload);
+                
+                if(!canUpload.success){                                        
+                    toast.error(canUpload.message, {
+                        id : loadingToast
+                    })
+                    return
+                }
                 const uploadResult = await uploadToS3(imagefile, "form_logos") 
 
                 if (!uploadResult || !uploadResult.uniqueKey) {

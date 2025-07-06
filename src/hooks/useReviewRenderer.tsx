@@ -24,6 +24,7 @@ export const useRenderReview = () => {
                         color : textColor,
                         borderRadius : roundedCorner
                     }}
+                    
                     starColor={starColor}
                     meteorColor={meteorColor}
                     {...motionProps}

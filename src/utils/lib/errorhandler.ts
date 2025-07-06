@@ -22,6 +22,12 @@ export const handlerError = async (error : unknown) : Promise<ErrroInterface> =>
         }
     }
     
+    if(error instanceof Error){
+        return {
+            errorMsg : error.message,
+            statusCode : 403
+        }
+    }
     if(error instanceof Response){
         const msg = (await error.json()).msg;
         return handlerStatuscode(error.status, msg); 
@@ -82,6 +88,17 @@ const handlerStatuscode = (status : number, message : string) : ErrorType=> {
         //             errorMsg : "Invalid Input Fields"
         //         }
         //     }
+        case 409:
+            if(message.includes("exceed")){
+                return {
+                    errorMsg : message,
+                    statusCode : 403
+                }
+            }
+            return {
+                errorMsg : "Something went wrong",
+                statusCode : 403
+            }
         default:
             return {
                 errorMsg: message || `Request failed with status ${status}`,

@@ -1,14 +1,11 @@
-
 "use client";
-import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
 import { motion } from "motion/react";
 import { GlowingComponent } from "../ui/glowingdiv";
 import { GradientText } from "../ui/gradienteText";
 import { TextReviewOne } from "../ui/testimonialscomponents/textreviewone";
+import { LinkTag } from "../ui/Link";
 
 export const LandingHeader = () => {
-	const router = useRouter();
 	const headLine = "Build Testimonial Pages";
 
 	const initial = {
@@ -61,9 +58,9 @@ export const LandingHeader = () => {
 				</GradientText>
 			</h1>
 			<motion.p
-				initial={initial}
+				initial={{...initial, filter : "blur(5px)"}}
 				animate={animate}
-				transition={{ duration: 0.5, ease: "linear", delay: 0.1 }}
+				transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
 				className="max-w-md mx-auto px-4 text-sm"
 			>
 				Transform happy customers into powerful testimonials. Create
@@ -73,21 +70,20 @@ export const LandingHeader = () => {
 			<motion.div
 				initial={initial}
 				animate={animate}
-				transition={{ duration: 0.5, ease: "linear", delay: 0.1 }}
+				transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
 				className="space-x-5"
 			>
-				<Button
-					onClick={() => router.push("/signin")}
-					variant={"secondary"}
-				>
+				<LinkTag href={"/signin"} sizes={"md"} variants={"secondary"}>
 					Start building for Free
-				</Button>
-				<Button
-					onClick={() => router.push("/signin")}
-					variant={"primary"}
+				</LinkTag>
+				<LinkTag
+					href={"/signin"}
+					className="md:px-10"
+					variants={"tertiary"}
+					sizes={"md"}
 				>
-					Watch Demo{" "}
-				</Button>
+					Watch Demo
+				</LinkTag>
 			</motion.div>
 			<TextReviewOne
 				className="w-60 md:w-96 xl:w-80 rotate-6 shadow-[5px_5px_12px_0px_#38b2ac] xl:absolute xl:translate-x-6/4 md:mt-20 mt-10 xl:-bottom-44"
@@ -113,4 +109,3 @@ export const LandingHeader = () => {
 		</div>
 	);
 };
-

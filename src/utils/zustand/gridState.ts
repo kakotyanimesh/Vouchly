@@ -20,7 +20,7 @@ type GridActions = {
 
 const initialState : WallOfLoveState = {
     gridType : "Masonry",
-    gridWidth : 40,
+    gridWidth : 80,
     openFinalWidget : false
 }
 

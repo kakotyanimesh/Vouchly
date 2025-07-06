@@ -294,6 +294,21 @@ export const getIndividualTestimonialFormData = async({adminId, formId} : {admin
                         customerReview : true
                     }
                 },
+                admin : {
+                    select : {
+                        subscription : {
+                            select : {
+                                subscriptionName : true,
+                                subscriptionData : {
+                                    select : {
+                                        maxReview : true,
+                                        maxVideoReview : true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 createdAt : true
             }
         })
@@ -448,7 +463,6 @@ export const addWidgetstoDb = async({formId, embadedIds, style, gridType } : Add
         }
 
         const parseddata = parsedObject.data
-        console.log(style.roundedCorner);
         
         
         const embadedId = await prisma.$transaction(async() => {

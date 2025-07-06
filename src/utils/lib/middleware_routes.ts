@@ -4,7 +4,7 @@
  */
 
 export const publicRoutes = [
-    "/", "/api/unprotected/uploadtos3", "/submit/*", "/api/unprotected/*", "/embadedwall/*",
+    "/", "/api/unprotected/uploadtos3", "/submit/*", "/api/unprotected/*", "/embadedwall/*", "/api/limitcheck/can-upload-review",
 ]
 
 

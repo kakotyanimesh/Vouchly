@@ -5,13 +5,10 @@ import { LinkTag } from "./ui/Link";
 import { Logo } from "./ui/logo";
 import { useState } from "react";
 import { AnimatePresence, motion, Variants } from "motion/react";
-import { useRouter } from "next/navigation";
 import { BlurdivPrimary, BlurdivTertiary } from "./ui/animateddivs";
-
 
 export const Navbar = () => {
 	const [openmenu, setOpenmenu] = useState(false);
-	const router = useRouter();
 
 	const toggleMenu = () => {
 		const newOpenMenuState = !openmenu;
@@ -50,20 +47,23 @@ export const Navbar = () => {
 					</div>
 				</div>
 				<div className="lg:flex flex-row gap-5 hidden">
-					<Button
-						onClick={() => router.push("/signin")}
-						variant={"secondary"}
+					<LinkTag
+						href={"/signin"}
+						sizes={"md"}
+						variants={"secondary"}
 					>
 						Sign in
-					</Button>
-					<Button
-						onClick={() => router.push("/signin")}
+					</LinkTag>
+					<LinkTag
+						href={"/signin"}
 						className="md:px-10"
-						variant={"primary"}
+						variants={"tertiary"}
+						sizes={"md"}
 					>
 						Get Started
-					</Button>
+					</LinkTag>
 				</div>
+				{/* <UserLoggedIn className="lg:flex hidden gap-5 flex-row". */}
 				<Button
 					variant={"fetch"}
 					onClick={toggleMenu}

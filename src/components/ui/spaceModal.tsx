@@ -25,7 +25,7 @@ export const SpaceModal = () => {
                 const resSpace = await createSpace({spaceName : spaceName.trim(), url : url.trim()})
 
                 if(!resSpace.success){
-                    throw new Error("failed to create space !! Try again later")
+                    throw new Error(resSpace.message)
                 } 
                 router.refresh()
                 toast.success("Space Created successfully", {

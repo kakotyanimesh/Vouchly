@@ -32,7 +32,7 @@ export default async function EmbadedScript({params}:{params : Promise<{slug : s
     const IfrmaeSrc = process.env.CLOUD_FRONT_DOMAIN_NAME
 
     return (
-        <div className="w-full min-h-screen p-3" style={{backgroundColor : parentPageBgColor}}>
+        <div className="w-full h-fit p-3" style={{backgroundColor : parentPageBgColor}}>
             <Script src={`${IfrmaeSrc}/js/iframeResize.max.js`}/>
                 {/* out div that has whole width and height ( get from db ) */}
                 <div className="flex justify-center items-center text-center">

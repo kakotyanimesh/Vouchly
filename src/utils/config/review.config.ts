@@ -10,7 +10,7 @@ export const reviewObject = z.object({
     stars : z.number(),
     jobTitle : z.string().max(10, {message : "How tf your job title exceed 20 sorry for bad words"}),
     customerCompany : z.string().max(20, {message : "Company name can't be more than 20 words"}),
-    textReview : z.string().optional(),
+    textReview : z.string().max(300, {message : "Your text review must be withing 300 words"}).min(10, {message : "Plese write atleast 30 words of review"}).optional(),
     videoLink : z.string().optional()
 }).refine(
     (data) => (data.textReview && !data.videoLink) || (data.videoLink && !data.textReview),{

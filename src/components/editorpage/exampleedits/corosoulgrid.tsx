@@ -72,6 +72,8 @@ export const CorosoulGrid = ({orderedReviews, reviewStyles, direction} : Corosou
     return (
         <motion.div 
             initial={false}
+            // onTap={() => setIshoverd(!ishoverd)}
+            // onTapCancel={() => alert("amoe")}
             onHoverStart={() => setIshoverd(true)}
             onHoverEnd={() => setIshoverd(false)}
             animate={controls}
@@ -82,7 +84,7 @@ export const CorosoulGrid = ({orderedReviews, reviewStyles, direction} : Corosou
                             reviewStyles,
                             review : rev, 
                             index : k,
-                            className : "h-[210px] pb-2 xl:w-[320px] md:w-[280px] w-[150px] flex-shrink-0",
+                            className : "h-[290px] pb-2 xl:w-[320px] w-[280px] flex-shrink-0",
                             motionProps : HoverAnimation({k, shadowColor})
                         })
                 ))

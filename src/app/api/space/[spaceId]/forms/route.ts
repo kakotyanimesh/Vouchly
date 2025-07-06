@@ -1,4 +1,5 @@
 import { TestimoniaFormConfig } from "@/utils/config/space.config";
+import { ExceedLimitError } from "@/utils/lib/errorclass";
 import prisma from "@/utils/lib/prisma";
 import { getUserSession } from "@/utils/lib/user_session";
 import { revalidateTag } from "next/cache";
@@ -30,6 +31,38 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
 
         const { id } = await getUserSession()
 
+        const userDetails = await prisma.user.findUnique({
+            where : {
+                id : Number(id)
+            }, include : {
+                subscription : {
+                    select : {
+                        subscriptionName : true,
+                        subscriptionData : {
+                            select : {
+                                maxTestimonialForm : true
+                            }
+                        }
+                    }
+                },_count : {
+                    select : {
+                        testimonialForms : true
+                    }
+                }
+            }
+        })
+
+        if(!userDetails || userDetails.subscription.length === 0){
+            throw new Error("Unable to find the user")
+            // the getusersession will automatically check this error just for safety
+        }
+
+        const totalTestimonialForms = userDetails._count.testimonialForms
+        const maxAllowedTestimonials = userDetails.subscription[0].subscriptionData.maxTestimonialForm
+
+        if(maxAllowedTestimonials !== -1 && totalTestimonialForms >= maxAllowedTestimonials){
+            throw new ExceedLimitError(`You have exceed Your Limit , Please Upgrate to ${userDetails.subscription[0].subscriptionName === "TRIAL" ? "PRO" : "ENTERPRICE"}`)
+        }
 
         const res = await prisma.testimonialForm.create({
             data : {
@@ -63,6 +96,12 @@ export async function POST(req:NextRequest, {params} : {params : Promise<{spaceI
             )
         }
         
+        if(error instanceof ExceedLimitError){
+            return NextResponse.json(
+                {msg : error.message},
+                {status : 403}
+            )
+        }
         return NextResponse.json(
             {msg : "Something bad happens at backend while creating Forms"},
             {status : 500}

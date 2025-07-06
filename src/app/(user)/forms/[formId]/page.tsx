@@ -36,7 +36,7 @@ export default async function IndividualForms({
 		return (
 			<h1>
 				Database is down at this moment please try again later
-				pleaseeeeeeeeee{" "}
+				pleaseeeeeeeeee 
 			</h1>
 		);
 	}
@@ -49,6 +49,8 @@ export default async function IndividualForms({
 				token={token}
 				questions={data.questions}
 				Name={data.Name}
+				subcriptionPlanName={data.admin.subscription[0].subscriptionName}
+				remainingReviews={data.admin.subscription[0].subscriptionData.maxReview - data._count.customerReview}
 				Description={data.Description}
 				submission={data._count.customerReview}
 				createdAt={data.createdAt.toDateString()}

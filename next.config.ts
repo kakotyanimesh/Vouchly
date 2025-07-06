@@ -11,9 +11,8 @@ const nextConfig: NextConfig = {
         pathname : "/**"
       },
       {
-        // d3kl3yb9qelts0.cloudfront.net/
         protocol : "https",
-        hostname : "d3kl3yb9qelts0.cloudfront.net",
+        hostname : "cdn.vouchly.kakoty.me",
         pathname : "/**"
       }
     ]

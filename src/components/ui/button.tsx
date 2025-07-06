@@ -43,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({classNa
         whileTap={{
             scale : 0.95,
             transition : {
-                ease : "linear"
+                ease : "easeOut"
             }
         }}
         ref={ref}

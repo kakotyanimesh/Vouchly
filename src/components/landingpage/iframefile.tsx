@@ -10,11 +10,11 @@ import { toast } from "sonner";
 
 export const IframeFile = () => {
 	const scriptCodeOne = heightLightText({
-		code: `<script type="text/javascript" src="https://d3kl3yb9qelts0.cloudfront.net/js/iframeResizer.min.js"></script>`,
+		code: `<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>`,
 	});
 
 	const iframeCode = heightLightText({
-		code: `<iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="http://localhost:3000/embadedwall/7d39dab1-00a9-477d-a0a1-73160ea07676" frameborder="0" scrolling="no" width="100%"></iframe>`,
+		code: `<iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="https://vouchly.kakoty.me/7d39dab1-00a9-477d-a0a1-73160ea07676" frameborder="0" scrolling="no" width="100%"></iframe>`,
 	});
 
 	const scriptCodeTwo = heightLightText({
@@ -39,15 +39,15 @@ export const IframeFile = () => {
 				<LinkTag
 					sizes={"md"}
 					className="py-1 px-2"
-					href={"/am,me"}
+					href={"/signup"}
 					variants={"secondary"}
 				>
 					Live Demo
 				</LinkTag>
 				<Button variant={"randomColor"} sizes={"sm"} onClick={() => {
                     navigator.clipboard.writeText(
-						`<script type="text/javascript" src="https://d3kl3yb9qelts0.cloudfront.net/js/iframeResizer.min.js"></script>
-                        <iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="http://localhost:3000/embadedwall/7d39dab1-00a9-477d-a0a1-73160ea07676" frameborder="0" scrolling="no" width="100%"></iframe>
+						`<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>
+                        <iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="https://vouchly.kakoty.me/embadedwall/7d39dab1-00a9-477d-a0a1-73160ea07676" frameborder="0" scrolling="no" width="100%"></iframe>
                         <script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676")})</script>`
 					);
                     toast.message("Embed script copied!", {
