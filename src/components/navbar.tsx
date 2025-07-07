@@ -46,23 +46,15 @@ export const Navbar = () => {
 						))}
 					</div>
 				</div>
-				<div className="lg:flex flex-row gap-5 hidden">
-					<LinkTag
-						href={"/signin"}
-						sizes={"md"}
-						variants={"secondary"}
-					>
-						Sign in
-					</LinkTag>
-					<LinkTag
-						href={"/signin"}
-						className="md:px-10"
-						variants={"tertiary"}
-						sizes={"md"}
-					>
-						Get Started
-					</LinkTag>
-				</div>
+
+				<LinkTag
+					href={"/signin"}
+					className="md:px-10 lg:flex  hidden"
+					variants={"tertiary"}
+					sizes={"md"}
+				>
+					Get Started
+				</LinkTag>
 				{/* <UserLoggedIn className="lg:flex hidden gap-5 flex-row". */}
 				<Button
 					variant={"fetch"}
