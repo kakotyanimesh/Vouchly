@@ -5,13 +5,13 @@ import React from "react";
 import { motion } from "motion/react";
 
 const ButtonVariants = cva(
-	"w-fit rounded-xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-linear duration-200",
+	"w-fit rounded-xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all ease-out duration-200",
 	{
 		variants: {
 			variant: {
-				primary: "bg-[hsl(var(--pure-white))]/80 text-black",
+				primary: "bg-[hsl(var(--pure-white))]/80 text-black hover:shadow-[0px_0px_6px_1px_#e2e8f0]",
 				secondary:
-					"bg-gradient-to-r from-[hsl(var(--tertiary))]/60 to-[hsl(var(--primary))]/60 text-white hover:shadow-[0px_0px_2px_1px_#f687b3]",
+					"bg-gradient-to-r from-[hsl(var(--tertiary))]/60 to-[hsl(var(--primary))]/60 text-white hover:shadow-[0px_0px_4px_1px_#f687b3]",
 				transparent:
 					"bg-[hsl(var(--primary))]/10 border border-[hsl(var(--primary))]/50 text-white hover:bg-[hsl(var(--primary))]/50",
 				fetch: "hover:underline decoration-[hsl(var(--card-bg-one))] bg-gradient-to-r  from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] bg-clip-text text-transparent underline-offset-2",
@@ -28,32 +28,38 @@ const ButtonVariants = cva(
 			variant: "primary",
 			sizes: "md",
 		},
-	}
+	},
 );
 
+export interface ButtonProps
+	extends Omit<HTMLMotionProps<"button">, "ref">,
+		VariantProps<typeof ButtonVariants> {}
 
-export interface ButtonProps extends Omit<HTMLMotionProps<"button">, "ref">, VariantProps<typeof ButtonVariants>{}
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+	({ className, children, variant, sizes, ...props }, ref) => {
+		return (
+			<motion.button
+				initial={{
+					scale: 1,
+				}}
+				whileTap={{
+					scale: 0.95,
+					transition: {
+						ease: "easeOut",
+					},
+				}}
+				ref={ref}
+				className={cn(
+					"",
+					ButtonVariants({ variant, sizes }),
+					className,
+				)}
+				{...props}
+			>
+				{children}
+			</motion.button>
+		);
+	},
+);
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({className, children, variant, sizes, ...props}, ref) => {
-    return (
-        <motion.button
-        initial={{
-            scale : 1
-        }}
-        whileTap={{
-            scale : 0.95,
-            transition : {
-                ease : "easeOut"
-            }
-        }}
-        ref={ref}
-        className={cn("", ButtonVariants({variant, sizes}), className)}
-        {...props}
-        >
-            {children}
-        </motion.button>
-    )
-})
-
-
-Button.displayName = "Button"
+Button.displayName = "Button";
