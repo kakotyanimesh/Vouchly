@@ -1,5 +1,5 @@
 "use client";
-import { PricingSection } from "@/app/(user)/pricing/page";
+import { PricingSection } from "../pricingSection";
 import { GradientText } from "../ui/gradienteText";
 
 export const PricingDiv = () => {
