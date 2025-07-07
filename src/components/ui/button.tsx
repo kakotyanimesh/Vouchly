@@ -9,7 +9,7 @@ const ButtonVariants = cva(
 	{
 		variants: {
 			variant: {
-				primary: "bg-[hsl(var(--pure-white))]/60 text-black hover:shadow-[0px_0px_6px_1px_#e2e8f0]",
+				primary: "bg-[hsl(var(--pure-white))]/80 text-black hover:shadow-[0px_0px_6px_1px_#e2e8f0]",
 				secondary:
 					"bg-gradient-to-r from-[hsl(var(--tertiary))]/60 to-[hsl(var(--primary))]/60 text-white hover:shadow-[0px_0px_4px_1px_#f687b3]",
 				transparent:

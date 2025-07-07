@@ -11,7 +11,7 @@ export const PricingDiv = () => {
 				Scale When You
 				<GradientText className=" mx-2">Grow</GradientText>
 			</h1>
-			<PricingSection className="xl:mx-44 gap-4 lg:gap-0"/>
+			<PricingSection className="xl:mx-44 gap-3 md:gap-0"/>
 		</div>
 	);
 };

@@ -28,16 +28,16 @@ export const NewPricingCard: React.FC<newPricingCardProps> = ({
 	return (
 		<Card
 			className={cn(
-				"px-5 py-5 space-y-3 border-0 text-left",
+				"px-5 py-5 md:space-y-3 space-y-1 border-0 text-left",
 				className,
 				title === "Professional"
-					? "lg:-mt-10 md:-mt-5 lg:h-[540px] bg-[hsl(var(--primary))]/20 "
+					? "lg:-mt-5 md:-mt-5 lg:h-[500px] bg-[hsl(var(--primary))]/20 "
 					: "md:h-[520px] lg:h-[450px]",
 			)}
 			{...props}
 		>
 			<h1 className="font-semibold text-xl">{title}</h1>
-			<h1 className="text-slate-600">
+            <h1 className={cn(title === "Professional" ? "text-[hsl(var(--primary))]/60" : "text-slate-600")}>
 				$ <span className="text-4xl text-white">{price}</span>
 				/month
 			</h1>
@@ -54,7 +54,7 @@ export const NewPricingCard: React.FC<newPricingCardProps> = ({
 			>
 				Get {title}
 			</Button>
-			<div className="space-y-2">
+			<div className="space-y-2 mt-3">
 				{features.map((f, k) => (
 					<h1
 						key={k}
