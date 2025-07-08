@@ -674,26 +674,11 @@ export const fetchEmbadedScript = async({formId} : {formId: number} ) => {
             }
         })
 
-        const embadedScript = `
-            <script type="text/javascript" src="${process.env.CLOUD_FRONT_DOMAIN_NAME}/js/iframeResizer.min.js" ></script>
-            <iframe
-                id="review-wall-${res?.embadedId}"
-                src=${process.env.NEXT_PUBLIC_NEXT_URL}embadedwall/${res?.embadedId}
-                frameborder="0"
-                scrolling="no"
-                width="100%">
-            </iframe>
-            <script>
-                window.addEventListener("load", function () {
-                    iFrameResize({ log: false, checkOrigin: false }, "#review-wall-${res?.embadedId}")
-                })
-            </script>
-        `
         
         return {
-            embadedScript,
-            success : true
-        }
+			embadedId : res?.embadedId,
+			success: true,
+		};
     } catch (error) {
         const err = await handlerError(error)
 
