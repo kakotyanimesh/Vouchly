@@ -1,15 +1,15 @@
 import { cn } from "@/utils/lib/cn";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export const TextBoxVariants = cva(
 	"w-full rounded-md border focus:ring-2 focus:outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50",
 	{
 		variants: {
 			variants: {
-				primary: "bg-[hsl(var(--primary))]/5 placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]",
+				primary:
+					"bg-[hsl(var(--primary))]/5 placeholder:text-[hsl(var(--secondary-foreground))]/60 text-white border-white/20 focus:ring-[hsl(var(--primary))]",
 			},
 			sizes: {
 				sm: "h-32 p-5",
@@ -31,15 +31,7 @@ export interface TextBoxProps
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
 	(
-		{
-			className,
-			sizes,
-			variants,
-			errorMessage,
-			iserror,
-			name,
-			...props
-		},
+		{ className, sizes, variants, errorMessage, iserror, name, ...props },
 		ref,
 	) => {
 		return (
@@ -70,12 +62,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextBoxProps>(
 								: "text-[hsl(var(--primary))]/30",
 						)}
 					>
-						{iserror && (
-							<FontAwesomeIcon
-								icon={faTriangleExclamation}
-								// style={{ color: "#e70d0d" }}
-							/>
-						)}
+						{iserror && <FaExclamationTriangle />}
 						{errorMessage}
 					</p>
 				)}

@@ -26,11 +26,13 @@ import { SubmissionThankyoudiv } from "./ui/thankyoudiv";
 import { useRouter } from "next/navigation";
 import LoadingCircleSpinner from "./ui/loadingspinner";
 import { reviewObject } from "@/utils/config/review.config";
+import React from "react";
+import { RecordVideo } from "./ui/recordvideomodal";
 
 export const SubmitFormComponent = (
 	data: Omit<
 		IndividualFormDivProps,
-		"script" | "createdAt" | "submission" | "token" | ""
+		"embaedId" | "createdAt" | "submission" | "token" | ""
 	> & { spaceId: number; adminId: number; formId: number },
 ) => {
 	const { storeNumber } = InputBoxesTypesStore();
@@ -97,36 +99,25 @@ export const SubmitFormComponent = (
 					formId: data.formId,
 					adminId: data.adminId,
 					jobTitle,
-					textReview:
-						storeNumber === 0 ? textReview : undefined,
-					videoLink:
-						storeNumber === 1
-							? "placeholder"
-							: undefined,
+					textReview: storeNumber === 0 ? textReview : undefined,
+					videoLink: storeNumber === 1 ? "placeholder" : undefined,
 				};
 
-				const parsedObject =
-					reviewObject.safeParse(testimonialObject);
+				const parsedObject = reviewObject.safeParse(testimonialObject);
 
 				if (!parsedObject.success) {
 					const validationError = parsedObject.error.errors
 						.map((e) => e.message)
 						.join("\n");
-					toast.error(
-						`Validation Failed ${validationError}`,
-						{
-							id: toastId,
-						},
-					);
+					toast.error(`Validation Failed ${validationError}`, {
+						id: toastId,
+					});
 					return;
 				}
 
 				const validateObject: ReviewTypes = parsedObject.data;
 
-				const userPfp = await uploadToS3(
-					imagefile,
-					"user-images",
-				);
+				const userPfp = await uploadToS3(imagefile, "user-images");
 
 				if (!userPfp || !userPfp.uniqueKey) {
 					toast.error(
@@ -171,8 +162,7 @@ export const SubmitFormComponent = (
 				}
 				// havent make the api route to submit testimonials haha -> I made it haha -> zod validation here also
 
-				const submitReview =
-					await submitTestimonials(validateObject);
+				const submitReview = await submitTestimonials(validateObject);
 
 				if (!submitReview.success) {
 					throw new Error(submitReview.message);
@@ -215,17 +205,11 @@ export const SubmitFormComponent = (
 						alt="form_logo"
 					/>
 					<div>
-						<h1 className="text-2xl font-bold">
-							{data.Name}
-						</h1>
-						<p className="text-sm">
-							{data.Description}
-						</p>
+						<h1 className="text-2xl font-bold">{data.Name}</h1>
+						<p className="text-sm">{data.Description}</p>
 					</div>
 					<div className="text-start border-l-4 pl-2 border-[hsl(var(--primary))] space-y-2">
-						<h1 className="text-md font-semibold">
-							Questions
-						</h1>
+						<h1 className="text-md font-semibold">Questions</h1>
 						{data.questions.map((q, k) => (
 							<h1 key={k} className="text-sm">
 								• {q}
@@ -241,9 +225,7 @@ export const SubmitFormComponent = (
 								disabled={isPending}
 								value={customerName}
 								onChange={(e) =>
-									setCustomerName(
-										e.target.value,
-									)
+									setCustomerName(e.target.value)
 								}
 								placeholder="Your name"
 								name="Name"
@@ -254,9 +236,7 @@ export const SubmitFormComponent = (
 								disabled={isPending}
 								value={customerEmail}
 								onChange={(e) =>
-									setCustomerEmail(
-										e.target.value,
-									)
+									setCustomerEmail(e.target.value)
 								}
 								placeholder="Your Email"
 								name="Email"
@@ -266,9 +246,7 @@ export const SubmitFormComponent = (
 								disabled={isPending}
 								value={customerCompany}
 								onChange={(e) =>
-									setCustomerCompany(
-										e.target.value,
-									)
+									setCustomerCompany(e.target.value)
 								}
 								placeholder="Your Company"
 								name="Company"
@@ -278,11 +256,7 @@ export const SubmitFormComponent = (
 							<InputBox
 								value={jobTitle}
 								disabled={isPending}
-								onChange={(e) =>
-									setJobTitle(
-										e.target.value,
-									)
-								}
+								onChange={(e) => setJobTitle(e.target.value)}
 								placeholder="Job Title"
 								name="Job Title"
 								type="text"
@@ -292,37 +266,30 @@ export const SubmitFormComponent = (
 							aria-disabled={isPending}
 							className="flex flex-row items-center gap-2"
 						>
-							{Array.from({ length: 5 }).map(
-								(s, k) => (
-									<button
-										type="button"
-										disabled={isPending}
-										onClick={() =>
-											setStars(
-												k + 1,
-											)
-										}
+							{Array.from({ length: 5 }).map((s, k) => (
+								<button
+									type="button"
+									disabled={isPending}
+									onClick={() => setStars(k + 1)}
+									className={cn(
+										"rounded-md p-2 cursor-pointer border",
+										stars > k
+											? "bg-[hsl(var(--primary))]/40 border-white/20"
+											: "bg-[hsl(var(--primary))]/10 border-black/20",
+									)}
+									key={k}
+								>
+									<Star
+										size={18}
 										className={cn(
-											"rounded-md p-2 cursor-pointer border",
 											stars > k
-												? "bg-[hsl(var(--primary))]/40 border-white/20"
-												: "bg-[hsl(var(--primary))]/10 border-black/20",
+												? "fill-[hsl(var(--primary))]"
+												: "",
+											"text-[hsl(var(--primary))]",
 										)}
-										key={k}
-									>
-										<Star
-											size={18}
-											className={cn(
-												stars >
-													k
-													? "fill-[hsl(var(--primary))]"
-													: "",
-												"text-[hsl(var(--primary))]",
-											)}
-										/>
-									</button>
-								),
-							)}
+									/>
+								</button>
+							))}
 						</div>
 						<FileUploda
 							disable={isPending}
@@ -334,21 +301,10 @@ export const SubmitFormComponent = (
 							<TextReview isdisable={isPending} />
 						)}
 						{storeNumber === 1 && (
-							<FileUploda
-								disable={isPending}
-								fileType="Video"
-								className="h-32"
-							/>
+							<VideoReview isdisable={isPending} />
 						)}
-						<Button
-							className="w-full"
-							variant={"secondary"}
-						>
-							{!isPending ? (
-								"submit"
-							) : (
-								<LoadingCircleSpinner />
-							)}
+						<Button className="w-full" variant={"secondary"}>
+							{!isPending ? "submit" : <LoadingCircleSpinner />}
 						</Button>
 					</form>
 					<Button
@@ -356,8 +312,7 @@ export const SubmitFormComponent = (
 						className="bg-gradient-to-r from-teal-400 to-emerald-400"
 						onClick={() =>
 							router.push(
-								process.env
-									.NEXT_PUBLIC_NEXT_URL as string,
+								process.env.NEXT_PUBLIC_NEXT_URL as string,
 							)
 						}
 					>
@@ -382,10 +337,10 @@ const tabS = [
 const TextReview = ({ isdisable }: { isdisable: boolean }) => {
 	const { textReview, setTextReview } = useTestimonialSubmissionStore();
 
-    const maxLimit = 300
-    const remaining = maxLimit - Number(textReview?.length)
+	const maxLimit = 300;
+	const remaining = maxLimit - Number(textReview?.length);
 
-    return (
+	return (
 		<TextArea
 			disabled={isdisable}
 			// onChange={(e) => setDescription(e.target.value) }
@@ -398,8 +353,35 @@ const TextReview = ({ isdisable }: { isdisable: boolean }) => {
 					? `Your text review must be within ${maxLimit} characters`
 					: `You have ${remaining} character left`
 			}
-            iserror={remaining < 0}
+			iserror={remaining < 0}
 			placeholder="Share Your Experience with our Product/service"
 		/>
-    );
+	);
+};
+
+const VideoReview = ({ isdisable }: { isdisable: boolean }) => {
+	const [isRecord, setIsRecord] = useState(true);
+	return (
+		<div className="space-y-2">
+			<h1 className="text-sm text-[hsl(var(--primary))]">
+				Video Review *
+			</h1>
+			<Button
+				className=""
+				type="button"
+				onClick={() => setIsRecord(!isRecord)}
+			>
+				{!isRecord ? "Upload" : "Record"} Video
+			</Button>
+			{isRecord ? (
+				<FileUploda
+					disable={isdisable}
+					fileType="Video"
+					className="h-32"
+				/>
+			) : (
+				<RecordVideo />
+			)}
+		</div>
+	);
 };

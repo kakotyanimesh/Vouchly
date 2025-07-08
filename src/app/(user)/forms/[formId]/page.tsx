@@ -25,12 +25,10 @@ export default async function IndividualForms({
 	const token = generateToken(id, Number(adminId));
 	// you cant use env variable in client component
 
-	const getscript = await fetchEmbadedScript({ formId: Number(id) });
+	const embadedId = await fetchEmbadedScript({ formId: Number(id) });
 
 	//  too much of objects and i don't want to fix it
-	const script = !getscript.embadedScript
-		? "You dont have any script"
-		: getscript.embadedScript;
+	
 
 	if (!data || "success" in data) {
 		return (
@@ -44,7 +42,7 @@ export default async function IndividualForms({
 		<div className="">
 			<BackButton />
 			<IndividualFormDiv
-				script={script}
+				embaedId={embadedId.embadedId}
 				formId={Number(id)}
 				token={token}
 				questions={data.questions}

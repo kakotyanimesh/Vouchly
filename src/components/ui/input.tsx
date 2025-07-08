@@ -1,8 +1,7 @@
 import { cn } from "@/utils/lib/cn";
 import { cva, VariantProps } from "class-variance-authority";
 import React, { ReactNode } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTriangleExclamation } from "@fortawesome//free-solid-svg-icons";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export const InputVariants = cva(
 	"w-full rounded-xl border focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ",
@@ -67,10 +66,7 @@ export const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(
 					/>
 					{errorMessage && (
 						<p className="text-xs text-red-400 ml-3">
-							<FontAwesomeIcon
-								icon={faTriangleExclamation}
-								// style={{ color: "#e70d0d" }}
-							/>
+							<FaExclamationTriangle />
 							{errorMessage}
 						</p>
 					)}

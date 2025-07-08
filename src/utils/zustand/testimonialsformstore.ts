@@ -13,6 +13,7 @@ type FormActions = {
     setDescription : (ds : string)=> void
     setquestions : (qs : string[]) => void
     addQuestionsArrray : () => void
+    removeQuestionsArray : (k : number) => void
     upadatedQuestions : (index : number, value : string) => void
     reset : () => void
 }
@@ -30,6 +31,9 @@ export const useFormStore = create<FormInterface & FormActions>((set) => ({
     setquestions : (qs) => set({questions : qs}),
     addQuestionsArrray : () => set((state) => ({
         questions : [...state.questions, ""]
+    })),
+    removeQuestionsArray : (k) => set((state) => ({
+        questions : state.questions.filter((_, q) => q !== k)
     })),
     upadatedQuestions : (index, value) => set((state) => {
         const upd = [...state.questions]
@@ -76,4 +80,15 @@ export const useFileStore = create<FileUploadActions & FileUploadInterface>((set
     setVideoFile : (v) => set({videofile : v}),
     resetFile : () => set(fileUploadInitialStates)
 
+}))
+
+type OpenVideoModalType = {
+    isVideoModalOpen : boolean,
+    setIsVideoModalOpen : () => void
+}
+
+
+export const useOpenVideoModalStore = create<OpenVideoModalType>((set) => ({
+    isVideoModalOpen : false,
+    setIsVideoModalOpen : () => set((state) => ({isVideoModalOpen : !state.isVideoModalOpen}))
 }))

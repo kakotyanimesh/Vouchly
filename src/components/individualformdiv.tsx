@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { LinkTag } from "./ui/Link";
 import { toast } from "sonner";
 import { SubscriptionPlanType } from "@/generated/prisma";
+import { heightLightText } from "./landingpage/iframefile";
 
 export interface IndividualFormDivProps {
 	Name: string;
@@ -15,16 +16,28 @@ export interface IndividualFormDivProps {
 	Description: string;
 	questions: string[];
 	submission: number;
-	subcriptionPlanName : SubscriptionPlanType,
-	remainingReviews : number,
+	subcriptionPlanName: SubscriptionPlanType;
+	remainingReviews: number;
 	createdAt: string;
 	token: string;
 	formId: number;
-	script: string | null;
+	embaedId: string | null | undefined;
 }
 
 export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 	const [copied, setCopied] = useState(false);
+
+	const scriptCodeOne = heightLightText({
+		code: `<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>`,
+	});
+
+	const iframeCode = heightLightText({
+		code: `<iframe id="review-wall-${data.embaedId}" src="https://vouchly.kakoty.me/${data.embaedId}" frameborder="0" scrolling="no" width="100%"></iframe>`,
+	});
+
+	const scriptCodeTwo = heightLightText({
+		code: `<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-${data.embaedId}")})</script>`,
+	});
 
 	useEffect(() => {
 		const id = setTimeout(() => {
@@ -76,26 +89,59 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 								Embed Widget
 							</h1>
 							<p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">
-								Copy and paste this code into your website to
-								display your testimonials.
+								{data.embaedId === null || undefined
+									? "You don't have any script yet Generate one after getting reviews from your customers	"
+									: "Copy and paste this code into your website to display your testimonials."}
 							</p>
 						</div>
-						<h1 className="rounded-md border-2 border-[hsl(var(--primary))] bg-white/5 whitespace-nowrap md:px-5 px-3 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto scrollbar scrollbar-h-1.5 scrollbar-thumb-rounded-full scrollbar-track-[hsl(var(--primary))]/20 scrollbar-thumb-[hsl(var(--primary))]/80 overflow-scroll">
-							{`${data.script}`}
-						</h1>
-						<Button
-							onClick={() => {
-								navigator.clipboard.writeText(`${data.script}`);
-								toast.message("Embed script copied!", {
-									description:
-										"Paste it in your website's HTML to show the testimonial widget.",
-								});
-							}}
-							className="flex flex-row items-center gap-3"
-						>
-							<Copy size={16} />
-							Copy Script
-						</Button>
+						{data.embaedId === null || undefined ? (
+							<LinkTag
+								variants="secondary"
+								sizes="md"
+								href={`/forms/${data.formId}/editor`}
+							>
+								Generate script
+							</LinkTag>
+						) : (
+							<>
+								<h1 className="rounded-md border-2 border-[hsl(var(--primary))] bg-white/5 whitespace-nowrap md:px-5 px-3 py-3 text-[hsl(var(--secondary-foreground))] overflow-x-auto scrollbar scrollbar-h-1.5 scrollbar-thumb-rounded-full scrollbar-track-[hsl(var(--primary))]/20 scrollbar-thumb-[hsl(var(--primary))]/80 overflow-scroll">
+									<code
+										dangerouslySetInnerHTML={{
+											__html: scriptCodeOne,
+										}}
+									/>
+									<code
+										dangerouslySetInnerHTML={{
+											__html: iframeCode,
+										}}
+									/>
+									<code
+										dangerouslySetInnerHTML={{
+											__html: scriptCodeTwo,
+										}}
+									/>
+								</h1>
+								<Button
+									onClick={() => {
+										navigator.clipboard.writeText(
+											`
+											<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>
+											<iframe id="review-wall-${data.embaedId}" src="https://vouchly.kakoty.me/${data.embaedId}" frameborder="0" scrolling="no" width="100%"></iframe>
+											<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-${data.embaedId}")})</script>
+											`,
+										);
+										toast.message("Embed script copied!", {
+											description:
+												"Paste it in your website's HTML to show the testimonial widget.",
+										});
+									}}
+									className="flex flex-row items-center gap-3"
+								>
+									<Copy size={16} />
+									Copy Script
+								</Button>
+							</>
+						)}
 					</Card>
 					<Card className=" py-7 px-5  space-y-5 border-[hsl(var(--primary))]/20">
 						<h1 className="text-md font-semibold">
