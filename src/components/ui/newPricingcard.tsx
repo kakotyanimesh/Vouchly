@@ -2,10 +2,9 @@
 import React from "react";
 import { cn } from "@/utils/lib/cn";
 import { Button } from "./button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "./card";
 import { toast } from "sonner";
+import { Check } from "lucide-react";
 
 export type CardType = "Free" | "Professional" | "Enterprise";
 
@@ -37,7 +36,13 @@ export const NewPricingCard: React.FC<newPricingCardProps> = ({
 			{...props}
 		>
 			<h1 className="font-semibold text-xl">{title}</h1>
-            <h1 className={cn(title === "Professional" ? "text-[hsl(var(--primary))]/60" : "text-slate-600")}>
+			<h1
+				className={cn(
+					title === "Professional"
+						? "text-[hsl(var(--primary))]/60"
+						: "text-slate-600",
+				)}
+			>
 				$ <span className="text-4xl text-white">{price}</span>
 				/month
 			</h1>
@@ -54,13 +59,13 @@ export const NewPricingCard: React.FC<newPricingCardProps> = ({
 			>
 				Get {title}
 			</Button>
-			<div className="space-y-2 mt-3">
+			<div className="space-y-2 mt-2">
 				{features.map((f, k) => (
 					<h1
 						key={k}
-						className="flex flex-row gap-2 items-center text-sm"
+						className="flex flex-row items-start gap-1 text-sm"
 					>
-						<FontAwesomeIcon icon={faCheck} size="2xs" />
+						<Check className="size-4 mt-1 rounded-full bg-[hsl(var(--primary))]/60"/>
 						{f}
 					</h1>
 				))}
