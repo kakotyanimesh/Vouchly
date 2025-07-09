@@ -22,7 +22,7 @@ export const useRenderReview = () => {
                     style={{
                         backgroundColor : rewiewCardBg,
                         color : textColor,
-                        borderRadius : roundedCorner
+                        borderRadius : `${roundedCorner}px`
                     }}
                     
                     starColor={starColor}
@@ -45,9 +45,10 @@ export const useRenderReview = () => {
                     {...motionProps}
                     style={{
                         color : textColor,
-                        borderRadius : roundedCorner,
+                        borderRadius : `${roundedCorner}px`,
                         
                     }}
+                    starColor={starColor}
                     bgColor= {rewiewCardBg}
                     borderRadius={roundedCorner}
                     className={className}

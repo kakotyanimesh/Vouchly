@@ -1,8 +1,9 @@
-import { fetchedReviews } from "@/app/action/server_action/user";
+import { fetchedReviews, getEmbadedReviewsId } from "@/app/action/server_action/user";
 import { Card, InfiniteScrollCard } from "@/components/ui/card";
 import { CheckBox } from "@/components/ui/checkbox";
 import { VideoTestimonialOne } from "@/components/ui/testimonialscomponents/customvideotestimonial";
 import { TextReviewOne } from "@/components/ui/testimonialscomponents/textreviewone";
+import { cn } from "@/utils/lib/cn";
 import { getUserSession } from "@/utils/lib/user_session";
 
 export default async function ReviewsPage({
@@ -14,6 +15,8 @@ export default async function ReviewsPage({
 	const adminId = parseInt((await getUserSession()).id);
 
 	const reviewData = await fetchedReviews({ formId, adminId });
+
+	const generatedReview = await getEmbadedReviewsId({ formId: formId });
 
 	return (
 		<Card className="flex-1 border-[hsl(var(--primary))]/20 h-[calc(100vh-11rem)] flex flex-col">
@@ -31,11 +34,20 @@ export default async function ReviewsPage({
 									<div key={k} className="w-full relative ">
 										<CheckBox
 											data={rv}
+											checked={generatedReview.ids?.includes(rv.id)}
 											className="absolute top-2 right-2 z-10"
 										/>
 										<TextReviewOne
 											textreviewid={rv.id}
-											className="h-full w-full"
+											style={{
+												borderRadius: `${generatedReview.style?.roundedCorner}px`
+											}}
+											className={cn(
+												"h-full w-full",
+												generatedReview.ids?.includes(rv.id)
+													? "border-4 border-[hsl(var(--primary))]"
+													: undefined,
+											)}
 											customerName={rv.data.customerName}
 											customerCompany={
 												rv.data.customerCompany
@@ -51,10 +63,17 @@ export default async function ReviewsPage({
 									<div key={k} className="w-full relative">
 										<CheckBox
 											data={rv}
+											checked={generatedReview.ids?.includes(rv.id)}
 											className="absolute top-2 right-2 z-10"
 										/>
 
 										<VideoTestimonialOne
+											className={cn(
+												"h-full w-full",
+												generatedReview.ids?.includes(rv.id)
+													? "border-4 border-[hsl(var(--primary))]"
+													: undefined,
+											)}
 											// className="h-full"
 											stars={rv.data.stars}
 											videoSrc={rv.data.videoLink}

@@ -133,7 +133,7 @@ model ReviewStyle {
   shadowColor               String?
   starColor                 String?
   parentPageBgColor         String
-  gridType                  gridTypes               @default(Masonry)
+  gridType                  gridTypes               @default(Classic)
   testimonialFormId         Int                     @unique
   testimonialForms          TestimonialForm         @relation(fields: [testimonialFormId], references: [id])
 }

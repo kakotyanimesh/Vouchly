@@ -119,9 +119,12 @@ export const SubmitFormComponent = (
 
 				const userPfp = await uploadToS3(imagefile, "user-images");
 
-				if (!userPfp || !userPfp.uniqueKey) {
+				
+				if (!userPfp || !userPfp.uniqueKey) {					
 					toast.error(
-						"Couldn`t upload your profile pic 😓 Try again?",
+						"Couldn`t upload your profile pic 😓 Try again?", {
+							id : toastId
+						}
 					);
 					return;
 				}

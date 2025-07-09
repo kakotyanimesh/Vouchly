@@ -27,6 +27,8 @@ export default async function EmbadedScript({params}:{params : Promise<{slug : s
         meteorColor : starColor
     }
 
+    console.log(inlineStyles);
+    
     const reviews : OrderedReviewTypes[] = orderedReviews
 
     const IfrmaeSrc = process.env.CLOUD_FRONT_DOMAIN_NAME

@@ -148,6 +148,7 @@ export const FormDiv = () => {
 							placeholder={`Write a question for your users`}
 						/>
 						<Button
+							disabled={isPending}
                             onClick={() => removeQuestionsArray(k)}
 							variant={"transparent"}
 							sizes={"sm"}
