@@ -238,8 +238,6 @@ const EditorButtons = ({ formId }: { formId: number }) => {
 				resetStyles();
 				// const
 			} catch (error) {
-				console.log(error);
-
 				const err =
 					error instanceof Error
 						? `❌ ${error.message}`

@@ -32,7 +32,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 	});
 
 	const iframeCode = heightLightText({
-		code: `<iframe id="review-wall-${data.embaedId}" src="https://vouchly.kakoty.me/${data.embaedId}" frameborder="0" scrolling="no" width="100%"></iframe>`,
+		code: `<iframe id="review-wall-${data.embaedId}" src="https://vouchly.kakoty.me/embadedwall/${data.embaedId}" frameborder="0" scrolling="no" width="100%"></iframe>`,
 	});
 
 	const scriptCodeTwo = heightLightText({
@@ -126,7 +126,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 										navigator.clipboard.writeText(
 											`
 											<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>
-											<iframe id="review-wall-${data.embaedId}" src="https://vouchly.kakoty.me/${data.embaedId}" frameborder="0" scrolling="no" width="100%"></iframe>
+											<iframe id="review-wall-${data.embaedId}" src="https://vouchly.kakoty.me/embadedwall/${data.embaedId}" frameborder="0" scrolling="no" width="100%"></iframe>
 											<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-${data.embaedId}")})</script>
 											`,
 										);

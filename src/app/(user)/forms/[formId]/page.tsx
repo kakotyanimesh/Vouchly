@@ -1,5 +1,5 @@
 import {
-	fetchEmbadedScript,
+	fetchEmbadedId,
 	getIndividualTestimonialFormData,
 } from "@/app/action/server_action/user";
 import { IndividualFormDiv } from "@/components/individualformdiv";
@@ -25,7 +25,7 @@ export default async function IndividualForms({
 	const token = generateToken(id, Number(adminId));
 	// you cant use env variable in client component
 
-	const embadedId = await fetchEmbadedScript({ formId: Number(id) });
+	const embadedId = await fetchEmbadedId({ formId: Number(id) });
 
 	//  too much of objects and i don't want to fix it
 	
