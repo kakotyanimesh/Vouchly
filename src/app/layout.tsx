@@ -5,7 +5,6 @@ import { Toaster } from "sonner";
 
 const myFont = localFont({ src: "../font/localfont.otf" });
 
-export const newFont = localFont({ src: "../font/fonttwo.ttf"})
 
 export const metadata: Metadata = {
 	title: "Vouchly",
