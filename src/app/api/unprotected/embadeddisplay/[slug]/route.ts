@@ -1,141 +1,96 @@
 import prisma from "@/utils/lib/prisma";
-import { OrderedReviewTypes } from "@/utils/types/user_types";
+import { reviewsType } from "@/utils/zustand/gridstateV2";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req:NextRequest, {params} : {params : Promise<{slug : string}>}) {
-    try {
-        const widgetId = (await params).slug
+// fact => you are using next req or not you have to define it bruh 
+
+export async function GET(req : NextRequest, {params} : {params : Promise<{slug : string}>}) {
+	try {
         
+		const embadedId = (await params).slug;        
 
-        const res = await prisma.embadedWall.findUnique({
-            where : {
-                id : widgetId
-            }, select : {
-                testimonialFormsId : true,
-                selectedReviews : true
-            }
-        })
+		const emabdedData = await prisma.reviewStyle.findUnique({
+			where: {
+				id: embadedId,
+			},
+			omit: {
+				testimonialFormId: true,
+			},
+		});
 
-        if(!res?.selectedReviews){
-            return NextResponse.json(
-                {msg : "You don't have any embaded wall with this id Try another"},
-                {status : 401}
-            )
-        }
+		if (!emabdedData) {
+			throw new Error("Invalid Embaded Id");
+		}
+		const testimonialdata = await prisma.customerReview.findMany({
+			where: {
+				id: {
+					in: emabdedData.selectedReviews,
+				},
+			},
+			include: {
+				textReview: {
+					select: {
+						textReview: true,
+					},
+				},
+				videoReview: {
+					select: {
+						videoLink: true,
+					},
+				},
+			},
+			omit: {
+				testimonialFormsId: true,
+				spaceId: true,
+				adminId: true,
+				approved: true,
+			},
+		});
 
-        const ids = res.selectedReviews
+		// we have send reviews with prefield like cdn links and with defining types
 
-        const [reviews, reviewStyle ] = await Promise.all([
-            await prisma.customerReview.findMany({
-                where : {
-                    id : {in : ids}
-                }, include : {
-                    textReview : {
-                        select : {
-                            textReview : true
-                        }
-                    }, 
-                    videoReview : {
-                        select : {
-                            videoLink : true
-                        }
-                    },
+		const reviews: reviewsType[] = testimonialdata
+			.map((td) => {
+				if (td.textReview) {
+					return {
+						id: td.id,
+						type: "text",
+						data: {
+							textReview: td.textReview.textReview,
+							customerCompany: td.customerCompany,
+							customerName: td.customerName,
+							imageSrc: `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${td.customerImageUrl}`,
+							stars: td.stars,
+							textreviewid: td.id,
+						},
+					} satisfies reviewsType;
+				} else if (td.videoReview) {
+					return {
+						id: td.id,
+						type: "video",
+						data: {
+							customerCompany: td.customerCompany,
+							customerName: td.customerName,
+							videoLink: `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${td.videoReview.videoLink}`,
+							stars: td.stars,
+							videoReviewid: td.id,
+						},
+					} satisfies reviewsType;
+				}
+				return undefined;
+			})
+			.filter(Boolean) as reviewsType[];
 
-                }, omit : {
-                    spaceId : true,
-                    adminId : true,
-                    createdAt : true
-                }
-            }),
-
-            await prisma.reviewStyle.findUnique({
-                where : {
-                    testimonialFormId : res.testimonialFormsId
-                }, omit : {
-                    testimonialFormId : true,
-                    id : true
-                }
-            })
-        ])
-
-        const reviewWithOrder : OrderedReviewTypes[] = ids.map(id => {
-            const rvs = reviews.find(rv => rv.id === id)
-            if(!rvs) return undefined
-
-            if(rvs.textReview){                
-                return {
-                    id,
-                    type : "text",
-                    data : {
-                        textreviewid : rvs.id,
-                        customerName : rvs.customerName,
-                        customerCompany : rvs.customerCompany,
-                        imageSrc : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rvs.customerImageUrl}`,
-                        stars : rvs.stars,
-                        textReview : rvs.textReview.textReview
-                    }
-                } satisfies OrderedReviewTypes
-            }
-
-            if(rvs.videoReview){
-                return {
-                    id,
-                    type : "video",
-                    data : {
-                        videoReviewid : rvs.id,
-                        customerName : rvs.customerName,
-                        customerCompany : rvs.customerCompany,
-                        videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rvs.videoReview.videoLink}`,
-                        stars : rvs.stars
-                    }
-                } satisfies OrderedReviewTypes
-            }
-            return undefined
-            // this is for wheen no reviews retun and map won't break
-        }).filter(Boolean) as OrderedReviewTypes[]
-
-        return NextResponse.json(
-            {msg : "Fetched Reviews successfully", reviewWithOrder, reviewStyle},
-            {status : 200}
-        )
-        
-    } catch (error) {
-        // console.log(error);
-        
-        return NextResponse.json(
-            process.env.NODE_ENV === "development" 
-            ? {msg : "DB down", errors : error}
-            : {msg : "Something really bad happen In server side "},
-            {status : 500}
-        )
-    }
+		return NextResponse.json({ emabdedData, reviews }, { status: 200 });
+	} catch (error) {
+		return NextResponse.json(
+			{
+				msg:
+					process.env.NODE_ENV === "development"
+						? `${error}, embadeddisplay`
+						: `something went wrong`,
+			},
+			{ status: 500 },
+		);
+	}
 }
-
-
-// const textTestimonialsArray : TextReviewPropsWallOfLove[] = []
-        // const videoTestimonialArray : VideoReviewPropsWallOflove[] = []
-
-        // for (const rvs of reviews) {
-        //     if(rvs.textReview){
-        //         textTestimonialsArray.push({
-        //             customerCompany : rvs.customerCompany,
-        //             customerName : rvs.customerName,
-        //             imageSrc : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rvs.customerImageUrl}`,
-        //             textReview : rvs.textReview.textReview,
-        //             stars : rvs.stars,
-        //             id : rvs.id
-        //         })
-        //     } else if(rvs.videoReview){
-        //         videoTestimonialArray.push({
-        //             id : rvs.id,
-        //             customerCompany : rvs.customerCompany,
-        //             customerName : rvs.customerName,
-        //             videoLink : `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rvs.videoReview.videoLink}`,
-        //             stars : rvs.stars
-        //         })
-        //     }
-        // }
-        // return NextResponse.json(
-        //     {videoTestimonialArray, textTestimonialsArray},
-        //     {status : 200}
-        // )

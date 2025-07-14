@@ -1,8 +1,24 @@
-"use client"
+"use client";
 
-import { revalidateCached } from "@/app/action/server_action/user"
-import { Button } from "./button"
+import { revalidateCached } from "@/app/action/server_action/user";
+import { Button } from "./button";
+import { cn } from "@/utils/lib/cn";
 
-export const RevalidateCachedButton = ({cachedName} : {cachedName : string}) => {
-    return <Button whileHover={{rotate : 2, boxShadow : "0px 0px 2px 4px #0decde"}} className="absolute bottom-5 md:right-10 right-2" sizes={"sm"} onClick={() => revalidateCached({cachedName})}>Refresh Database</Button>
-}
+export const RevalidateCachedButton = ({
+	cachedName,
+    className 
+}: {
+	cachedName: string;
+className ?: string
+}) => {
+	return (
+		<Button
+			whileHover={{ rotate: 2, boxShadow: "0px 0px 2px 4px #0decde" }}
+			className={cn("", className)}
+			sizes={"sm"}
+			onClick={() => revalidateCached({ cachedName })}
+		>
+			Refresh Database
+		</Button>
+	);
+};

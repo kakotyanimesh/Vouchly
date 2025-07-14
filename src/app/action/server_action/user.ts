@@ -1,5 +1,4 @@
 "use server";
-import { gridTypes } from "@/generated/prisma";
 import { embadedTypes } from "@/utils/config/user.config";
 import { handlerError } from "@/utils/lib/errorhandler";
 import prisma from "@/utils/lib/prisma";
@@ -11,7 +10,10 @@ import {
 	TextReviewPropsWallOfLove,
 	VideoReviewPropsWallOflove,
 } from "@/utils/types/user_types";
-import { ReviewStyleType } from "@/utils/zustand/gridState";
+import {
+	gridStyleType,
+	TestimonialCardStyleProps,
+} from "@/utils/zustand/gridstateV2";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { cache } from "react";
 import { ZodError } from "zod/v4";
@@ -506,8 +508,8 @@ export const revalidateCached = async ({
 type AddWidgetTypes = {
 	formId: number;
 	embadedIds: number[];
-	style: Omit<ReviewStyleType, "meteorColor">;
-	gridType: gridTypes;
+	style: Partial<TestimonialCardStyleProps>;
+	gridType: gridStyleType;
 };
 
 export const addWidgetstoDb = async ({
@@ -531,51 +533,64 @@ export const addWidgetstoDb = async ({
 
 		const parseddata = parsedObject.data;
 
-		const embadedId = await prisma.$transaction(async () => {
-			await prisma.reviewStyle.create({
-				data: {
-					testimonialFormId: Number(parseddata.formId),
-					textColor: style.textColor,
-					rewiewCardBg: style.rewiewCardBg,
-					roundedCorner: style.roundedCorner.toLocaleString(),
-					shadowColor: style.shadowColor,
-					starColor: style.starColor,
-					gridType: parseddata.gridType,
-					parentPageBgColor: style.parentBgColor,
-				},
-			});
-
-			const emabdedRes = await prisma.embadedWall.create({
-				data: {
-					testimonialFormsId: Number(parseddata.formId),
-					selectedReviews: parseddata.embadedIds,
-				},
-				select: {
-					id: true,
-				},
-			});
-
-			return emabdedRes.id;
-		});
-
-		revalidatePath(`reviewwallcached-${formId}`);
-
-		return {
-			success: true,
-			id: embadedId,
+		const styledData = {
+			testimonialFormId: Number(parseddata.formId),
+			textColor: style.textColor,
+			tesimoonialCardBg: style.tesimoonialCardBg,
+			roundedCorner: style.roundedCorner!.toLocaleString(),
+			shadowColor: style.shadowColor,
+			starColor: style.starColor,
+			gridType: parseddata.gridType,
+			parentBgColor: style.parentBgColor!,
 		};
-	} catch (error) {
-		console.log(error);
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		if ((error as any).code === "P2002") {
+		const existingWall = await prisma.reviewStyle.findFirst({
+			where: {
+				testimonialFormId: Number(formId),
+			},
+			select: {
+				id: true,
+			},
+		});
+		
+
+		if (existingWall) {
+			// await prisma.$transaction(async () =>)
+
+			const embadedId = await prisma.reviewStyle.update({
+				where : {
+					testimonialFormId : Number(formId)
+				}, data : {
+					...styledData,
+					selectedReviews : parseddata.embadedIds
+				}, select : {
+					id : true
+				}
+			})
+
+			revalidatePath(`reviewwallcached-${formId}`);
 			return {
-				success: false,
-				message: "You already has one wall",
-				style: 409,
+				success: true,
+				id : embadedId.id,
+			};
+		} else {
+			const embadedwall = await prisma.reviewStyle.create({
+				data : {
+					...styledData,
+					testimonialFormId : formId,
+					selectedReviews : parseddata.embadedIds
+				}, select : {
+					id : true
+				}
+			})
+			revalidatePath(`reviewwallcached-${formId}`);
+			return {
+				success: true,
+				id: embadedwall.id,
 			};
 		}
-
+	} catch (error) {
+		
 		if (error instanceof ZodError) {
 			return {
 				errorMsg: `Invalid Inputs at ${JSON.stringify(error.cause)}`,
@@ -592,7 +607,7 @@ export const addWidgetstoDb = async ({
 	}
 };
 
-export const saveScriptKey = async ({
+export const saveEmbadedId = async ({
 	embadedId,
 	formId,
 }: {
@@ -615,6 +630,8 @@ export const saveScriptKey = async ({
 			success: true,
 		};
 	} catch (error) {
+		console.log(error, "err");
+		
 		const err = await handlerError(error);
 
 		return {
@@ -625,116 +642,116 @@ export const saveScriptKey = async ({
 	}
 };
 
-const cachedEmbadedWall = async ({ formId }: { formId: number }) => {
-	const wall = await prisma.embadedWall.findUnique({
-		where: {
-			testimonialFormsId: Number(formId),
-		},
-		select: {
-			selectedReviews: true,
-		},
-	});
+// const cachedEmbadedWall = async ({ formId }: { formId: number }) => {
+// 	const wall = await prisma.embadedWall.findUnique({
+// 		where: {
+// 			testimonialFormsId: Number(formId),
+// 		},
+// 		select: {
+// 			selectedReviews: true,
+// 		},
+// 	});
 
-	if (!wall || wall.selectedReviews.length === 0) {
-		return {
-			textReviewArray: [],
-			videoReviewArray: [],
-		};
-		// {
-		//     // here Im returing new arrys not getiing access to those that are being declared after it
-		//     // textReviewArray : [],
-		//     // videoReviewArray : [] => worst gpt code ever im not going to add this
+// 	if (!wall || wall.selectedReviews.length === 0) {
+// 		return {
+// 			textReviewArray: [],
+// 			videoReviewArray: [],
+// 		};
+// 		// {
+// 		//     // here Im returing new arrys not getiing access to those that are being declared after it
+// 		//     // textReviewArray : [],
+// 		//     // videoReviewArray : [] => worst gpt code ever im not going to add this
 
-		// }
-	}
+// 		// }
+// 	}
 
-	const reviewIds = wall.selectedReviews;
+// 	const reviewIds = wall.selectedReviews;
 
-	const reviews = await prisma.customerReview.findMany({
-		where: {
-			id: { in: reviewIds },
-		},
-		include: {
-			textReview: {
-				select: {
-					textReview: true,
-				},
-			},
-			videoReview: {
-				select: {
-					videoLink: true,
-				},
-			},
-		},
-		omit: {
-			testimonialFormsId: true,
-			spaceId: true,
-			adminId: true,
-			createdAt: true,
-		},
-	});
+// 	const reviews = await prisma.customerReview.findMany({
+// 		where: {
+// 			id: { in: reviewIds },
+// 		},
+// 		include: {
+// 			textReview: {
+// 				select: {
+// 					textReview: true,
+// 				},
+// 			},
+// 			videoReview: {
+// 				select: {
+// 					videoLink: true,
+// 				},
+// 			},
+// 		},
+// 		omit: {
+// 			testimonialFormsId: true,
+// 			spaceId: true,
+// 			adminId: true,
+// 			createdAt: true,
+// 		},
+// 	});
 
-	const textReviewArray: TextReviewPropsWallOfLove[] = [];
-	const videoReviewArray: VideoReviewPropsWallOflove[] = [];
+// 	const textReviewArray: TextReviewPropsWallOfLove[] = [];
+// 	const videoReviewArray: VideoReviewPropsWallOflove[] = [];
 
-	for (const rvs of reviews) {
-		if (rvs.textReview) {
-			textReviewArray.push({
-				id: rvs.id,
-				textReview: rvs.textReview.textReview,
-				customerName: rvs.customerName,
-				customerCompany: rvs.customerCompany,
-				stars: rvs.stars,
-				imageSrc: rvs.customerImageUrl,
-			});
-		} else if (rvs.videoReview) {
-			videoReviewArray.push({
-				id: rvs.id,
-				videoLink: rvs.videoReview.videoLink,
-				customerCompany: rvs.customerCompany,
-				customerName: rvs.customerName,
-				stars: rvs.stars,
-			});
-		}
-	}
+// 	for (const rvs of reviews) {
+// 		if (rvs.textReview) {
+// 			textReviewArray.push({
+// 				id: rvs.id,
+// 				textReview: rvs.textReview.textReview,
+// 				customerName: rvs.customerName,
+// 				customerCompany: rvs.customerCompany,
+// 				stars: rvs.stars,
+// 				imageSrc: rvs.customerImageUrl,
+// 			});
+// 		} else if (rvs.videoReview) {
+// 			videoReviewArray.push({
+// 				id: rvs.id,
+// 				videoLink: rvs.videoReview.videoLink,
+// 				customerCompany: rvs.customerCompany,
+// 				customerName: rvs.customerName,
+// 				stars: rvs.stars,
+// 			});
+// 		}
+// 	}
 
-	return {
-		textReviewArray,
-		videoReviewArray,
-	};
-};
+// 	return {
+// 		textReviewArray,
+// 		videoReviewArray,
+// 	};
+// };
 
-export const getEmbadedWall = async ({ formId }: { formId: number }) => {
-	try {
-		const cachedFn = await cachedEmbadedWall({ formId: formId });
+// export const getEmbadedWall = async ({ formId }: { formId: number }) => {
+// 	try {
+// 		const cachedFn = await cachedEmbadedWall({ formId: formId });
 
-		const { textReviewArray, videoReviewArray } = cachedFn;
+// 		const { textReviewArray, videoReviewArray } = cachedFn;
 
-		const textReviewArrayWithURL = textReviewArray.map((rev) => ({
-			...rev,
-			imageSrc: `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rev.imageSrc}`,
-		}));
+// 		const textReviewArrayWithURL = textReviewArray.map((rev) => ({
+// 			...rev,
+// 			imageSrc: `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rev.imageSrc}`,
+// 		}));
 
-		const videoReviewWithURL = videoReviewArray.map((rev) => ({
-			...rev,
-			videoLink: `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rev.videoLink}`,
-		}));
-		return {
-			success: true,
-			textReviewArrayWithURL,
-			videoReviewWithURL,
-		};
-	} catch (error) {
-		console.log(error);
+// 		const videoReviewWithURL = videoReviewArray.map((rev) => ({
+// 			...rev,
+// 			videoLink: `${process.env.CLOUD_FRONT_DOMAIN_NAME}/${rev.videoLink}`,
+// 		}));
+// 		return {
+// 			success: true,
+// 			textReviewArrayWithURL,
+// 			videoReviewWithURL,
+// 		};
+// 	} catch (error) {
+// 		console.log(error);
 
-		const err = await handlerError(error);
-		return {
-			success: false,
-			message: err.errorMsg,
-			status: err.statusCode,
-		};
-	}
-};
+// 		const err = await handlerError(error);
+// 		return {
+// 			success: false,
+// 			message: err.errorMsg,
+// 			status: err.statusCode,
+// 		};
+// 	}
+// };
 
 export const fetchEmbadedId = cache(async ({ formId }: { formId: number }) => {
 	try {
@@ -867,15 +884,10 @@ export const getEmbadedReviewsId = async ({ formId }: { formId: number }) => {
 				id: Number(formId),
 			},
 			select: {
-				embadedWidgets: {
-					select: {
-						selectedReviews: true,
-					},
-				},
 				ReviewStyle: {
-					omit : {
-                        testimonialFormId : true,
-                    }
+					omit: {
+						testimonialFormId: true,
+					},
 				},
 			},
 		});
@@ -885,8 +897,8 @@ export const getEmbadedReviewsId = async ({ formId }: { formId: number }) => {
 		return {
 			message:
 				"You have generated one emanded Review You can added more to it",
-			ids: res?.embadedWidgets?.selectedReviews,
-            style : res?.ReviewStyle
+			ids: res?.ReviewStyle?.selectedReviews,
+			style: res?.ReviewStyle,
 		};
 	} catch (error) {
 		const err = await handlerError(error);

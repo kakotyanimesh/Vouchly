@@ -22,7 +22,7 @@ export const SideBar = () => {
 			onHoverStart={() => setShowFullSidebar(true)}
 			onHoverEnd={() => setShowFullSidebar(false)}
 			className={cn(
-				"md:h-full z-10 fixed md:space-y-4 bg-[#0f0e0e]/10 backdrop-blur-3xl transition-all ease-out duration-75  border-r-1 border-[hsl(var(--pure-white))]/10",
+				"md:h-full z-30 fixed md:space-y-4 bg-[#0f0e0e]/10 backdrop-blur-3xl transition-all ease-out duration-75  border-r-1 border-[hsl(var(--pure-white))]/10",
 				showFullSidebar ? "md:w-48 w-full" : "md:w-16 w-full",
 			)}
 		>

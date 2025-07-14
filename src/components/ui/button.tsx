@@ -13,7 +13,7 @@ const ButtonVariants = cva(
 				secondary:
 					"bg-gradient-to-r from-[hsl(var(--tertiary))]/60 to-[hsl(var(--primary))]/60 text-white hover:shadow-[0px_0px_4px_1px_#f687b3]",
 				transparent:
-					"bg-[hsl(var(--primary))]/10 border border-[hsl(var(--primary))]/50 text-white hover:bg-[hsl(var(--primary))]/50",
+					"bg-[hsl(var(--primary))]/20 text-white hover:bg-[hsl(var(--primary))]/50 hover:shadow-[0px_0px_4px_1px_#4fd1c5]",
 				fetch: "hover:underline decoration-[hsl(var(--card-bg-one))] bg-gradient-to-r  from-[hsl(var(--card-bg-two))]/60 to-[hsl(var(--card-bg-one))] bg-clip-text text-transparent underline-offset-2",
 				// decoration underline color
 				randomColor:
@@ -43,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 					scale: 1,
 				}}
 				whileTap={{
-					scale: 0.95,
+					scale: 0.98,
 					transition: {
 						ease: "easeOut",
 					},
