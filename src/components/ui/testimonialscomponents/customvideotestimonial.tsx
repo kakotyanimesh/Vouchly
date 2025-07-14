@@ -249,6 +249,7 @@ export const VideoTestimonialOne: React.FC<VideoTestimonialType> = ({
 	);
 };
 
+
 export const getVideoType = (url: string) => {
 	const type = url.split(".").pop();
 	switch (type) {
@@ -260,6 +261,7 @@ export const getVideoType = (url: string) => {
 			return "ogg";
 		case "mov":
 			return "mov";
+
 		case "avi":
 			return "avi";
 		default:

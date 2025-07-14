@@ -215,7 +215,6 @@ export const submitTestimonials = async (data: ReviewTypes) => {
 
 export const getReviews = async ({ embadedId }: { embadedId: string }) => {
 	try {
-		
 		const res = await fetch(
 			`${url}api/unprotected/embadeddisplay/${embadedId}`,
 		);
@@ -225,7 +224,6 @@ export const getReviews = async ({ embadedId }: { embadedId: string }) => {
 			const errdata = await res.json();
 			throw new Error(errdata.msg || "No data found Invalid data");
 		}
-
 		const data = await res.json();		
 
 		return {

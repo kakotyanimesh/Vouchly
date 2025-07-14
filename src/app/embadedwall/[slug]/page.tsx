@@ -18,7 +18,6 @@ export default async function EmbadedScript({
     const reviewData = await getReviews({ embadedId });
     const { textColor, tesimoonialCardBg, starColor, roundedCorner } = reviewData.emdadeddata;
 
-
     const gridType = reviewData.emdadeddata.gridType;
     const selectedReviews = reviewData.reviews;
     return (

@@ -532,7 +532,6 @@ export const addWidgetstoDb = async ({
 		}
 
 		const parseddata = parsedObject.data;
-
 		const styledData = {
 			testimonialFormId: Number(parseddata.formId),
 			textColor: style.textColor,
@@ -909,3 +908,4 @@ export const getEmbadedReviewsId = async ({ formId }: { formId: number }) => {
 		};
 	}
 };
+
