@@ -33,7 +33,7 @@ export const updateObject = z.object({
 
 
 export const embadedTypes = z.object({
-    formId : z.string(),
+    formId : z.number(),
     embadedIds : z.number().array(),
     gridType : z.nativeEnum(gridTypes),
 })

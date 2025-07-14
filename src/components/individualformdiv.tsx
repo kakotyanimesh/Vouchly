@@ -51,6 +51,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 
 	return (
 		<div className="space-y-5">
+			{/* <BackButton /> */}
 			<section className="flex flex-col space-y-2 lg:flex-row lg:justify-between lg:items-center">
 				<div>
 					<h1 className="font-semibold text-2xl">{data.Name}</h1>

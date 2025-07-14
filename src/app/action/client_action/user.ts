@@ -224,16 +224,14 @@ export const getReviews = async ({ embadedId }: { embadedId: string }) => {
 			const errdata = await res.json();
 			throw new Error(errdata.msg || "No data found Invalid data");
 		}
-
-		const data = await res.json();
+		const data = await res.json();		
 
 		return {
 			success: true,
-			orderedReviews: data.reviewWithOrder,
-			reviewStyle: data.reviewStyle,
+			emdadeddata: data.emabdedData,
+			reviews: data.reviews,
 		};
 	} catch (error) {
-		console.log(error);
 
 		const err = await handlerError(error);
 

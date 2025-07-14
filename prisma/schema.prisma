@@ -12,7 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -58,8 +58,7 @@ model TestimonialForm  {
   createdAt                 DateTime                @default(now())
   updatedAt                 DateTime                @updatedAt
   status                    status                  @default(Draft)
-  embadedWidgets            EmbadedWall?
-  embadedId                  String?             
+  embadedId                 String?             
   ReviewStyle               ReviewStyle?
 
   @@index([spaceId, adminId])
@@ -110,30 +109,35 @@ model VidoeReview {
 }
 
 
-model EmbadedWall {
-  id                        String                @default(uuid())            @id 
-  testimonialFormsId        Int                   @unique
-  testimonialForms          TestimonialForm       @relation(fields: [testimonialFormsId], references: [id])
-  selectedReviews           Int[]
-  createdAt                 DateTime              @default(now())
-}
+// model EmbadedWall {
+//   id                        String                @default(uuid())            @id 
+//   testimonialFormsId        Int                   @unique
+//   testimonialForms          TestimonialForm       @relation(fields: [testimonialFormsId], references: [id])
+//   selectedReviews           Int[]
+//   createdAt                 DateTime              @default(now())
+// }
 
 
 enum gridTypes {
-    Carousel  
-    Classic 
-    Masonry 
+  ManualSlide
+	AutoSlide
+	FlipView
+	GlideUp
+	Luminate
+	BlueEcho
+	Default
 }
 
 model ReviewStyle {
-  id                        Int                     @default(autoincrement())     @id
+  id                        String                     @default(uuid())     @id
   textColor                 String?
-  rewiewCardBg              String?
+  tesimoonialCardBg         String?
   roundedCorner             String?
   shadowColor               String?
   starColor                 String?
-  parentPageBgColor         String
-  gridType                  gridTypes               @default(Classic)
+  parentBgColor             String?
+  gridType                  gridTypes               @default(ManualSlide)
+  selectedReviews           Int[]
   testimonialFormId         Int                     @unique
   testimonialForms          TestimonialForm         @relation(fields: [testimonialFormId], references: [id])
 }

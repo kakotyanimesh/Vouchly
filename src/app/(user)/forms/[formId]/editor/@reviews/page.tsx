@@ -1,10 +1,16 @@
-import { fetchedReviews, getEmbadedReviewsId } from "@/app/action/server_action/user";
+
+import {
+	fetchedReviews,
+	getEmbadedReviewsId,
+} from "@/app/action/server_action/user";
+
 import { Card, InfiniteScrollCard } from "@/components/ui/card";
 import { CheckBox } from "@/components/ui/checkbox";
 import { VideoTestimonialOne } from "@/components/ui/testimonialscomponents/customvideotestimonial";
 import { TextReviewOne } from "@/components/ui/testimonialscomponents/textreviewone";
 import { cn } from "@/utils/lib/cn";
 import { getUserSession } from "@/utils/lib/user_session";
+import { TextReviewProps, VideoReviewProps } from "@/utils/types/user_types";
 
 export default async function ReviewsPage({
 	params,
@@ -19,7 +25,7 @@ export default async function ReviewsPage({
 	const generatedReview = await getEmbadedReviewsId({ formId: formId });
 
 	return (
-		<Card className="flex-1 border-[hsl(var(--primary))]/20 h-[calc(100vh-11rem)] flex flex-col">
+		<Card className="border-[hsl(var(--primary))]/20 md:h-[calc(100vh-11rem)] h-[calc(100vh-15rem)] flex flex-col">
 			{!reviewData.orderedReviews?.length ? (
 				<h1 className="text-center mt-10 text-xl bg-gradient-to-bl from-[hsl(var(--primary))] to-[hsl(var(--tertiary))] bg-clip-text text-transparent font-semibold">
 					You dont have any reviews yet ! <br /> Please Ask Your users
@@ -27,61 +33,48 @@ export default async function ReviewsPage({
 				</h1>
 			) : (
 				<InfiniteScrollCard>
-					<div className="grid md:grid-cols-3 grid-cols-1 gap-2 p-4">
-						{reviewData.orderedReviews.map((rv, k) => {
+					<div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-4">
+						{reviewData.orderedReviews.map((rv, Idx) => {
 							if (rv.type === "text") {
+								const textReview = rv.data as TextReviewProps;
 								return (
-									<div key={k} className="w-full relative ">
+									<div key={Idx} className="relative">
 										<CheckBox
 											data={rv}
-											checked={generatedReview.ids?.includes(rv.id)}
+											defaultChecked={generatedReview.ids?.includes(rv.id)}
 											className="absolute top-2 right-2 z-10"
 										/>
 										<TextReviewOne
-											textreviewid={rv.id}
-											style={{
-												borderRadius: `${generatedReview.style?.roundedCorner}px`
-											}}
-											className={cn(
-												"h-full w-full",
-												generatedReview.ids?.includes(rv.id)
-													? "border-4 border-[hsl(var(--primary))]"
-													: undefined,
-											)}
-											customerName={rv.data.customerName}
+											// key={Idx}
+											className={cn("h-full", generatedReview.ids?.includes(rv.id) && "border-2 border-[hsl(var(--tertiary))]")}
 											customerCompany={
-												rv.data.customerCompany
+												textReview.customerCompany
 											}
-											textReview={rv.data.textReview}
-											imageSrc={rv.data.imageSrc}
-											stars={rv.data.stars}
+											customerName={textReview.customerName}
+											textReview={textReview.textReview}
+											textreviewid={textReview.textreviewid}
+											imageSrc={textReview.imageSrc}
+											stars={textReview.stars}
 										/>
 									</div>
 								);
 							} else if (rv.type === "video") {
+								const videoReview = rv.data as VideoReviewProps;
 								return (
-									<div key={k} className="w-full relative">
+									<div key={Idx} className="relative">
 										<CheckBox
 											data={rv}
-											checked={generatedReview.ids?.includes(rv.id)}
+											defaultChecked={generatedReview.ids?.includes(rv.id)}
 											className="absolute top-2 right-2 z-10"
 										/>
-
 										<VideoTestimonialOne
-											className={cn(
-												"h-full w-full",
-												generatedReview.ids?.includes(rv.id)
-													? "border-4 border-[hsl(var(--primary))]"
-													: undefined,
-											)}
-											// className="h-full"
-											stars={rv.data.stars}
-											videoSrc={rv.data.videoLink}
+											username={videoReview.customerName}
 											usercompany={
-												rv.data.customerCompany
+												videoReview.customerCompany
 											}
-											username={rv.data.customerName}
-											key={k}
+											videoSrc={videoReview.videoLink}
+											stars={videoReview.stars}
+											// key={Idx}
 										/>
 									</div>
 								);
