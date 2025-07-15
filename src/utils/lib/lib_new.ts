@@ -1,4 +1,9 @@
 
+export const nakedURL = ({url} : {url : string}) => {
+    if(url.startsWith("https://") || url.startsWith("https://")) return url
+
+    return `https://${url}`
+}
 
 export const endcodeURL = (p : string) => {
     return encodeURIComponent(p)

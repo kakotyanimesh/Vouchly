@@ -18,6 +18,7 @@ const ButtonVariants = cva(
 				// decoration underline color
 				randomColor:
 					"bg-sky-300 text-blue-900 hover:shadow-[0px_0px_2px_1px_#667eea]",
+				tertiary: "bg-[hsl(var(--primary))]/50 text-white hover:shadow-[0px_0px_6px_0px_#38b2ac]"
 			},
 			sizes: {
 				sm: "py-1 px-2 text-sm",

@@ -18,7 +18,7 @@ className ?: string
 			sizes={"sm"}
 			onClick={() => revalidateCached({ cachedName })}
 		>
-			Refresh Database
+			Refresh Data
 		</Button>
 	);
 };

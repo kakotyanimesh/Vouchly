@@ -40,7 +40,7 @@ export default async function IndividualForms({
 	}
 	return (
 		<div className="">
-			<BackButton />
+			<BackButton link="space"/>
 			<IndividualFormDiv
 				embaedId={embadedId.embadedId}
 				formId={Number(id)}

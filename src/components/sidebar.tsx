@@ -83,7 +83,7 @@ export const SideBar = () => {
 
 const SideBarRoutes = [
 	{
-		name: "Dashboard",
+		name: "Home",
 		src: "/dashboard",
 		icons: <House strokeWidth={1.5} size={18} />,
 	},
@@ -98,7 +98,7 @@ const SideBarRoutes = [
 		icons: <Shredder strokeWidth={1.5} size={18} />,
 	},
 	{
-		name: "Account",
+		name: "Profile",
 		src: "/account",
 		icons: <User strokeWidth={1.5} size={18} />,
 	},

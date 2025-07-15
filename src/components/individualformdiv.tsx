@@ -9,6 +9,7 @@ import { LinkTag } from "./ui/Link";
 import { toast } from "sonner";
 import { SubscriptionPlanType } from "@/generated/prisma";
 import { heightLightText } from "./landingpage/iframefile";
+import { FaFileCode } from "react-icons/fa6";
 
 export interface IndividualFormDivProps {
 	Name: string;
@@ -49,6 +50,21 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 		};
 	}, [copied]);
 
+	// will add one dat
+	// const update = async (formData: FormData) => {
+	// 	const Name = formData.get("Title");
+	// 	const Description = formData.get("Description");
+
+	// 	const res = await updateForm(
+	// 		{
+	// 			formId: data.formId,
+	// 			Name,
+	// 			Description,
+	// 			spaceId
+	// 		}
+	// 	)
+
+	// };
 	return (
 		<div className="space-y-5">
 			{/* <BackButton /> */}
@@ -61,12 +77,14 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 				</div>
 				<div className="flex flex-row gap-4 items-center">
 					<LinkTag
+						variants={"secondary"}
 						href={`${process.env.NEXT_PUBLIC_NEXT_URL}/submit/${data.token}`}
 						target="_blank"
-						className="flex flex-row items-center gap-2 bg-[hsl(var(--pure-white))] w-fit rounded-xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 md:px-5 px-3 py-2 font-semibold text-sm text-black"
+						sizes={"md"}
+						className="flex flex-row items-center gap-1 cursor-pointer"
 					>
 						<Eye className="" size={14} />
-						view Public Form
+						View Live Form
 					</LinkTag>
 					<Button
 						onClick={() => {
@@ -78,7 +96,8 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 						variant={"secondary"}
 						className="flex flex-row items-center gap-2"
 					>
-						<Link size={14} /> Share
+						<Link size={14} />
+						Share
 					</Button>
 				</div>
 			</section>
@@ -91,7 +110,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 							</h1>
 							<p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">
 								{data.embaedId === null || undefined
-									? "You don't have any script yet Generate one after getting reviews from your customers	"
+									? "Embed your testimonial display on your website. A script will be available here once you have collected approved testimonials."
 									: "Copy and paste this code into your website to display your testimonials."}
 							</p>
 						</div>
@@ -99,9 +118,14 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 							<LinkTag
 								variants="secondary"
 								sizes="md"
+								className="flex flex-row items-center gap-1"
 								href={`/forms/${data.formId}/editor`}
 							>
-								Generate script
+								<FaFileCode
+									size={16}
+									className="fill-[hsl(var(--pure-white))] text-[hsl(var(--pure-white))]"
+								/>{" "}
+								Generate Embed Code
 							</LinkTag>
 						) : (
 							<>
@@ -171,16 +195,16 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 									})
 								}
 							>
-								Update
+								Save Changes
 							</Button>
 						</form>
 					</Card>
 				</div>
 
 				<div className="space-y-2 col-span-1">
-					<Card className=" p-5  h-fit space-y-2 border-[hsl(var(--primary))]/20">
+					<Card className=" p-5  h-fit space-y-3 border-[hsl(var(--primary))]/20">
 						<section>
-							<h1 className="font-semibold text-2xl">
+							<h1 className="font-semibold text-xl">
 								Submissions
 							</h1>
 							<p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">
@@ -205,7 +229,7 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 						>
 							View All Submissions
 						</LinkTag>
-						<h1 className="bg-[hsl(var(--primary))]/60 px-5 mt-4 text-sm rounded-xl w-fit border-2 border-[hsl(var(--tertiary))]">
+						<h1 className="bg-[hsl(var(--primary))]/30 px-5 mt-4 text-xs rounded-xl w-fit border border-[hsl(var(--primary))]/50">
 							You can collect up to {data.remainingReviews || 0}{" "}
 							reviews with the{" "}
 							{data.subcriptionPlanName || "Free"} plan.
@@ -214,8 +238,8 @@ export const IndividualFormDiv = (data: IndividualFormDivProps) => {
 
 					<Card className="py-7 px-5  h-fit space-y-5 border-[hsl(var(--primary))]/20">
 						<section>
-							<h1 className="font-semibold text-2xl">
-								Sharing & Details
+							<h1 className="font-semibold text-xl">
+								Share & Embed Options
 							</h1>
 							<p className="text-[hsl(var(--secondary-foreground))]/70 text-sm">
 								Share your form and view its identifiers.

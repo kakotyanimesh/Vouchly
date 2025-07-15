@@ -27,7 +27,7 @@ export default function EditorStaticPage() {
 						className="rounded-xl overflow-hidden border-[hsl(var(--pure-white))]/20 border bg-[hsl(var(--deep-black))] xl:left-20  md:inset-y-2 md:right-2 md:left-20 inset-x-3 top-2 bottom-10 z-20 absolute lg:px-4 lg:pt-1 px-2	 space-y-1"
 					>
 						<section className="flex flex-row justify-between  items-center p-1">
-							<h1>💡Testimonial Editor</h1>
+							<h1>💡Widget Customizer</h1>
 								
 							<Button
 								variant={"transparent"}
@@ -57,7 +57,7 @@ export default function EditorStaticPage() {
 					onClick={() => setIsClicked(!isClicked)}
 					className="w-36"
 				>
-					Choose A style
+					Choose Layout
 				</Button>
 			</div>
 		</div>

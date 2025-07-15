@@ -39,6 +39,7 @@ export const LinkTag = React.forwardRef<
 	return (
 		<Link
 			ref={ref}
+			prefetch={true}
 			className={cn(LinkVariant({ variants, sizes }), className)}
 			{...props}
 		/>

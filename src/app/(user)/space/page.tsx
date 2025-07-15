@@ -7,29 +7,34 @@ import { Suspense } from "react";
 // import { SpaceCarddata } from "@/utils/hardcodeddata/shortcuts";
 
 export default async function Space() {
-    
-    return (
-        <div className="space-y-5">
-            <SpaceNavabr heading="My spaces" desc="Organize your projects and forms into dedicated workspaces" buttonTitle="Create Space"/>
-            <Suspense fallback={<SpaceLoading/>}>
-                <SpaceContent/>
-            </Suspense>
-        </div>
-    )
+	return (
+		<div className="space-y-5">
+			<SpaceNavabr
+				heading="My Workspace"
+                desc="Effortlessly manage and organize your testimonial forms within dedicated project spaces."
+                buttonTitle="Add New Space"
+			/>
+			<Suspense fallback={<SpaceLoading />}>
+				<SpaceContent />
+			</Suspense>
+		</div>
+	);
 }
 
-
 async function SpaceContent() {
-    const { id } = await getUserSession()
+	const { id } = await getUserSession();
 
-    // await new Promise(resolve => setTimeout(resolve, 2000));
-    const data = await getAllSpaces(id)
+	// await new Promise(resolve => setTimeout(resolve, 2000));
+	const data = await getAllSpaces(id);
 
-    if(!Array.isArray(data)){
-        return (
-            <p className="text-[hsl(var(--primary))]">Something went wrong went at server level please try again later !! </p>
-        )
-    }
+	if (!Array.isArray(data)) {
+		return (
+			<p className="text-[hsl(var(--primary))]">
+				Something went wrong went at server level please try again later
+				!!{" "}
+			</p>
+		);
+	}
 
-    return <SpaceDiv data={data}/>
+	return <SpaceDiv data={data} />;
 }

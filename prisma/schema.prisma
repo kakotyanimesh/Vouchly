@@ -12,7 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -62,6 +62,7 @@ model TestimonialForm  {
   ReviewStyle               ReviewStyle?
 
   @@index([spaceId, adminId])
+  @@unique([id, adminId], name: "formId_admin_id")
 }
 
 enum status {

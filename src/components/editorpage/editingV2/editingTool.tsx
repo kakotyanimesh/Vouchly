@@ -41,6 +41,12 @@ export const EditingTool = () => {
 	    startTransition(async () => {
 	        const toasterId = toast.loading("🛠️ Saving your style magic...");
 
+			if(selectedReviews.length === 0){
+				toast.error("You haven't selected any reviews yet", {
+					id : toasterId
+				})
+				return
+			}
 			const formId = Number(params["formId"])
 
 			if (!formId || Number.isNaN(formId)) {

@@ -21,6 +21,15 @@ export interface CreateFormTypes {
     spaceId : number
 }
 
+// for now
+
+export interface UpdateFormType {
+	Name: string;
+	Description: string;
+	formId : number,
+	spaceId: number;
+}
+
 export interface DashboardCardProps {
     title : string,
     data : number,
