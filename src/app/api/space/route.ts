@@ -6,95 +6,106 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-export async function POST(req:NextRequest) {
-    try {
-        const parseddata = SpaceObject.safeParse(await req.json())
+export async function POST(req: NextRequest) {
+	try {
+		const parseddata = SpaceObject.safeParse(await req.json());
 
-        if(!parseddata.success){
-            // console.log();
-            
-            throw parseddata.error
-        }
+		if (!parseddata.success) {
+			// console.log();
 
-        const { spaceName, url } = parseddata.data
-        
-        const { id } = await getUserSession()
+			throw parseddata.error;
+		}
 
-        const userDetails = await prisma.user.findUnique({
-            where : {
-                id : Number(id)
-            }, include: {
-                subscription : {
-                    select : {
-                        subscriptionData : {
-                            select : {
-                                maxSpace : true,
-                                name : true
-                            }
-                        }
-                    }
-                }, _count : {
-                    select : {
-                        spaces : true
-                    }
-                }
-            }
-        })
+		const { spaceName, url } = parseddata.data;
 
-        if(!userDetails || !userDetails.subscription || userDetails.subscription.length === 0){
-            throw new Error("Unable to find the user ")
-        }
+		const { id } = await getUserSession();
 
-        const totalUserSpace = userDetails._count.spaces  
-              
-        const maxAllowedSpaces = userDetails.subscription[0].subscriptionData.maxSpace
-        
+		const userDetails = await prisma.user.findUnique({
+			where: {
+				id: Number(id),
+			},
+			include: {
+				subscription: {
+					select: {
+						subscriptionData: {
+							select: {
+								maxSpace: true,
+								name: true,
+							},
+						},
+					},
+				},
+				_count: {
+					select: {
+						spaces: true,
+					},
+				},
+			},
+		});
 
-        if(maxAllowedSpaces !== -1 && totalUserSpace >= maxAllowedSpaces){
-            throw new ExceedLimitError(`You have exceed Your Limit , Please Upgrate to ${userDetails.subscription[0].subscriptionData.name === "TRIAL" ? "PRO" : "ENTERPRICE"}`)
-        }
+		if (
+			!userDetails ||
+			!userDetails.subscription ||
+			userDetails.subscription.length === 0
+		) {
+			throw new Error("Unable to find the user ");
+		}
 
-        await prisma.spaces.create({
-            data : {
-                spaceName,
-                url,
-                userId : Number(id)
-            }
-        })
+		const totalUserSpace = userDetails._count.spaces;
 
-        // revalidateTag(`user-spaces-${id}`)
-        // revalidateTag(`spaces`)
-        revalidateTag(`user-spaces-${id}`)
-        revalidateTag(`user-all-data-count-${id}`)
-        revalidatePath(`/space`)
+		const maxAllowedSpaces =
+			userDetails.subscription[0].subscriptionData.maxSpace;
 
-        return NextResponse.json(
-            {msg : "Space created successfully"},
-            {status : 200}
-        )
-    } catch (error) {
+		if (maxAllowedSpaces !== -1 && totalUserSpace >= maxAllowedSpaces) {
+			throw new ExceedLimitError(
+				`You have exceed Your Limit , Please Upgrate to ${userDetails.subscription[0].subscriptionData.name === "TRIAL" ? "PRO" : "ENTERPRICE"}`,
+			);
+		}
 
-        // console.log(error, "zod error ")
-        // console.error(error.instanceof)
+		const space = await prisma.spaces.create({
+			data: {
+				spaceName,
+				url,
+				userId: Number(id),
+			},
+			select: {
+				spaceName: true,
+				id: true,
+			},
+		});
 
-        if(error instanceof ZodError){
-            return NextResponse.json(
-                {msg : "Invalid inputs, Check your input fields properly !!",},
-                {status : 400}
-            )
-        }
+		// revalidateTag(`user-spaces-${id}`)
+		// revalidateTag(`spaces`)
+		revalidateTag(`user-spaces-${id}`);
+		revalidateTag(`user-all-data-count-${id}`);
+		revalidatePath(`/space`);
 
-        if(error instanceof ExceedLimitError){
-            return NextResponse.json(
-                {msg : error.message},
-                {status : 403}
-            )
-        }
+		return NextResponse.json(
+			{
+				msg: "Space created successfully",
+				spaceId: space.id,
+				spaceName: space.spaceName,
+			},
+			{ status: 200 },
+		);
+	} catch (error) {
+		// console.log(error, "zod error ")
+		// console.error(error.instanceof)
 
+		if (error instanceof ZodError) {
+			return NextResponse.json(
+				{ msg: "Invalid inputs, Check your input fields properly !!" },
+				{ status: 400 },
+			);
+		}
 
-        return NextResponse.json(
-            {msg : "Something went wrong while creating space"},
-            {status : 500}
-        )
-    }
+		if (error instanceof ExceedLimitError) {
+			return NextResponse.json({ msg: error.message }, { status: 403 });
+		}
+
+		return NextResponse.json(
+			{ msg: "Something went wrong while creating space" },
+			{ status: 500 },
+		);
+	}
 }

@@ -1,4 +1,3 @@
-// import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
 import axios from "axios";
 
 interface ErrroInterface {
@@ -33,6 +32,15 @@ export const handlerError = async (error : unknown) : Promise<ErrroInterface> =>
         return handlerStatuscode(error.status, msg); 
     }
 
+    // if (error instanceof PrismaClientValidationError) {
+	// 	if (error.code === "P2025") {
+	// 		return {
+	// 			errorMsg:
+	// 				"Invalid data provided or You are not authorized to do this",
+	// 			statusCode: 404,
+	// 		};
+	// 	}
+	// }
     // if(error instanceof PrismaClientKnownRequestError && error.code === "P2002"){
     //     return {
     //         errorMsg : "Its already in the database",

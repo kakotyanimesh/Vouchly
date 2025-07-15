@@ -47,7 +47,7 @@ export const TableComponent : React.FC<TableProps> =  ({className, thead, tdata,
                                         {/* <button className="cursor-pointer" onClick={() => redirect(`/forms/${td.id}`)}>
                                             ...
                                         </button> */}
-                                        <TableTopUp link={`/forms/${td.id}`}/>
+                                        <TableTopUp link={`/forms/${td.id}`} formId={parseInt(td.id)}/>
                                     </td>
                                 )
                             }

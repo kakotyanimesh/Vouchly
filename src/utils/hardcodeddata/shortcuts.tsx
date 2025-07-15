@@ -1,37 +1,38 @@
-import { GitGraph, MessageCircleDashed, Plus, Settings} from "lucide-react"
+import { GitGraph, LucideMessageCircleCode, Rocket} from "lucide-react"
 import { RecentelyActiveProps, TableHeader, TextReviewProps } from "../types/user_types"
+import { IoSettings  } from "react-icons/io5";
 import { featureIconTypes } from "@/components/ui/featurecard"
 import { MotionProps } from "motion/react"
 
 export const shortCutArrayDashboard = [
     {   
-        title : "Create New Space", 
-        icon : <Plus size={15}/>, 
-        parentColor: "group hover:shadow-[0px_0px_4px_0px_rgba(55,174,105,0.5)] bg-[hsl(var(--primary))]/10", 
-        iconStyle : "bg-[hsl(var(--primary))]/50",
+        title: "Create Space", 
+        icon : <Rocket className="fill-[hsl(var(--primary))]" size={15}/>, 
+        parentColor: "hover:shadow-[0px_0px_5px_0px_#48bb78] bg-[hsl(var(--primary))]/15", 
+        iconStyle : "bg-[hsl(var(--primary))]/30",
         redirect : "/space"
     },
     {   
-        title : "View Forms", 
-        icon : <GitGraph size={15}/>, 
-        parentColor:"group hover:shadow-[0px_0px_4px_0px_rgba(20,44,219,0.5)] bg-blue-500/10", 
-        iconStyle : "bg-blue-500/50",
+        title: "Manage Testimonial Forms", 
+        icon : <GitGraph className="fill-blue-300" size={15}/>, 
+        parentColor:"hover:shadow-[0px_0px_5px_0px_#4299e1] bg-blue-600/15 text-blue-300", 
+        iconStyle : "bg-blue-600/30",
         redirect : "/forms"
 
     },
     {
-        title : "Check Submissions", 
-        icon : <MessageCircleDashed size={15}/>, 
-        parentColor:"group hover:shadow-[0px_0px_4px_0px_rgba(174,0,255,0.5)] bg-purple-500/10", 
-        iconStyle : "bg-purple-500/50",
+        title: "Review Submissions", 
+        icon: <LucideMessageCircleCode className="fill-purple-300" size={15}/>, 
+        parentColor:"hover:shadow-[0px_0px_5px_0px_#9f7aea] bg-purple-600/15 text-purple-300", 
+        iconStyle : "bg-purple-600/30",
         redirect : "/space"
         
     },
     {
-        title : "Manage Settings", 
-        icon : <Settings size={15}/>, 
-        parentColor: "hover:shadow-[0px_0px_4px_0px_rgba(255,64,0,0.5)] bg-orange-500/10",
-        iconStyle : "bg-orange-500/50",
+        title: "Account & Settings", 
+        icon: <IoSettings  className="fill-orange-300" size={15}/>, 
+        parentColor: "hover:shadow-[0px_0px_5px_0px_#f6ad55] bg-orange-600/20 text-orange-300 backdrop-blur-3xl",
+        iconStyle: "bg-orange-600/30",
         redirect : "/account"
         
     },

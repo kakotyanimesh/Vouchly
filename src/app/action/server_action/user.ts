@@ -551,37 +551,39 @@ export const addWidgetstoDb = async ({
 				id: true,
 			},
 		});
-		
 
 		if (existingWall) {
 			// await prisma.$transaction(async () =>)
 
 			const embadedId = await prisma.reviewStyle.update({
-				where : {
-					testimonialFormId : Number(formId)
-				}, data : {
+				where: {
+					testimonialFormId: Number(formId),
+				},
+				data: {
 					...styledData,
-					selectedReviews : parseddata.embadedIds
-				}, select : {
-					id : true
-				}
-			})
+					selectedReviews: parseddata.embadedIds,
+				},
+				select: {
+					id: true,
+				},
+			});
 
 			revalidatePath(`reviewwallcached-${formId}`);
 			return {
 				success: true,
-				id : embadedId.id,
+				id: embadedId.id,
 			};
 		} else {
 			const embadedwall = await prisma.reviewStyle.create({
-				data : {
+				data: {
 					...styledData,
-					testimonialFormId : formId,
-					selectedReviews : parseddata.embadedIds
-				}, select : {
-					id : true
-				}
-			})
+					testimonialFormId: formId,
+					selectedReviews: parseddata.embadedIds,
+				},
+				select: {
+					id: true,
+				},
+			});
 			revalidatePath(`reviewwallcached-${formId}`);
 			return {
 				success: true,
@@ -589,7 +591,6 @@ export const addWidgetstoDb = async ({
 			};
 		}
 	} catch (error) {
-		
 		if (error instanceof ZodError) {
 			return {
 				errorMsg: `Invalid Inputs at ${JSON.stringify(error.cause)}`,
@@ -630,7 +631,7 @@ export const saveEmbadedId = async ({
 		};
 	} catch (error) {
 		console.log(error, "err");
-		
+
 		const err = await handlerError(error);
 
 		return {
@@ -909,3 +910,111 @@ export const getEmbadedReviewsId = async ({ formId }: { formId: number }) => {
 	}
 };
 
+export const deleteSpace = async ({ spaceId }: { spaceId: number }) => {
+	try {
+		const { id } = await getUserSession();
+		await prisma.$transaction(async () => {
+			await prisma.testimonialForm.deleteMany({
+				where: {
+					spaceId: Number(spaceId),
+				},
+			});
+
+			await prisma.spaces.delete({
+				where: {
+					user_ID_space_ID: {
+						id: spaceId,
+						userId: Number(id),
+					},
+				},
+			});
+		});
+
+		revalidateTag(`user-spaces-${id}`);
+		revalidateTag(`spaces`);
+		return {
+			success: true,
+			message: "space deleted successfully",
+		};
+	} catch (error) {
+		console.log(error);
+
+		const err = await handlerError(error);
+		return {
+			success: false,
+			status: err.statusCode,
+			message: err.errorMsg,
+		};
+	}
+};
+
+export const deleteForm = async ({ formId }: { formId: number }) => {
+	try {
+		const { id } = await getUserSession();
+
+		const res = await prisma.testimonialForm.delete({
+			where: {
+				formId_admin_id: {
+					adminId: Number(id),
+					id: formId,
+				},
+			},
+			select: {
+				spaceId: true,
+			},
+		});
+
+		revalidateTag(`all_testimonials-${id}`);
+		revalidateTag(`testimonials`);
+		revalidateTag(`user-inidividual-space-testimoials-${res.spaceId}`);
+		return {
+			success: true,
+			message: "form deleted successfully",
+		};
+	} catch (error) {
+		console.log(error);
+
+		const err = await handlerError(error);
+		return {
+			success: false,
+			messsage: err.errorMsg,
+			status: err.statusCode,
+		};
+	}
+};
+
+
+export const getFirstThreeSpaces = async({userId} : {userId : number}) => {
+	try {
+		const recentSpaces = await prisma.spaces.findMany({
+			where : {
+				userId : userId
+			}, select : {
+				spaceName : true,
+				url : true,
+				id : true,
+				createdAt : true,
+				_count : {
+					select : {
+						testimonialForms : true
+					}
+				}
+			}, take : 3,
+			orderBy : {
+				createdAt : "asc"
+			}
+		})
+
+		return {
+			status : true,
+			recentSpaces
+		}
+	} catch (error) {
+		const err = await handlerError(error)
+		return {
+			success : false,
+			status : err.statusCode,
+			message : err.errorMsg
+		}
+	}
+}

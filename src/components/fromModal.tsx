@@ -1,5 +1,5 @@
 "use client";
-import { File, Plus } from "lucide-react";
+import { File, Shredder } from "lucide-react";
 import { Card } from "./ui/card";
 import { IconDiv } from "./ui/icondiv";
 import { cn } from "@/utils/lib/cn";
@@ -42,16 +42,20 @@ export const FormCreation = ({ sName, sId, data }: FormDivtypes) => {
 					className="flex items-center gap-2 group-hover:bg-[hsl(var(--primary))]/20 "
 					href={`/space/createForm?data=${endcodeURL(JSON.stringify({ sName, sId }))}`}
 				>
-					<Plus size={16} />
-					Create Testimonia
+					<Shredder
+						size={16}
+						className="fill-[hsl(var(--pure-white))] text-[hsl(var(--pure-white))]"
+					/>
+					Build a Form
 				</LinkTag>
 			</div>
 
 			{data.length === 0 ? (
-				<Card className="w-full h-full py-10 items-center bg-[hsl(var(--pure-white))]/5 border border-[hsl(var(--primary))]/20 backdrop-blur-3xl  flex flex-col space-y-5 justify-center  transition-colors ease-linear duration-200">
-					<IconDiv reactNode={<File />} />
+				<Card className="w-full h-full py-10 items-center text-center bg-[hsl(var(--pure-white))]/5 border border-[hsl(var(--primary))]/20 backdrop-blur-3xl  flex flex-col space-y-3 justify-center  transition-colors ease-linear duration-200">
+					<IconDiv className="p-3" reactNode={<File />} />
 					<h1 className="text-sm">
-						Create your first Testimonia Form{" "}
+						Ready to collect testimonials?
+						Design your first form now{" "}
 					</h1>
 					<LinkTag
 						variants={"secondary"}
@@ -59,8 +63,11 @@ export const FormCreation = ({ sName, sId, data }: FormDivtypes) => {
 						className="flex items-center gap-2"
 						href={`/space/createForm?data=${endcodeURL(JSON.stringify({ sName, sId }))}`}
 					>
-						<Plus size={16} />
-						Create Testimonia
+						<Shredder
+							size={16}
+							className="fill-[hsl(var(--pure-white))] text-[hsl(var(--pure-white))]"
+						/>
+						Build a Form
 					</LinkTag>
 				</Card>
 			) : (

@@ -5,6 +5,7 @@ import {
 	CreateSpaceTypes,
 	ReviewTypes,
 	SignupTypes,
+	UpdateFormType,
 } from "@/utils/types/user_types";
 import axios from "axios";
 
@@ -60,6 +61,8 @@ export const createSpace = async (data: CreateSpaceTypes) => {
 		return {
 			success: true,
 			message: resMsg.message,
+			id : resMsg.spaceId,
+			spaceName : resMsg.spaceName
 		};
 	} catch (error) {
 		const err = await handlerError(error);
@@ -224,7 +227,7 @@ export const getReviews = async ({ embadedId }: { embadedId: string }) => {
 			const errdata = await res.json();
 			throw new Error(errdata.msg || "No data found Invalid data");
 		}
-		const data = await res.json();		
+		const data = await res.json();
 
 		return {
 			success: true,
@@ -232,7 +235,6 @@ export const getReviews = async ({ embadedId }: { embadedId: string }) => {
 			reviews: data.reviews,
 		};
 	} catch (error) {
-
 		const err = await handlerError(error);
 
 		return {
@@ -309,4 +311,32 @@ export const checkReviewUsages = async ({
 	}
 };
 
+export const updateForm = async (data: UpdateFormType) => {
+	try {
+		const res = await fetch(`api/space/${data.spaceId}/forms`, {
+			method: "PUT",
+			headers: {
+				"Content-type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
 
+		if (!res.ok) {
+			throw res;
+		}
+
+		const { msg, status } = await res.json();
+		return {
+			succes : true,
+			message : msg,
+			status : status
+		}
+	} catch (error) {
+		const err = await handlerError(error);
+		return {
+			success: false,
+			message: err.errorMsg,
+			status: err.statusCode,
+		};
+	}
+};

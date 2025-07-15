@@ -18,6 +18,7 @@ import {
 } from "@/app/action/client_action/user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 
 export const FormDiv = () => {
 	const { sId } = useParseSpacedata();
@@ -136,28 +137,49 @@ export const FormDiv = () => {
 				/>
 
 				{questions.map((q, k) => (
-					<Card key={k} className="relative px-3 py-5">
-						<InputBox
-							disabled={isPending}
-							value={q}
-							onChange={(e) =>
-								upadatedQuestions(k, e.target.value)
-							}
-							name={`#️⃣ Question ${k + 1} `}
+					<AnimatePresence key={k} mode="wait">
+						<motion.div
+							initial={{
+								opacity: 0,
+								y: -2
+							}}
+							animate={{
+								opacity: 1,
+								y: 0,
+								transition : {
+									ease : "linear",
+									duration : 0.4
+								}
+							}}
+							exit={{
+								opacity : 0,
+								y : -2 
+							}}
 							key={k}
-							placeholder={`Write a question for your users`}
-						/>
-						<Button
-							disabled={isPending}
-                            onClick={() => removeQuestionsArray(k)}
-							variant={"transparent"}
-							sizes={"sm"}
-                            type="button"
-							className="absolute border-0 right-5 top-2 g-gradient-to-r from-teal-400 to-emerald-400"
+							className="relative px-3 py-5 border border-[hsl(var(--primary))]/40 rounded-2xl"
 						>
-							<MdDelete className="text-teal-200" />{" "}
-						</Button>
-					</Card>
+							<InputBox
+								disabled={isPending}
+								value={q}
+								onChange={(e) =>
+									upadatedQuestions(k, e.target.value)
+								}
+								name={`#️⃣ Question ${k + 1} `}
+								key={k}
+								placeholder={`Write a question for your users`}
+							/>
+							<Button
+								disabled={isPending}
+								onClick={() => removeQuestionsArray(k)}
+								variant={"transparent"}
+								sizes={"sm"}
+								type="button"
+								className="absolute border-0 right-5 top-2 g-gradient-to-r from-teal-400 to-emerald-400"
+							>
+								<MdDelete className="text-teal-200" />{" "}
+							</Button>
+						</motion.div>
+					</AnimatePresence>
 				))}
 				<Button
 					disabled={isPending || questions.length > 3}
