@@ -8,20 +8,17 @@ import { Button } from "../ui/button";
 import { LinkTag } from "../ui/Link";
 import { toast } from "sonner";
 
-
-										
-
 export const IframeFile = () => {
 	const scriptCodeOne = heightLightText({
 		code: `<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>`,
 	});
 
 	const iframeCode = heightLightText({
-		code: `<iframe id="review-wall-dda74045-9b95-4d91-accd-05d34e8f85f7" src="https://vouchly.kakoty.me/embadedwall/dda74045-9b95-4d91-accd-05d34e8f85f7" frameborder="0" scrolling="no" width="100%"></iframe>`,
+		code: `<iframe id="review-wall-79d7aa54-d0d8-4607-90a6-1f498f780d14" src="https://vouchly.kakoty.me/embadedwall/79d7aa54-d0d8-4607-90a6-1f498f780d14" frameborder="0" scrolling="no" width="100%"></iframe>`,
 	});
 
 	const scriptCodeTwo = heightLightText({
-		code: `<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-dda74045-9b95-4d91-accd-05d34e8f85f7")})</script>`,
+		code: `<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-79d7aa54-d0d8-4607-90a6-1f498f780d14")})</script>`,
 	});
 	return (
 		<Card className="lg:w-[600px] w-full bg-gradient-to-bl from-[hsl(var(--feature-preview))]/30 to-[hsl(var(--primary))]/30 py-3 px-6 border-0 space-y-3">
@@ -48,17 +45,23 @@ export const IframeFile = () => {
 				>
 					Live Demo
 				</LinkTag>
-				<Button variant={"randomColor"} sizes={"sm"} onClick={() => {
-                    navigator.clipboard.writeText(
-						`<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>
-                        <iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="https://vouchly.kakoty.me/embadedwall/7d39dab1-00a9-477d-a0a1-73160ea07676" frameborder="0" scrolling="no" width="100%"></iframe>
-                        <script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676")})</script>`
-					);
-                    toast.message("Embed script copied!", {
-						description:
-							"Paste it in your website's HTML to show the testimonial widget.",
-					});
-                }}>
+				<Button
+					variant={"randomColor"}
+					sizes={"sm"}
+					onClick={() => {
+						navigator.clipboard.writeText(
+							`
+											<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>
+											<iframe id="review-wall-79d7aa54-d0d8-4607-90a6-1f498f780d14" src="https://vouchly.kakoty.me/embadedwall/79d7aa54-d0d8-4607-90a6-1f498f780d14" frameborder="0" scrolling="no" width="100%"></iframe>
+											<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-79d7aa54-d0d8-4607-90a6-1f498f780d14")})</script>
+											`,
+						);
+						toast.message("Embed script copied!", {
+							description:
+								"Paste it in your website's HTML to show the testimonial widget.",
+						});
+					}}
+				>
 					Copy
 				</Button>
 			</div>
