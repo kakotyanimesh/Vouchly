@@ -1,7 +1,9 @@
 import { TextReviews } from "@/utils/hardcodeddata/shortcuts";
 import { TextReviewOne } from "../ui/testimonialscomponents/textreviewone";
 import { VideoTestimonial } from "../ui/testimonialscomponents/videotestimonial";
-import animeshvideo from "@/videos/animeshvideo.mp4.json";
+import videotwo from "@/videos/videotwo.mp4.json"
+import untitledDesign from '@/videos/Untitled Video.mp4.json';
+import v4 from '@/videos/v4.mp4.json';
 import { useAnimationProps } from "@/hooks/useAnimationhook";
 import { GradientText } from "../ui/gradienteText";
 
@@ -27,8 +29,8 @@ export const NoCoding = () => {
 						{...leftAnimation}
 						className="md:col-span-1 col-span-3 bg-gradient-to-bl from-[hsl(var(--feature-preview))]/40 to-[hsl(var(--primary))]/60"
 						username="Animesh"
-						usercompany="Tits.com"
-						videoSrc={animeshvideo}
+						usercompany="Vouchly"
+						videoSrc={videotwo}
 					/>
 					{TextReviews.slice(0, 1).map((t, k) => (
 						<TextReviewOne
@@ -46,9 +48,9 @@ export const NoCoding = () => {
 					<VideoTestimonial
 						{...rightAnimation}
 						className="md:col-span-1 col-span-3 bg-gradient-to-bl from-[hsl(var(--feature-preview))]/40 to-[hsl(var(--primary))]/60"
-						username="Animesh"
-						usercompany="Tits.com"
-						videoSrc={animeshvideo}
+						username="Annie"
+						usercompany="Vouchly"
+						videoSrc={untitledDesign}
 					/>
 				</div>
 
@@ -71,8 +73,8 @@ export const NoCoding = () => {
 						{...upAnimation}
 						className="md:col-span-1 col-span-3 bg-gradient-to-bl from-[hsl(var(--feature-preview))]/40 to-[hsl(var(--primary))]/60"
 						username="Animesh"
-						usercompany="Tits.com"
-						videoSrc={animeshvideo}
+						usercompany="Vouchly"
+						videoSrc={v4}
 					/>
 					{TextReviews.slice(2, 3).map((t, k) => (
 						<TextReviewOne
