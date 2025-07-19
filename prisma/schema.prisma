@@ -12,7 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -47,7 +47,7 @@ model Spaces {
 model TestimonialForm  {
   id                        Int                     @default(autoincrement()) @id
   spaceId                   Int                 
-  space                     Spaces                  @relation(fields: [spaceId], references: [id])
+  space                     Spaces                  @relation(fields: [spaceId], references: [id], onDelete: Cascade)
   adminId                   Int               
   admin                     User                    @relation(fields: [adminId], references: [id])
   questions                 String[]
@@ -74,9 +74,9 @@ enum status {
 model CustomerReview {
   id                        Int                   @default(autoincrement()) @id
   testimonialFormsId        Int
-  testimonialForms          TestimonialForm       @relation(fields: [testimonialFormsId], references: [id])
+  testimonialForms          TestimonialForm       @relation(fields: [testimonialFormsId], references: [id], onDelete: Cascade)
   spaceId                   Int        
-  space                     Spaces                @relation(fields: [spaceId], references: [id])
+  space                     Spaces                @relation(fields: [spaceId], references: [id], onDelete: Cascade)
   adminId                   Int
   admin                     User                  @relation(fields: [adminId], references: [id])
   customerImageUrl          String
@@ -98,14 +98,14 @@ model CustomerReview {
 model TextReview {
   id                        Int     @default(autoincrement())   @id
   customerReviewId          Int @unique
-  CustomerReview            CustomerReview    @relation(fields: [customerReviewId], references: [id])
+  CustomerReview            CustomerReview    @relation(fields: [customerReviewId], references: [id], onDelete:  Cascade)
   textReview                String
 }
 
 model VidoeReview {
   id                       Int      @default(autoincrement())     @id
   customerReviewId         Int @unique
-  CustomerReview           CustomerReview     @relation(fields: [customerReviewId], references: [id])
+  CustomerReview           CustomerReview     @relation(fields: [customerReviewId], references: [id], onDelete: Cascade)
   videoLink                String
 }
 
@@ -140,7 +140,7 @@ model ReviewStyle {
   gridType                  gridTypes               @default(ManualSlide)
   selectedReviews           Int[]
   testimonialFormId         Int                     @unique
-  testimonialForms          TestimonialForm         @relation(fields: [testimonialFormId], references: [id])
+  testimonialForms          TestimonialForm         @relation(fields: [testimonialFormId], references: [id], onDelete: Cascade)
 }
 
 

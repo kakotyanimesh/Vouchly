@@ -54,7 +54,7 @@ export const GlassyReview: React.FC<GlassReviewProps> = ({
 				/>
 				<div className="space-y-2">
 					{RenderStars({ starNo: stars, starColor })}
-					<h1 className="text-sm">{textReview}</h1>
+					<h1 className="text-sm break-all">{textReview}</h1>
 					<h1 className="text-xs bg-[hsl(var(--tertiary))] w-fit px-3 group-hover:-skew-3 transition-all duration-200 ease-out">
 						{customerName}
 					</h1>

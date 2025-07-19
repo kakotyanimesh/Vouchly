@@ -913,21 +913,14 @@ export const getEmbadedReviewsId = async ({ formId }: { formId: number }) => {
 export const deleteSpace = async ({ spaceId }: { spaceId: number }) => {
 	try {
 		const { id } = await getUserSession();
-		await prisma.$transaction(async () => {
-			await prisma.testimonialForm.deleteMany({
-				where: {
-					spaceId: Number(spaceId),
-				},
-			});
 
-			await prisma.spaces.delete({
-				where: {
-					user_ID_space_ID: {
-						id: spaceId,
-						userId: Number(id),
-					},
+		await prisma.spaces.delete({
+			where: {
+				user_ID_space_ID: {
+					id: spaceId,
+					userId: Number(id),
 				},
-			});
+			},
 		});
 
 		revalidateTag(`user-spaces-${id}`);
@@ -983,38 +976,39 @@ export const deleteForm = async ({ formId }: { formId: number }) => {
 	}
 };
 
-
-export const getFirstThreeSpaces = async({userId} : {userId : number}) => {
+export const getFirstThreeSpaces = async ({ userId }: { userId: number }) => {
 	try {
 		const recentSpaces = await prisma.spaces.findMany({
-			where : {
-				userId : userId
-			}, select : {
-				spaceName : true,
-				url : true,
-				id : true,
-				createdAt : true,
-				_count : {
-					select : {
-						testimonialForms : true
-					}
-				}
-			}, take : 3,
-			orderBy : {
-				createdAt : "asc"
-			}
-		})
+			where: {
+				userId: userId,
+			},
+			select: {
+				spaceName: true,
+				url: true,
+				id: true,
+				createdAt: true,
+				_count: {
+					select: {
+						testimonialForms: true,
+					},
+				},
+			},
+			take: 3,
+			orderBy: {
+				createdAt: "asc",
+			},
+		});
 
 		return {
-			status : true,
-			recentSpaces
-		}
+			status: true,
+			recentSpaces,
+		};
 	} catch (error) {
-		const err = await handlerError(error)
+		const err = await handlerError(error);
 		return {
-			success : false,
-			status : err.statusCode,
-			message : err.errorMsg
-		}
+			success: false,
+			status: err.statusCode,
+			message: err.errorMsg,
+		};
 	}
-}
+};

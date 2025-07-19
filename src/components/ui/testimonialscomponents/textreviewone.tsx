@@ -47,7 +47,7 @@ export const TextReviewOne: React.FC<TextReviewTypes> = ({
 		>
 			<div className="lg:space-y-3 space-y-1">
 				{RenderStars({ starNo: stars, starColor })}
-				<h1 className="text-sm inline-block">{textReview}</h1>
+				<h1 className="text-sm inline-block break-all">{textReview}</h1>
 			</div>
 			<div className="flex flex-row gap-3 items-center">
 				<Image

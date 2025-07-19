@@ -36,7 +36,7 @@ export const ManualSlide: React.FC<TextReviewTypes> = ({
 		>
 			{RenderStars({ starNo: stars, starColor })}
 
-			<h1 className="text-left text-sm">{textReview}</h1>
+			<h1 className="text-left text-sm break-all">{textReview}</h1>
 			<div className="flex flex-row items-center gap-3 text-left">
 				<Image
 					src={imageSrc}
