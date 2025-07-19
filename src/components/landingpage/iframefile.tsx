@@ -8,17 +8,20 @@ import { Button } from "../ui/button";
 import { LinkTag } from "../ui/Link";
 import { toast } from "sonner";
 
+
+										
+
 export const IframeFile = () => {
 	const scriptCodeOne = heightLightText({
 		code: `<script type="text/javascript" src="https://cdn.vouchly.kakoty.me/js/iframeResizer.min.js"></script>`,
 	});
 
 	const iframeCode = heightLightText({
-		code: `<iframe id="review-wall-7d39dab1-00a9-477d-a0a1-73160ea07676" src="https://vouchly.kakoty.me/embadedwall/307b08fb-31a9-4f7c-8014-0856a70081b5" frameborder="0" scrolling="no" width="100%"></iframe>`,
+		code: `<iframe id="review-wall-dda74045-9b95-4d91-accd-05d34e8f85f7" src="https://vouchly.kakoty.me/embadedwall/dda74045-9b95-4d91-accd-05d34e8f85f7" frameborder="0" scrolling="no" width="100%"></iframe>`,
 	});
 
 	const scriptCodeTwo = heightLightText({
-		code: `<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-307b08fb-31a9-4f7c-8014-0856a70081b5")})</script>`,
+		code: `<script>window.addEventListener("load", function () {iFrameResize({ log: false, checkOrigin: false }, "#review-wall-dda74045-9b95-4d91-accd-05d34e8f85f7")})</script>`,
 	});
 	return (
 		<Card className="lg:w-[600px] w-full bg-gradient-to-bl from-[hsl(var(--feature-preview))]/30 to-[hsl(var(--primary))]/30 py-3 px-6 border-0 space-y-3">

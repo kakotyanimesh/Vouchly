@@ -52,7 +52,7 @@ export const FlipView: React.FC<TextReviewTypes> = ({
 					className: "text-center flex justify-center",
 					starColor,
 				})}
-				<h1 className="text-sm">{textReview}</h1>
+				<h1 className="text-sm break-all">{textReview}</h1>
 			</div>
 		</motion.div>
 	);
